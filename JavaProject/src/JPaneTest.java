@@ -45,6 +45,7 @@ public class JPaneTest extends JFrame implements ActionListener{
     String DEFAULT_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";  
     String time;  
     int ONE_SECOND = 1000;
+    int Ok = 1;
 	
 	public JPaneTest() {
 		setTitle("Hotel management System");
@@ -235,10 +236,11 @@ public class JPaneTest extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent ae) {
         if(ae.getSource() == button1[0]) {
         	// createANewUser();
-        	// Popup pp = new Popup(this);
+        	Ok = 0;
+        	Popup pp = new Popup(this);
         }
         if(ae.getSource() == button1[1]) {
-        	// canel();
+        	// cancel();
         }
         if(ae.getSource() == button2[0]) {
 			Popup_FRinfo pp1 = new Popup_FRinfo(this);    //family room info
@@ -255,10 +257,11 @@ public class JPaneTest extends JFrame implements ActionListener{
         }
         if(ae.getSource() == button2[4]) {
         	// addBookingInfo();        //  add booking info to just check-in user
-        	// Popup pp = new Popup(this);
+        	Ok = 1;
+        	Popup pp = new Popup(this);
         }
         if(ae.getSource() == button2[5]) {
-        	// canel();
+        	// cancel();
         }
         if(ae.getSource() == button5[0]) {
 			// calculateTotalFee();     //  get all of fees from database and sum them then show it on the interface
@@ -268,7 +271,8 @@ public class JPaneTest extends JFrame implements ActionListener{
         }
 		if(ae.getSource() == button5[2]){
             // checkout();       // detele customer's info, update the room status
-			// Popup pp = new Popup(this);
+			Ok = 2;
+			Popup pp = new Popup(this);
         }
 		if(ae.getSource() == button5[3]){
             // canel();
@@ -305,6 +309,34 @@ public class JPaneTest extends JFrame implements ActionListener{
     } 
 	
     // for pop-up windows
+    class Popup implements ActionListener{
+        JDialog jDialog2=null; 
+	    Popup(JFrame jFrame){
+	       jDialog2=new JDialog(jFrame,"Notice",true);
+	       JTextArea jt2 = new JTextArea();
+	       String[] textinfo = {"      Successfully Check-in!","Successfully booked a room!","         Check-out Done!"};
+	       for (int i = 0; i < 3; i++){
+	    	   if(Ok == i){
+	    		   jt2 = new JTextArea(textinfo[i]);
+	    	   }
+	       }
+	       jt2.setFont(font);
+	       JButton jButton1=new JButton("close");
+	       jButton1.addActionListener(this);
+	       jDialog2.getContentPane().add(BorderLayout.SOUTH,jButton1);
+	       jDialog2.getContentPane().add(jt2);
+	       jDialog2.setSize(260,100);
+	       jDialog2.setLocation(450,450);
+	       jDialog2.setVisible(true);
+	       jDialog2.setResizable(false);
+	    }
+	     public void actionPerformed(ActionEvent e){
+	        if(e.getActionCommand().equals("close")){
+	               jDialog2.dispose();
+	        }
+	     }	
+	}
+    
 	class Popup_roomStatus implements ActionListener{
 	        JButton[] button22 = new JButton[27];
 	        JDialog jDialog=null; 
