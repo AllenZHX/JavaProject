@@ -13,7 +13,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
 	JButton[] button1 = new JButton[2];
-	JButton[] button2 = new JButton[5];
+	JButton[] button2 = new JButton[6];
 	JButton[] button5 = new JButton[4];
 	JButton[] button6 = new JButton[3];
 	JLabel[] label1 = new JLabel[3];
@@ -25,17 +25,17 @@ public class JPaneTest extends JFrame implements ActionListener{
 	JTextArea[] ta6 = new JTextArea[4];
 	JTable table = new JTable();
 	ScrollPane scrollPane = new ScrollPane();
-	String[] buttonString1_6 = {"OK", "Canel"};
-	String[] buttonString2 = {"Family Room","Double Room","Single Room","OK", "Canel"};
-	String[] labelString1 = {"Check-in", "Name:","ID:"};
-	String[] labelString2 = {"Booking"};
-	String[] labelString5 = {"Check-out","Room #: ","Total: ","Paid-up: ","Change: "};
-	String[] labelString6 = {"ORDER","Room #: ","Item: ","Num: ","Total: "};
+	String[] buttonString1 = {"OK", "Canel"};
+	String[] buttonString2 = {"Family Room","Double Room","Single Room","Check Current Rooms' Status","OK", "Canel"};
 	String[] buttonString22 = {"F1","F2","D1","D2","D3","D4","S1","S2","S3",
 			                  "F3","F4","D5","D6","D7","D8","S4","S5","S6",
 			                  "F5","F6","D9","D10","D11","D12","S7","S8","S9"};
 	String[] buttonString5 = {"Settle","confirm","Finish","Canel"};
 	String[] buttonString6 = {"Settle","OK","Canel"};
+	String[] labelString1 = {"Check-in", "Name:","ID:"};
+	String[] labelString2 = {"Booking"};
+	String[] labelString5 = {"Check-out","Room #: ","Total: ","Paid-up: ","Change: "};
+	String[] labelString6 = {"ORDER","Room #: ","Item: ","Num: ","Total: "};
 	Font font =  new Font("Times new Roman", Font.BOLD, 20);
 	Font font1 =  new Font("Times new Roman", Font.BOLD, 34);
 	Font font2 =  new Font("Times new Roman", Font.BOLD, 14);
@@ -61,8 +61,9 @@ public class JPaneTest extends JFrame implements ActionListener{
 		//******for Panel1(Check-in Part)******
 		for(int i = 0; i < 2; i++) {
 		    button1[i] = new JButton();
-		    button1[i].setText(buttonString1_6[i]);
+		    button1[i].setText(buttonString1[i]);
 		    button1[i].setFont(font2);
+		    button1[i].addActionListener(this);
 		}
 		for(int i = 0; i < 3; i++) {
 		    label1[i] = new JLabel();
@@ -91,14 +92,12 @@ public class JPaneTest extends JFrame implements ActionListener{
 			p1.add(ta1[i]);
 		
 		// ******for Panel2(Booking Part)*******
-		for(int i = 0; i < 5; i++) {
+		for(int i = 0; i < 6; i++) {
 		    button2[i] = new JButton();
 		    button2[i].setText(buttonString2[i]);
 		    button2[i].setFont(font2);
 		    button2[i].addActionListener(this);
 		}
-		JButton button222 = new JButton("Check Current Rooms' Status");
-		button222.addActionListener(this);
 		    label2[0] = new JLabel();
 		    label2[0].setText(labelString2[0]);
 		    label2[0].setFont(font1);
@@ -106,15 +105,14 @@ public class JPaneTest extends JFrame implements ActionListener{
 		button2[0].setBounds(50,120,80,80);
 		button2[1].setBounds(155,120,80,80);
 		button2[2].setBounds(260,120,80,80);
-		button2[3].setBounds(40,320,100,40);
-		button2[4].setBounds(240,320,100,40);
-		button222.setBounds(72,230,240,60);
+		button2[4].setBounds(40,320,100,40);
+		button2[5].setBounds(240,320,100,40);
+		button2[3].setBounds(72,230,240,60);
 		label2[0].setBounds(120,30,160,50);
 
-		for(int i = 0; i < 5; i++)
+		for(int i = 0; i < 6; i++)
 			p2.add(button2[i]);
 		p2.add(label2[0]);
-		p2.add(button222);
 		
 		// ******for Panel3(show data list Part)******
 		
@@ -148,6 +146,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 		    button5[i] = new JButton();
 		    button5[i].setText(buttonString5[i]);
 		    button5[i].setFont(font2);
+		    button5[i].addActionListener(this);
 		}
 		for(int i = 0; i < 5; i++) {
 		    label5[i] = new JLabel();
@@ -186,6 +185,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 		    button6[i] = new JButton();
 		    button6[i].setText(buttonString6[i]);
 		    button6[i].setFont(font2);
+		    button6[i].addActionListener(this);
 		}
 		for(int i = 0; i < 5; i++) {
 		    label6[i] = new JLabel();
@@ -233,16 +233,60 @@ public class JPaneTest extends JFrame implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent ae) {
-		if(ae.getActionCommand().equals("Check Current Rooms' Status")){
-            Popup hw = new Popup(this);}
-		if(ae.getActionCommand().equals("Family Room")){
-            Popup1 hw1 = new Popup1(this);}
-		if(ae.getActionCommand().equals("Double Room")){
-            Popup2 hw2 = new Popup2(this);}
-		if(ae.getActionCommand().equals("Single Room")){
-            Popup3 hw3 = new Popup3(this);}
-            
+        if(ae.getSource() == button1[0]) {
+        	// createANewUser();
+        	// Popup pp = new Popup(this);
+        }
+        if(ae.getSource() == button1[1]) {
+        	// canel();
+        }
+        if(ae.getSource() == button2[0]) {
+			Popup_FRinfo pp1 = new Popup_FRinfo(this);    //family room info
+        }
+		if(ae.getSource() == button2[1]){
+            Popup_DRinfo pp2 = new Popup_DRinfo(this);   // double room info
+        }
+		if(ae.getSource() == button2[2]){
+            Popup_SRinfo pp3 = new Popup_SRinfo(this);   //single room info
+        }
+		if(ae.getSource() == button2[3]){
+			// getRoomStatus();      // search database, get room status (empty or fill) (use Boolean[] status = new Boolean[27] to store the info)
+            Popup_roomStatus hw = new Popup_roomStatus(this);   // show the current room status
+        }
+        if(ae.getSource() == button2[4]) {
+        	// addBookingInfo();        //  add booking info to just check-in user
+        	// Popup pp = new Popup(this);
+        }
+        if(ae.getSource() == button2[5]) {
+        	// canel();
+        }
+        if(ae.getSource() == button5[0]) {
+			// calculateTotalFee();     //  get all of fees from database and sum them then show it on the interface
+        }
+		if(ae.getSource() == button5[1]){
+            // calculateChange();    // according to paid-up money, get the amount of the change
+        }
+		if(ae.getSource() == button5[2]){
+            // checkout();       // detele customer's info, update the room status
+			// Popup pp = new Popup(this);
+        }
+		if(ae.getSource() == button5[3]){
+            // canel();
+        }
+        if(ae.getSource() == button6[0]) {
+        	// calculateServPrice();     // according to what and how many food or drink customer order, show the money amount in the interface.
+        }
+        if(ae.getSource() == button6[1]) {
+        	// addServiceinfo();     // add service info to database
+        }
+        if(ae.getSource() == button6[2]) {
+			// canel();
+        }
+        //*******************************************************************
+        
+        
 	}
+	// for current time
 	
 	public void configTimeArea() {  
         Timer tmr = new Timer();  
@@ -260,16 +304,21 @@ public class JPaneTest extends JFrame implements ActionListener{
         }  
     } 
 	
-	class Popup implements ActionListener{
+    // for pop-up windows
+	class Popup_roomStatus implements ActionListener{
 	        JButton[] button22 = new JButton[27];
 	        JDialog jDialog=null; 
-		    Popup(JFrame jFrame){
+		    Popup_roomStatus(JFrame jFrame){
 			    JPanel p22 = new JPanel(new GridLayout(3,9,10,15));
 			    for(int i = 0; i < 27; i++) {
 				    button22[i] = new JButton();
 				    button22[i].setText(buttonString22[i]);
 				    button22[i].setFont(font);
-				    //button22[i].setBackground(Color.RED);
+				    /*
+				    if (status[i] == true){
+				          button22[i].setBackground(Color.RED);
+				    }
+				    */
 				    button22[i].addActionListener(this);
 				}
 			    for(int i = 0; i < 27; i++)
@@ -291,15 +340,16 @@ public class JPaneTest extends JFrame implements ActionListener{
 		        	for(int i = 0; i<27; i++){
 		        		if(e.getActionCommand().equals(buttonString22[i]))
 		        			button22[i].setBackground(Color.RED);
+		        		    //status[i] = true;
 		        	}
 		        	   
 		        }
 		     }
 	}
 	
-	class Popup1 implements ActionListener{
+	class Popup_FRinfo implements ActionListener{
         JDialog jDialog1=null; 
-	    Popup1(JFrame jFrame){
+	    Popup_FRinfo(JFrame jFrame){
 	       jDialog1=new JDialog(jFrame,"Room Introduction",true);
 	       final JTextArea jt1 = new JTextArea("               Price: $ 220 /day\n      "
 	       		                             + "    Free Wifi, air condition\n   "
@@ -324,9 +374,9 @@ public class JPaneTest extends JFrame implements ActionListener{
 	     }	
 	}
 	
-	class Popup2 implements ActionListener{
+	class Popup_DRinfo implements ActionListener{
         JDialog jDialog2=null; 
-	    Popup2(JFrame jFrame){
+	    Popup_DRinfo(JFrame jFrame){
 	       jDialog2=new JDialog(jFrame,"Room Introduction",true);
 	       final JTextArea jt2 = new JTextArea("               Price: $ 160 /day\n      "
 	       		                             + "    Free Wifi, air condition\n   "
@@ -350,9 +400,9 @@ public class JPaneTest extends JFrame implements ActionListener{
 	     }	
 	}
 	
-	class Popup3 implements ActionListener{
+	class Popup_SRinfo implements ActionListener{
         JDialog jDialog3=null; 
-	    Popup3(JFrame jFrame){
+	    Popup_SRinfo(JFrame jFrame){
 	       jDialog3=new JDialog(jFrame,"Room Introduction",true);
 	       final JTextArea jt3 = new JTextArea("               Price: $ 90 /day\n      "
 	       		                             + "    Free Wifi, air condition\n   "
