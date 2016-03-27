@@ -49,12 +49,20 @@ public class JPaneTest extends JFrame implements ActionListener{
     int ONE_SECOND = 1000;
     int Ok = 1;
     int Can = 1;
+    int roomid;
     String room = "";
     String status = "";
     Boolean[] roomstatus = {false,false,false,false,false,false,false,false,false,
     						false,false,false,false,false,false,false,false,false,
     						false,false,false,false,false,false,false,false,false};
-    
+    String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
+	String user = "root";
+	String password = ",26187108hoog";
+	Double[] roomprice = {220.0,160.0,90.0};
+	Double feeofroom = 0.0;
+	Double feeofservice = 0.0;
+	Double totalfee = 0.0;
+
 	
 	public JPaneTest() {
 		setTitle("Hotel management System");
@@ -270,8 +278,8 @@ public class JPaneTest extends JFrame implements ActionListener{
             // calculateChange();    // according to paid-up money, get the amount of the change
         }
 		if(ae.getSource() == button5[2]){
-            // checkout();       // detele customer's info, update the room status
-			Ok = 2;
+            checkout();       // detele customer's info, update the room status
+			Ok = 1;
 			Popup pp = new Popup(this);
         }
 		if(ae.getSource() == button5[3]){
@@ -282,9 +290,9 @@ public class JPaneTest extends JFrame implements ActionListener{
         	// calculateServPrice();     // according to what and how many food or drink customer order, show the money amount in the interface.
         }
         if(ae.getSource() == button6[1]) {
-        	Ok = 3;
+        	Ok = 2;
         	Popup pp = new Popup(this);
-        	// addServiceinfo();     // add service info to database
+        	addServiceinfo();     // add service info to database
         }
         if(ae.getSource() == button6[2]) {
 			Can = 3;
@@ -296,19 +304,70 @@ public class JPaneTest extends JFrame implements ActionListener{
 	}
 	
 	public void createANewUser() {
-		String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
-		String user = "root";
-		String password = ",26187108hoog";
 		try{
 			//1. Get a connection to database
 			Connection myConn = DriverManager.getConnection(url, user, password);
 			//2. Create a statement
-			String sql = "insert into checkin (name,idnum,room,status) values(?,?,?,?)";
+			String sql = "insert into checkin (name,idnum,room,status,roomid) values(?,?,?,?,?)";
+			String sql2 = "insert into payment (roomnum,fee_room,fee_service,total) values(?,?,?,?)";
 			PreparedStatement myStmt = myConn.prepareStatement(sql);
 			myStmt.setString(1,ta1[0].getText());
 			myStmt.setString(2,ta1[1].getText());
 			myStmt.setString(3,room);
 			myStmt.setString(4,status);
+			myStmt.setInt(5,roomid);
+			PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
+			myStmt2.setString(1,room);
+			myStmt2.setDouble(2,feeofroom);
+			myStmt2.setDouble(3,0);
+			myStmt2.setDouble(4,totalfee);
+			//3. Execute SQL 
+			myStmt.executeUpdate();
+			myStmt2.executeUpdate();
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
+	public void getRoomStatus() {   
+		try{
+			//1. Get a connection to database
+			Connection myConn = DriverManager.getConnection(url, user, password);
+			//2. Create a statement
+			String sql = "select * from checkin";
+			Statement myStmt = myConn.createStatement();
+			//3. Execute SQL 
+			ResultSet myRs = myStmt.executeQuery(sql);
+			while (myRs.next()) {
+				int aa = myRs.getInt("roomid");
+				for(int i = 0; i < 27; i++){
+					if (aa == i){
+						roomstatus[i] = true;
+					}
+				}
+			}	
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		/*for(int i = 0; i < 27; i++){
+			button22[i] = new JButton();
+			if(roomstatus[i] == true){
+				button22[i].setBackground(Color.RED);
+			}
+		}*/
+	}
+	
+	public void addServiceinfo() {
+		try{
+			//1. Get a connection to database
+			Connection myConn = DriverManager.getConnection(url, user, password);
+			//2. Create a statement
+			String sql = "update payment set fee_service = ? where roomnum = ?";
+			PreparedStatement myStmt = myConn.prepareStatement(sql);
+			myStmt.setDouble(1,Double.parseDouble(ta6[3].getText()));
+			myStmt.setString(2,ta6[0].getText());
 			//3. Execute SQL 
 			myStmt.executeUpdate();
 		}
@@ -317,12 +376,20 @@ public class JPaneTest extends JFrame implements ActionListener{
 		}
 	}
 	
-	public void getRoomStatus() {   //should use JDBC to get the data, not this method!
-		for(int i = 0; i < 27; i++){
-			button22[i] = new JButton();
-			if(roomstatus[i] == true){
-				button22[i].setBackground(Color.RED);
-			}
+	public void checkout(){
+		try{
+			Connection myConn = DriverManager.getConnection(url, user, password);
+			String sql = "delete from checkin where room = ?";
+			String sql2 = "delete from payment where roomnum = ?";
+			PreparedStatement myStmt = myConn.prepareStatement(sql);
+			myStmt.setString(1,ta5[0].getText());
+			PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
+			myStmt2.setString(1,ta5[0].getText());
+			myStmt.executeUpdate();
+			myStmt2.executeUpdate();
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
 		}
 	}
 	
@@ -369,9 +436,8 @@ public class JPaneTest extends JFrame implements ActionListener{
 	    Popup(JFrame jFrame){
 	       jDialog2=new JDialog(jFrame,"Notice",true);
 	       JTextArea jt2 = new JTextArea();
-	       String[] textinfo = {"      Successfully Check-in!","Successfully booked a room!",
-	    		                "         Check-out Done!","     successfully purchase!"};
-	       for (int i = 0; i < 4; i++){
+	       String[] textinfo = {"      Successfully Check-in!","         Check-out Done!","     successfully purchase!"};
+	       for (int i = 0; i < 3; i++){
 	    	   if(Ok == i){
 	    		   jt2 = new JTextArea(textinfo[i]);
 	    	   }
@@ -398,13 +464,12 @@ public class JPaneTest extends JFrame implements ActionListener{
 		    Popup_roomStatus(JFrame jFrame){
 			    JPanel p22 = new JPanel(new GridLayout(3,9,10,15));
 			    for(int i = 0; i < 27; i++) {
+			    	button22[i] = new JButton();
 				    button22[i].setText(buttonString22[i]);
 				    button22[i].setFont(font);
-				    /*
-				    if (status[i] == true){
+				    if (roomstatus[i] == true){
 				          button22[i].setBackground(Color.RED);
 				    }
-				    */
 				    button22[i].addActionListener(this);
 				}
 			   for(int i = 0; i < 27; i++)
@@ -428,8 +493,16 @@ public class JPaneTest extends JFrame implements ActionListener{
 		        			if(roomstatus[i] == false){
 			        			button22[i].setBackground(Color.RED);
 		        		        room = buttonString22[i];
+		        		        roomid = i;
 		        		        status = "check-in!";
-			        		    roomstatus[i] = true;
+		        		        if(i == 0 || i == 1 || i == 9 || i == 10 || i == 18 || i == 19){
+		        		        	feeofroom = roomprice[0];
+		        		        }else if(i == 2 || i == 3 || i == 4 || i == 5 || i == 11 || i == 12 || i == 13 || i == 14 || i == 20 || i == 21 || i == 22 || i == 23){
+		        		        	feeofroom = roomprice[1];
+		        		        }else{
+		        		        	feeofroom = roomprice[2];
+		        		        }
+		        		        roomstatus[i] = true;
 		        			}
 		        		}
 		        	}
