@@ -8,14 +8,16 @@ import java.util.Timer;
 import java.util.TimerTask;  
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.sql.*;
 
 public class JPaneTest extends JFrame implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
-	JButton[] button1 = new JButton[2];
-	JButton[] button2 = new JButton[6];
+	JButton[] button1 = new JButton[1];
+	JButton[] button2 = new JButton[5];
 	JButton[] button5 = new JButton[4];
 	JButton[] button6 = new JButton[3];
+	JButton[] button22 = new JButton[27];
 	JLabel[] label1 = new JLabel[3];
 	JLabel[] label2 = new JLabel[4];
 	JLabel[] label5 = new JLabel[5];
@@ -25,8 +27,8 @@ public class JPaneTest extends JFrame implements ActionListener{
 	JTextArea[] ta6 = new JTextArea[4];
 	JTable table = new JTable();
 	ScrollPane scrollPane = new ScrollPane();
-	String[] buttonString1 = {"OK", "Canel"};
-	String[] buttonString2 = {"Family Room","Double Room","Single Room","Check Current Rooms' Status","OK", "Canel"};
+	String[] buttonString1 = {"OK"};
+	String[] buttonString2 = {"Family Room","Double Room","Single Room","Check Current Rooms' Status","Canel"};
 	String[] buttonString22 = {"F1","F2","D1","D2","D3","D4","S1","S2","S3",
 			                  "F3","F4","D5","D6","D7","D8","S4","S5","S6",
 			                  "F5","F6","D9","D10","D11","D12","S7","S8","S9"};
@@ -46,6 +48,13 @@ public class JPaneTest extends JFrame implements ActionListener{
     String time;  
     int ONE_SECOND = 1000;
     int Ok = 1;
+    int Can = 1;
+    String room = "";
+    String status = "";
+    Boolean[] roomstatus = {false,false,false,false,false,false,false,false,false,
+    						false,false,false,false,false,false,false,false,false,
+    						false,false,false,false,false,false,false,false,false};
+    
 	
 	public JPaneTest() {
 		setTitle("Hotel management System");
@@ -60,7 +69,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 		JPanel p6 = new JPanel(new GridLayout(1,2,5,15));
 		
 		//******for Panel1(Check-in Part)******
-		for(int i = 0; i < 2; i++) {
+		for(int i = 0; i < 1; i++) {
 		    button1[i] = new JButton();
 		    button1[i].setText(buttonString1[i]);
 		    button1[i].setFont(font2);
@@ -78,14 +87,13 @@ public class JPaneTest extends JFrame implements ActionListener{
 		    ta1[i].setFont(font);
 		}
 		p1.setLayout(null);
-		button1[0].setBounds(40,320,100,40);
-		button1[1].setBounds(240,320,100,40);
+		button1[0].setBounds(250,320,100,40);
 		label1[0].setBounds(120,30,160,50);
 		label1[1].setBounds(40,120,80,50);
 		label1[2].setBounds(40,190,80,50);
 		ta1[0].setBounds(140,130,180,30);
 		ta1[1].setBounds(140,200,180,30);
-		for(int i = 0; i < 2; i++)
+		for(int i = 0; i < 1; i++)
 			p1.add(button1[i]);
 		for(int i = 0; i < 3; i++) 
 			p1.add(label1[i]);
@@ -93,7 +101,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 			p1.add(ta1[i]);
 		
 		// ******for Panel2(Booking Part)*******
-		for(int i = 0; i < 6; i++) {
+		for(int i = 0; i < 5; i++) {
 		    button2[i] = new JButton();
 		    button2[i].setText(buttonString2[i]);
 		    button2[i].setFont(font2);
@@ -106,12 +114,11 @@ public class JPaneTest extends JFrame implements ActionListener{
 		button2[0].setBounds(50,120,80,80);
 		button2[1].setBounds(155,120,80,80);
 		button2[2].setBounds(260,120,80,80);
-		button2[4].setBounds(40,320,100,40);
-		button2[5].setBounds(240,320,100,40);
+		button2[4].setBounds(100,320,100,40);
 		button2[3].setBounds(72,230,240,60);
 		label2[0].setBounds(120,30,160,50);
 
-		for(int i = 0; i < 6; i++)
+		for(int i = 0; i < 5; i++)
 			p2.add(button2[i]);
 		p2.add(label2[0]);
 		
@@ -235,12 +242,9 @@ public class JPaneTest extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent ae) {
         if(ae.getSource() == button1[0]) {
-        	// createANewUser();
+        	createANewUser();
         	Ok = 0;
         	Popup pp = new Popup(this);
-        }
-        if(ae.getSource() == button1[1]) {
-        	// cancel();
         }
         if(ae.getSource() == button2[0]) {
 			Popup_FRinfo pp1 = new Popup_FRinfo(this);    //family room info
@@ -252,16 +256,12 @@ public class JPaneTest extends JFrame implements ActionListener{
             Popup_SRinfo pp3 = new Popup_SRinfo(this);   //single room info
         }
 		if(ae.getSource() == button2[3]){
-			// getRoomStatus();      // search database, get room status (empty or fill) (use Boolean[] status = new Boolean[27] to store the info)
+			getRoomStatus();      // search database, get room status (empty or fill) (use Boolean[] status = new Boolean[27] to store the info)
             Popup_roomStatus hw = new Popup_roomStatus(this);   // show the current room status
         }
         if(ae.getSource() == button2[4]) {
-        	// addBookingInfo();        //  add booking info to just check-in user
-        	Ok = 1;
-        	Popup pp = new Popup(this);
-        }
-        if(ae.getSource() == button2[5]) {
-        	// cancel();
+        	Can = 0;
+        	cancel();
         }
         if(ae.getSource() == button5[0]) {
 			// calculateTotalFee();     //  get all of fees from database and sum them then show it on the interface
@@ -275,21 +275,75 @@ public class JPaneTest extends JFrame implements ActionListener{
 			Popup pp = new Popup(this);
         }
 		if(ae.getSource() == button5[3]){
-            // canel();
+            Can = 2;
+			cancel();
         }
         if(ae.getSource() == button6[0]) {
         	// calculateServPrice();     // according to what and how many food or drink customer order, show the money amount in the interface.
         }
         if(ae.getSource() == button6[1]) {
+        	Ok = 3;
+        	Popup pp = new Popup(this);
         	// addServiceinfo();     // add service info to database
         }
         if(ae.getSource() == button6[2]) {
-			// canel();
+			Can = 3;
+        	cancel();
         }
         //*******************************************************************
         
         
 	}
+	
+	public void createANewUser() {
+		String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
+		String user = "root";
+		String password = ",26187108hoog";
+		try{
+			//1. Get a connection to database
+			Connection myConn = DriverManager.getConnection(url, user, password);
+			//2. Create a statement
+			String sql = "insert into checkin (name,idnum,room,status) values(?,?,?,?)";
+			PreparedStatement myStmt = myConn.prepareStatement(sql);
+			myStmt.setString(1,ta1[0].getText());
+			myStmt.setString(2,ta1[1].getText());
+			myStmt.setString(3,room);
+			myStmt.setString(4,status);
+			//3. Execute SQL 
+			myStmt.executeUpdate();
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
+	public void getRoomStatus() {   //should use JDBC to get the data, not this method!
+		for(int i = 0; i < 27; i++){
+			button22[i] = new JButton();
+			if(roomstatus[i] == true){
+				button22[i].setBackground(Color.RED);
+			}
+		}
+	}
+	
+	public void cancel() {
+		if(Can == 0){
+			for(int i = 0; i < 2; i++)
+				ta1[i].setText("");
+		}
+		if(Can == 1){
+			//  cancel the booking.
+		}
+		if(Can == 2){
+			for(int i = 0; i < 4; i++)
+				ta5[i].setText("");
+		}
+		if(Can == 3){
+			for(int i = 0; i < 4; i++)
+				ta6[i].setText("");
+		}
+	}
+	
 	// for current time
 	
 	public void configTimeArea() {  
@@ -309,13 +363,15 @@ public class JPaneTest extends JFrame implements ActionListener{
     } 
 	
     // for pop-up windows
+    
     class Popup implements ActionListener{
         JDialog jDialog2=null; 
 	    Popup(JFrame jFrame){
 	       jDialog2=new JDialog(jFrame,"Notice",true);
 	       JTextArea jt2 = new JTextArea();
-	       String[] textinfo = {"      Successfully Check-in!","Successfully booked a room!","         Check-out Done!"};
-	       for (int i = 0; i < 3; i++){
+	       String[] textinfo = {"      Successfully Check-in!","Successfully booked a room!",
+	    		                "         Check-out Done!","     successfully purchase!"};
+	       for (int i = 0; i < 4; i++){
 	    	   if(Ok == i){
 	    		   jt2 = new JTextArea(textinfo[i]);
 	    	   }
@@ -326,7 +382,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 	       jDialog2.getContentPane().add(BorderLayout.SOUTH,jButton1);
 	       jDialog2.getContentPane().add(jt2);
 	       jDialog2.setSize(260,100);
-	       jDialog2.setLocation(450,450);
+	       jDialog2.setLocationRelativeTo(null);
 	       jDialog2.setVisible(true);
 	       jDialog2.setResizable(false);
 	    }
@@ -338,12 +394,10 @@ public class JPaneTest extends JFrame implements ActionListener{
 	}
     
 	class Popup_roomStatus implements ActionListener{
-	        JButton[] button22 = new JButton[27];
 	        JDialog jDialog=null; 
 		    Popup_roomStatus(JFrame jFrame){
 			    JPanel p22 = new JPanel(new GridLayout(3,9,10,15));
 			    for(int i = 0; i < 27; i++) {
-				    button22[i] = new JButton();
 				    button22[i].setText(buttonString22[i]);
 				    button22[i].setFont(font);
 				    /*
@@ -353,7 +407,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 				    */
 				    button22[i].addActionListener(this);
 				}
-			    for(int i = 0; i < 27; i++)
+			   for(int i = 0; i < 27; i++)
 			    	p22.add(button22[i]);
 		       jDialog=new JDialog(jFrame,"Room",true);
 		       JButton jButton=new JButton("close");
@@ -361,7 +415,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 		       jDialog.getContentPane().add(BorderLayout.SOUTH,jButton);
 		       jDialog.getContentPane().add(p22);
 		       jDialog.setSize(850,350);
-		       jDialog.setLocation(450,450);
+		       jDialog.setLocationRelativeTo(null);
 		       jDialog.setVisible(true);
 		       jDialog.setResizable(false);
 		    }
@@ -370,9 +424,14 @@ public class JPaneTest extends JFrame implements ActionListener{
 		               jDialog.dispose();
 		        }else{
 		        	for(int i = 0; i<27; i++){
-		        		if(e.getActionCommand().equals(buttonString22[i]))
-		        			button22[i].setBackground(Color.RED);
-		        		    //status[i] = true;
+		        		if(e.getSource() == button22[i]){
+		        			if(roomstatus[i] == false){
+			        			button22[i].setBackground(Color.RED);
+		        		        room = buttonString22[i];
+		        		        status = "check-in!";
+			        		    roomstatus[i] = true;
+		        			}
+		        		}
 		        	}
 		        	   
 		        }
@@ -395,7 +454,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 	       jDialog1.getContentPane().add(BorderLayout.SOUTH,jButton1);
 	       jDialog1.getContentPane().add(jt1);
 	       jDialog1.setSize(300,250);
-	       jDialog1.setLocation(450,450);
+	       jDialog1.setLocationRelativeTo(null);
 	       jDialog1.setVisible(true);
 	       jDialog1.setResizable(false);
 	    }
@@ -421,7 +480,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 	       jDialog2.getContentPane().add(BorderLayout.SOUTH,jButton1);
 	       jDialog2.getContentPane().add(jt2);
 	       jDialog2.setSize(300,250);
-	       jDialog2.setLocation(450,450);
+	       jDialog2.setLocationRelativeTo(null);
 	       jDialog2.setVisible(true);
 	       jDialog2.setResizable(false);
 	    }
@@ -447,7 +506,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 	       jDialog3.getContentPane().add(BorderLayout.SOUTH,jButton1);
 	       jDialog3.getContentPane().add(jt3);
 	       jDialog3.setSize(300,250);
-	       jDialog3.setLocation(450,450);
+	       jDialog3.setLocationRelativeTo(null);
 	       jDialog3.setVisible(true);
 	       jDialog3.setResizable(false);
 	    }
