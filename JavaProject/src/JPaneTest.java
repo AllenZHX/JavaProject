@@ -50,6 +50,7 @@ public class JPaneTest extends JFrame implements ActionListener{
     int Ok = 1;
     int Can = 1;
     int roomid = 99;
+    int num = 0;
     String room = "";
     String status = "";
     Boolean[] roomstatus = {false,false,false,false,false,false,false,false,false,
@@ -287,7 +288,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 			cancel();
         }
         if(ae.getSource() == button6[0]) {
-        	// calculateServPrice();     // according to what and how many food or drink customer order, show the money amount in the interface.
+        	calculateServPrice();     // according to what and how many food or drink customer order, show the money amount in the interface.
         }
         if(ae.getSource() == button6[1]) {
         	Ok = 2;
@@ -361,12 +362,58 @@ public class JPaneTest extends JFrame implements ActionListener{
 			//1. Get a connection to database
 			Connection myConn = DriverManager.getConnection(url, user, password);
 			//2. Create a statement
-			String sql = "update payment set fee_service = ? where roomnum = ?";
-			PreparedStatement myStmt = myConn.prepareStatement(sql);
-			myStmt.setDouble(1,Double.parseDouble(ta6[3].getText()));
-			myStmt.setString(2,ta6[0].getText());
+			String sql = "select * from payment";
+			Statement myStmt = myConn.createStatement();
+			ResultSet myRs = myStmt.executeQuery(sql);
+			double fee_service = 0;
+			String roomnum = ta6[0].getText();
+			while (myRs.next()) {
+				if(roomnum.equals(myRs.getString("roomnum"))){
+					System.out.print(123);
+					fee_service = myRs.getDouble("fee_service");
+				}	
+			}
+			
+			
+			String sql2 = "update payment set fee_service = ? where roomnum = ?";
+			PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
+			myStmt2.setDouble(1,Double.parseDouble(ta6[3].getText()) + fee_service);
+			myStmt2.setString(2,ta6[0].getText());
 			//3. Execute SQL 
-			myStmt.executeUpdate();
+			myStmt2.executeUpdate();
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
+	public void calculateServPrice() {
+		try{
+			//1. Get a connection to database
+			Connection myConn = DriverManager.getConnection(url, user, password);
+			//2. Create a statement
+			String sql = "select * from servicelist";
+			Statement myStmt = myConn.createStatement();
+			ResultSet myRs = myStmt.executeQuery(sql);
+			int i = 1;
+			int stock = 0;
+			while (myRs.next()) {
+				int a = Integer.parseInt(ta6[1].getText());
+				if(a == i){
+					num = Integer.parseInt(ta6[2].getText());
+					double price = myRs.getDouble("price");
+					stock = myRs.getInt("stock");
+					double total = num * price;
+					ta6[3].setText(Double.toString(total));
+				}
+				i++;
+			}	
+			String sql2 = "update servicelist set stock = ? where id = ?";
+			PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
+			myStmt2.setInt(1,stock-num);
+			myStmt2.setInt(2,Integer.parseInt(ta6[1].getText()));
+			//3. Execute SQL 
+			myStmt2.executeUpdate();
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
@@ -378,7 +425,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 			Connection myConn = DriverManager.getConnection(url, user, password);
 			String sql = "delete from checkin where room = ?";
 			String sql2 = "delete from payment where roomnum = ?";
-			String sql3 = "select * from checkin where room = ?";
+			//String sql3 = "select * from checkin where room = ?";
 			PreparedStatement myStmt = myConn.prepareStatement(sql);
 			myStmt.setString(1,ta5[0].getText());
 			PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
@@ -386,13 +433,13 @@ public class JPaneTest extends JFrame implements ActionListener{
 			myStmt.executeUpdate();
 			myStmt2.executeUpdate();
 			
-			PreparedStatement myStmt3 = myConn.prepareStatement(sql3);
+			/*PreparedStatement myStmt3 = myConn.prepareStatement(sql3);
 			myStmt3.setString(1,ta5[0].getText());
 			ResultSet myRs = myStmt3.executeQuery(sql3);
 			while (myRs.next()) {
 				int aa = myRs.getInt("roomid");
 				roomstatus[aa] = false;
-				}
+				}*/
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
