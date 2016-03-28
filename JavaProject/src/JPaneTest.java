@@ -49,7 +49,7 @@ public class JPaneTest extends JFrame implements ActionListener{
     int ONE_SECOND = 1000;
     int Ok = 1;
     int Can = 1;
-    int roomid;
+    int roomid = 99;
     String room = "";
     String status = "";
     Boolean[] roomstatus = {false,false,false,false,false,false,false,false,false,
@@ -264,7 +264,7 @@ public class JPaneTest extends JFrame implements ActionListener{
             Popup_SRinfo pp3 = new Popup_SRinfo(this);   //single room info
         }
 		if(ae.getSource() == button2[3]){
-			getRoomStatus();      // search database, get room status (empty or fill) (use Boolean[] status = new Boolean[27] to store the info)
+			getRoomStatus();      // search database, get room status (empty or fill)
             Popup_roomStatus hw = new Popup_roomStatus(this);   // show the current room status
         }
         if(ae.getSource() == button2[4]) {
@@ -339,13 +339,10 @@ public class JPaneTest extends JFrame implements ActionListener{
 			Statement myStmt = myConn.createStatement();
 			//3. Execute SQL 
 			ResultSet myRs = myStmt.executeQuery(sql);
+			roomid = 99;
 			while (myRs.next()) {
 				int aa = myRs.getInt("roomid");
-				for(int i = 0; i < 27; i++){
-					if (aa == i){
-						roomstatus[i] = true;
-					}
-				}
+				roomstatus[aa] = true;
 			}	
 		}
 		catch (Exception exc) {
@@ -381,12 +378,21 @@ public class JPaneTest extends JFrame implements ActionListener{
 			Connection myConn = DriverManager.getConnection(url, user, password);
 			String sql = "delete from checkin where room = ?";
 			String sql2 = "delete from payment where roomnum = ?";
+			String sql3 = "select * from checkin where room = ?";
 			PreparedStatement myStmt = myConn.prepareStatement(sql);
 			myStmt.setString(1,ta5[0].getText());
 			PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
 			myStmt2.setString(1,ta5[0].getText());
 			myStmt.executeUpdate();
 			myStmt2.executeUpdate();
+			
+			PreparedStatement myStmt3 = myConn.prepareStatement(sql3);
+			myStmt3.setString(1,ta5[0].getText());
+			ResultSet myRs = myStmt3.executeQuery(sql3);
+			while (myRs.next()) {
+				int aa = myRs.getInt("roomid");
+				roomstatus[aa] = false;
+				}
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
@@ -397,6 +403,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 		if(Can == 0){
 			for(int i = 0; i < 2; i++)
 				ta1[i].setText("");
+			
 		}
 		if(Can == 1){
 			//  cancel the booking.
@@ -467,6 +474,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 			    	button22[i] = new JButton();
 				    button22[i].setText(buttonString22[i]);
 				    button22[i].setFont(font);
+				    button22[i].setBackground(Color.GREEN);
 				    if (roomstatus[i] == true){
 				          button22[i].setBackground(Color.RED);
 				    }
@@ -492,6 +500,10 @@ public class JPaneTest extends JFrame implements ActionListener{
 		        		if(e.getSource() == button22[i]){
 		        			if(roomstatus[i] == false){
 			        			button22[i].setBackground(Color.RED);
+			        			if(roomid < 27){
+			        				button22[roomid].setBackground(Color.GREEN);
+			        				roomstatus[roomid] = false;
+			        			}
 		        		        room = buttonString22[i];
 		        		        roomid = i;
 		        		        status = "check-in!";
@@ -503,6 +515,8 @@ public class JPaneTest extends JFrame implements ActionListener{
 		        		        	feeofroom = roomprice[2];
 		        		        }
 		        		        roomstatus[i] = true;
+		        			}else{
+		        				
 		        			}
 		        		}
 		        	}
