@@ -1,7 +1,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;  
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;  
 import java.util.Date;  
 import java.util.Timer;  
@@ -15,6 +16,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	JButton[] button1 = new JButton[1];
 	JButton[] button2 = new JButton[5];
+	JButton[] button3 = new JButton[3];
 	JButton[] button5 = new JButton[4];
 	JButton[] button6 = new JButton[3];
 	JButton[] button22 = new JButton[27];
@@ -26,13 +28,14 @@ public class JPaneTest extends JFrame implements ActionListener{
 	JTextArea[] ta5 = new JTextArea[4];
 	JTextArea[] ta6 = new JTextArea[4];
 	JTable table = new JTable();
-	ScrollPane scrollPane = new ScrollPane();
+	JScrollPane scrollPane = new JScrollPane(table);
 	String[] buttonString1 = {"OK"};
-	String[] buttonString2 = {"Family Room","Double Room","Single Room","Check Current Rooms' Status","Canel"};
+	String[] buttonString2 = {"Family Room","Double Room","Single Room","Check Current Rooms' Status","Cancel"};
 	String[] buttonString22 = {"F1","F2","D1","D2","D3","D4","S1","S2","S3",
 			                  "F3","F4","D5","D6","D7","D8","S4","S5","S6",
 			                  "F5","F6","D9","D10","D11","D12","S7","S8","S9"};
-	String[] buttonString5 = {"Settle","confirm","Finish","Canel"};
+	String[] buttonString3 = {"userinfo","service","payment"};
+	String[] buttonString5 = {"Settle","confirm","Finish","Cancel"};
 	String[] buttonString6 = {"Settle","OK","Canel"};
 	String[] labelString1 = {"Check-in", "Name:","ID:"};
 	String[] labelString2 = {"Booking"};
@@ -51,6 +54,7 @@ public class JPaneTest extends JFrame implements ActionListener{
     int Can = 1;
     int roomid = 99;
     int num = 0;
+    int listnum = 0;
     String room = "";
     String status = "";
     Boolean[] roomstatus = {false,false,false,false,false,false,false,false,false,
@@ -63,19 +67,17 @@ public class JPaneTest extends JFrame implements ActionListener{
 	Double feeofroom = 0.0;
 	Double feeofservice = 0.0;
 	Double totalfee = 0.0;
-
+	JPanel p1 = new JPanel();
+	JPanel p2 = new JPanel();
+	JPanel p3 = new JPanel();
+	JPanel p4 = new JPanel();
+	JPanel p5 = new JPanel();
+	JPanel p6 = new JPanel();
 	
 	public JPaneTest() {
 		setTitle("Hotel management System");
 		Container c = getContentPane();
 		c.setLayout(new GridLayout(2,3,10,10));
-		
-		JPanel p1 = new JPanel();
-		JPanel p2 = new JPanel();
-		JPanel p3 = new JPanel(new GridLayout(2,1,5,15));
-		JPanel p4 = new JPanel(new GridLayout(3,1,5,15));
-		JPanel p5 = new JPanel(new GridLayout(2,2,5,15));
-		JPanel p6 = new JPanel(new GridLayout(1,2,5,15));
 		
 		//******for Panel1(Check-in Part)******
 		for(int i = 0; i < 1; i++) {
@@ -132,18 +134,32 @@ public class JPaneTest extends JFrame implements ActionListener{
 		p2.add(label2[0]);
 		
 		// ******for Panel3(show data list Part)******
-		
-		DefaultTableModel defaultModel = (DefaultTableModel) table.getModel();
+		for(int i = 0; i < 3; i++) {
+		    button3[i] = new JButton();
+		    button3[i].setText(buttonString3[i]);
+		    button3[i].setFont(font2);
+		    button3[i].addActionListener(this);
+		}
+		p3.setLayout(null);
+		button3[0].setBounds(20,320,100,50);
+		button3[1].setBounds(150,320,100,50);
+		button3[2].setBounds(280,320,100,50);
+		for(int i = 0; i < 3; i++)
+			p3.add(button3[i]);
+		/*
+		DefaultTableModel defaultModel = (DefaultTableModel)table.getModel();
 		defaultModel.setRowCount(0);
-		defaultModel.setColumnIdentifiers(new Object[]{"items","storage","price"});
+		defaultModel.setColumnIdentifiers(new Object[]{"id","items","price","stock"});
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setModel(defaultModel);
+		//defaultModel.addRow(new Object[]{getId(),getItem(),getPrice(),getSrock()});
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setViewportView(table);
 		p3.setLayout(null);
-		scrollPane.setBounds(30,50,340,300);
+		scrollPane.setBounds(30,50,340,250);
 		scrollPane.setFont(font);
 		p3.add(scrollPane);
+		*/
 		
 		// ******for Panel4(standard time Part)******
 		
@@ -187,8 +203,8 @@ public class JPaneTest extends JFrame implements ActionListener{
 		label5[3].setBounds(40,190,80,50);
 		label5[4].setBounds(40,230,80,50);
 		ta5[0].setBounds(140,90,100,30);
-		ta5[1].setBounds(140,200,100,30);
-		ta5[2].setBounds(140,130,100,30);
+		ta5[1].setBounds(140,130,100,30);
+		ta5[2].setBounds(140,200,100,30);
 		ta5[3].setBounds(140,240,100,30);
 		for(int i = 0; i < 4; i++)
 			p5.add(button5[i]);
@@ -272,11 +288,23 @@ public class JPaneTest extends JFrame implements ActionListener{
         	Can = 0;
         	cancel();
         }
+        if(ae.getSource() == button3[0]) {
+        	listnum = 0;
+        	showtable();
+        }
+        if(ae.getSource() == button3[1]) {
+        	listnum = 1;
+        	showtable();
+        }
+        if(ae.getSource() == button3[2]) {
+        	listnum = 2;
+        	showtable();
+        }
         if(ae.getSource() == button5[0]) {
-			// calculateTotalFee();     //  get all of fees from database and sum them then show it on the interface
+			calculateTotalFee();     //  get all of fees from database and sum them then show it on the interface
         }
 		if(ae.getSource() == button5[1]){
-            // calculateChange();    // according to paid-up money, get the amount of the change
+            calculateChange();    // according to paid-up money, get the amount of the change
         }
 		if(ae.getSource() == button5[2]){
             checkout();       // detele customer's info, update the room status
@@ -349,12 +377,6 @@ public class JPaneTest extends JFrame implements ActionListener{
 		catch (Exception exc) {
 			exc.printStackTrace();
 		}
-		/*for(int i = 0; i < 27; i++){
-			button22[i] = new JButton();
-			if(roomstatus[i] == true){
-				button22[i].setBackground(Color.RED);
-			}
-		}*/
 	}
 	
 	public void addServiceinfo() {
@@ -369,12 +391,10 @@ public class JPaneTest extends JFrame implements ActionListener{
 			String roomnum = ta6[0].getText();
 			while (myRs.next()) {
 				if(roomnum.equals(myRs.getString("roomnum"))){
-					System.out.print(123);
 					fee_service = myRs.getDouble("fee_service");
 				}	
 			}
-			
-			
+
 			String sql2 = "update payment set fee_service = ? where roomnum = ?";
 			PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
 			myStmt2.setDouble(1,Double.parseDouble(ta6[3].getText()) + fee_service);
@@ -385,6 +405,171 @@ public class JPaneTest extends JFrame implements ActionListener{
 		catch (Exception exc) {
 			exc.printStackTrace();
 		}
+	}
+	
+	public class customer {
+		private int id1;
+		private String name;
+		private int idnum;
+		private String room;
+		private String status;
+		private int id2;
+		private String items;
+		private double price;
+		private int stock;
+		private int id3;
+		private String roomnum;
+		private double fee_room;
+		private double fee_service;
+		private double total;
+		public void setid1(int i1){id1 = i1;}
+		public void setname(String nam){name = nam;}
+		public void setidnum(int idnu){idnum = idnu;}
+		public void setroom(String roo){room = roo;}
+		public void setstatus(String statu){status = statu;}
+		public int getid1(){return id1;}
+		public String getname(){return name;}
+		public int getidnum(){return idnum;}
+		public String getroom(){return room;}
+		public String getstatus(){return status;}
+		
+		public void setid2(int i2){id2 = i2;}
+		public void setitems(String item){items = item;}
+		public void setprice(double pric){price = pric;}
+		public void setstock(int stoc){stock = stoc;}
+		public int getid2(){return id2;}
+		public String getitems(){return items;}
+		public double getprice(){return price;}
+		public int getstock(){return stock;}
+		
+		public void setid3(int i3){id3 = i3;}
+		public void setroomnum(String roomnu){roomnum = roomnu;}
+		public void setfee_room(double fee_roo){fee_room = fee_roo;}
+		public void setfee_service(double fee_servic){fee_service = fee_servic;}
+		public void settotal(double tota){total = tota;}
+		public int getid3(){return id3;}
+		public String getroomnum(){return roomnum;}
+		public double getfee_room(){return fee_room;}
+		public double getfee_service(){return fee_service;}
+		public double gettotal(){return total;}
+		
+		public ArrayList selectAll1(){
+			ArrayList<customer> ls = new ArrayList<customer>();
+			try{
+				Connection myConn = DriverManager.getConnection(url, user, password);
+				String sql = "select * from checkin";
+				Statement myStmt = myConn.createStatement();
+				ResultSet myRs = myStmt.executeQuery(sql);
+				while (myRs.next()) {
+					customer cc= new customer();
+					cc.setid1(myRs.getInt("id"));
+					cc.setname(myRs.getString("name"));
+					cc.setidnum(myRs.getInt("idnum"));
+					cc.setroom(myRs.getString("room"));
+					cc.setstatus(myRs.getString("status"));
+					ls.add(cc);
+				}	
+			}
+			catch (Exception exc) {
+				exc.printStackTrace();
+			}
+			return ls;
+	   }
+		public ArrayList selectAll2(){
+			ArrayList<customer> ls = new ArrayList<customer>();
+			try{
+				Connection myConn = DriverManager.getConnection(url, user, password);
+				String sql = "select * from servicelist";
+				Statement myStmt = myConn.createStatement();
+				ResultSet myRs = myStmt.executeQuery(sql);
+				while (myRs.next()) {
+					customer cc= new customer();
+					cc.setid2(myRs.getInt("id"));
+					cc.setitems(myRs.getString("items"));
+					cc.setprice(myRs.getDouble("price"));
+					cc.setstock(myRs.getInt("stock"));
+					ls.add(cc);
+				}	
+			}
+			catch (Exception exc) {
+				exc.printStackTrace();
+			}
+			return ls;
+	   }
+		public ArrayList selectAll3(){
+			ArrayList<customer> ls = new ArrayList<customer>();
+			try{
+				Connection myConn = DriverManager.getConnection(url, user, password);
+				String sql = "select * from payment";
+				Statement myStmt = myConn.createStatement();
+				ResultSet myRs = myStmt.executeQuery(sql);
+				while (myRs.next()) {
+					customer cc= new customer();
+					cc.setid3(myRs.getInt("id"));
+					cc.setroomnum(myRs.getString("roomnum"));
+					cc.setfee_room(myRs.getDouble("fee_room"));
+					cc.setfee_service(myRs.getDouble("fee_service"));
+					cc.settotal(myRs.getDouble("total"));
+					ls.add(cc);
+				}	
+			}
+			catch (Exception exc) {
+				exc.printStackTrace();
+			}
+			return ls;
+	   }
+	
+		
+	}
+	
+	public void showtable(){
+		
+		DefaultTableModel defaultModel = (DefaultTableModel)table.getModel();
+		defaultModel.setRowCount(0);
+		if(listnum == 0){
+			defaultModel.setColumnIdentifiers(new Object[]{"id","name","idnum","room","status"});
+		}
+		if(listnum == 1){
+			defaultModel.setColumnIdentifiers(new Object[]{"id","items","price","stock"});
+		}
+		if(listnum == 2){
+			defaultModel.setColumnIdentifiers(new Object[]{"id","roomnum","fee_room","fee_service","total"});
+		}
+		table.getTableHeader().setReorderingAllowed(false);
+		table.setModel(defaultModel);
+		//defaultModel.addRow(new Object[]{getId(),getItem(),getPrice(),getSrock()});
+		if(listnum == 0){
+			customer ccc = new customer();
+			ArrayList list = ccc.selectAll1();
+			for(int i = 0; i < list.size(); i++){
+				ccc = (customer)list.get(i);
+				defaultModel.addRow(new Object[]{ccc.getid1(),ccc.getname(),
+								ccc.getidnum(),ccc.getroom(),ccc.getstatus()});
+			}			
+		}
+		if(listnum == 1){
+			customer ccc = new customer();
+			ArrayList list = ccc.selectAll2();
+			for(int i = 0; i < list.size(); i++){
+				ccc = (customer)list.get(i);
+				defaultModel.addRow(new Object[]{ccc.getid2(),ccc.getitems(),
+								               ccc.getprice(),ccc.getstock()});
+			}
+		}
+		if(listnum == 2){
+			customer ccc = new customer();
+			ArrayList list = ccc.selectAll3();
+			for(int i = 0; i < list.size(); i++){
+				ccc = (customer)list.get(i);
+				defaultModel.addRow(new Object[]{ccc.getid3(),ccc.getroomnum(),
+						     ccc.getfee_room(),ccc.getfee_service(),ccc.gettotal()});
+			}
+		}
+		scrollPane.setViewportView(table);
+		p3.setLayout(null);
+		scrollPane.setBounds(30,50,340,250);
+		scrollPane.setFont(font);
+		p3.add(scrollPane);
 	}
 	
 	public void calculateServPrice() {
@@ -420,12 +605,52 @@ public class JPaneTest extends JFrame implements ActionListener{
 		}
 	}
 	
+	public void calculateTotalFee() {
+		try{
+			//1. Get a connection to database
+			Connection myConn = DriverManager.getConnection(url, user, password);
+			//2. Create a statement
+			String sql = "select * from payment";
+			Statement myStmt = myConn.createStatement();
+			ResultSet myRs = myStmt.executeQuery(sql);
+			double fee_service = 0;
+			double fee_room = 0;
+			double total = 0;
+			String roomnum = ta5[0].getText();
+			while (myRs.next()) {
+				if(roomnum.equals(myRs.getString("roomnum"))){
+					fee_service = myRs.getDouble("fee_service");
+					fee_room = myRs.getDouble("fee_room");
+					total = fee_service+fee_room;
+					ta5[1].setText(Double.toString(total));
+				}	
+			}
+			String sql2 = "update payment set total = ? where roomnum = ?";
+			PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
+			myStmt2.setDouble(1,total);
+			myStmt2.setString(2,ta5[0].getText());
+			//3. Execute SQL 
+			myStmt2.executeUpdate();
+			
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		
+	}
+	
+	public void calculateChange() {
+		double total = Double.parseDouble(ta5[1].getText());
+		double paidup = Double.parseDouble(ta5[2].getText());
+		double change = paidup - total;
+		ta5[3].setText(Double.toString(change));
+	}
+	
 	public void checkout(){
 		try{
 			Connection myConn = DriverManager.getConnection(url, user, password);
 			String sql = "delete from checkin where room = ?";
 			String sql2 = "delete from payment where roomnum = ?";
-			//String sql3 = "select * from checkin where room = ?";
 			PreparedStatement myStmt = myConn.prepareStatement(sql);
 			myStmt.setString(1,ta5[0].getText());
 			PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
@@ -433,13 +658,6 @@ public class JPaneTest extends JFrame implements ActionListener{
 			myStmt.executeUpdate();
 			myStmt2.executeUpdate();
 			
-			/*PreparedStatement myStmt3 = myConn.prepareStatement(sql3);
-			myStmt3.setString(1,ta5[0].getText());
-			ResultSet myRs = myStmt3.executeQuery(sql3);
-			while (myRs.next()) {
-				int aa = myRs.getInt("roomid");
-				roomstatus[aa] = false;
-				}*/
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
@@ -449,8 +667,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 	public void cancel() {
 		if(Can == 0){
 			for(int i = 0; i < 2; i++)
-				ta1[i].setText("");
-			
+				ta1[i].setText("");	
 		}
 		if(Can == 1){
 			//  cancel the booking.
@@ -650,6 +867,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 	        }
 	     }	
 	}
+	
 	
 	public static void main(String[] args){
 		new JPaneTest();
