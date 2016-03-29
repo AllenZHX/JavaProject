@@ -339,6 +339,8 @@ public class JPaneTest extends JFrame implements ActionListener{
 			//3. Execute SQL 
 			myStmt.executeUpdate();
 			myStmt2.executeUpdate();
+			listnum = 0;
+			showtable();
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
@@ -390,6 +392,29 @@ public class JPaneTest extends JFrame implements ActionListener{
 			myStmt2.setString(2,ta6[0].getText());
 			//3. Execute SQL 
 			myStmt2.executeUpdate();
+			
+			
+			String sql3 = "select * from servicelist";
+			Statement myStmt3 = myConn.createStatement();
+			ResultSet myRs3 = myStmt3.executeQuery(sql3);
+			int i = 1;
+			int stock = 0;
+			while (myRs3.next()) {
+				int a = Integer.parseInt(ta6[1].getText());
+				if(a == i){
+					stock = myRs3.getInt("stock");
+				}
+				i++;
+			}	
+			String sql4 = "update servicelist set stock = ? where id = ?";
+			PreparedStatement myStmt4 = myConn.prepareStatement(sql4);
+			myStmt4.setInt(1,stock-num);
+			myStmt4.setInt(2,Integer.parseInt(ta6[1].getText()));
+			//3. Execute SQL 
+			myStmt4.executeUpdate();
+			
+			listnum = 2;
+			showtable();
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
@@ -570,24 +595,16 @@ public class JPaneTest extends JFrame implements ActionListener{
 			Statement myStmt = myConn.createStatement();
 			ResultSet myRs = myStmt.executeQuery(sql);
 			int i = 1;
-			int stock = 0;
 			while (myRs.next()) {
 				int a = Integer.parseInt(ta6[1].getText());
 				if(a == i){
 					num = Integer.parseInt(ta6[2].getText());
 					double price = myRs.getDouble("price");
-					stock = myRs.getInt("stock");
 					double total = num * price;
 					ta6[3].setText(Double.toString(total));
 				}
 				i++;
 			}	
-			String sql2 = "update servicelist set stock = ? where id = ?";
-			PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
-			myStmt2.setInt(1,stock-num);
-			myStmt2.setInt(2,Integer.parseInt(ta6[1].getText()));
-			//3. Execute SQL 
-			myStmt2.executeUpdate();
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
@@ -620,6 +637,8 @@ public class JPaneTest extends JFrame implements ActionListener{
 			myStmt2.setString(2,ta5[0].getText());
 			//3. Execute SQL 
 			myStmt2.executeUpdate();
+			listnum = 2;
+			showtable();
 			
 		}
 		catch (Exception exc) {
@@ -646,6 +665,8 @@ public class JPaneTest extends JFrame implements ActionListener{
 			myStmt2.setString(1,ta5[0].getText());
 			myStmt.executeUpdate();
 			myStmt2.executeUpdate();
+			listnum = 0;
+			showtable();
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
