@@ -141,25 +141,11 @@ public class JPaneTest extends JFrame implements ActionListener{
 		    button3[i].addActionListener(this);
 		}
 		p3.setLayout(null);
-		button3[0].setBounds(20,320,100,50);
-		button3[1].setBounds(150,320,100,50);
+		button3[0].setBounds(0,320,100,50);
+		button3[1].setBounds(140,320,100,50);
 		button3[2].setBounds(280,320,100,50);
 		for(int i = 0; i < 3; i++)
 			p3.add(button3[i]);
-		/*
-		DefaultTableModel defaultModel = (DefaultTableModel)table.getModel();
-		defaultModel.setRowCount(0);
-		defaultModel.setColumnIdentifiers(new Object[]{"id","items","price","stock"});
-		table.getTableHeader().setReorderingAllowed(false);
-		table.setModel(defaultModel);
-		//defaultModel.addRow(new Object[]{getId(),getItem(),getPrice(),getSrock()});
-		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setViewportView(table);
-		p3.setLayout(null);
-		scrollPane.setBounds(30,50,340,250);
-		scrollPane.setFont(font);
-		p3.add(scrollPane);
-		*/
 		
 		// ******for Panel4(standard time Part)******
 		
@@ -369,6 +355,9 @@ public class JPaneTest extends JFrame implements ActionListener{
 			//3. Execute SQL 
 			ResultSet myRs = myStmt.executeQuery(sql);
 			roomid = 99;
+			for(int i = 0; i < 27; i++){
+				roomstatus[i] = false;
+			}
 			while (myRs.next()) {
 				int aa = myRs.getInt("roomid");
 				roomstatus[aa] = true;
@@ -567,7 +556,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 		}
 		scrollPane.setViewportView(table);
 		p3.setLayout(null);
-		scrollPane.setBounds(30,50,340,250);
+		scrollPane.setBounds(20,30,340,260);
 		scrollPane.setFont(font);
 		p3.add(scrollPane);
 	}
@@ -657,7 +646,6 @@ public class JPaneTest extends JFrame implements ActionListener{
 			myStmt2.setString(1,ta5[0].getText());
 			myStmt.executeUpdate();
 			myStmt2.executeUpdate();
-			
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
