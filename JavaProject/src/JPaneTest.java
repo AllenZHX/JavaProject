@@ -10,6 +10,7 @@ import java.util.TimerTask;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.io.File;
 
 public class JPaneTest extends JFrame implements ActionListener{
 	
@@ -21,7 +22,6 @@ public class JPaneTest extends JFrame implements ActionListener{
 	JButton[] button6 = new JButton[3];
 	JButton[] button22 = new JButton[27];
 	JLabel[] label1 = new JLabel[3];
-	JLabel[] label2 = new JLabel[4];
 	JLabel[] label5 = new JLabel[5];
 	JLabel[] label6 = new JLabel[5];
 	JTextArea[] ta1 = new JTextArea[2];
@@ -30,13 +30,13 @@ public class JPaneTest extends JFrame implements ActionListener{
 	JTable table = new JTable();
 	JScrollPane scrollPane = new JScrollPane(table);
 	String[] buttonString1 = {"OK"};
-	String[] buttonString2 = {"Family Room","Double Room","Single Room","Check Current Rooms' Status","Cancel"};
+	String[] buttonString2 = {"Family","Double","Single","Check Current Rooms' Status","Clear"};
 	String[] buttonString22 = {"F1","F2","D1","D2","D3","D4","S1","S2","S3",
 			                  "F3","F4","D5","D6","D7","D8","S4","S5","S6",
 			                  "F5","F6","D9","D10","D11","D12","S7","S8","S9"};
 	String[] buttonString3 = {"userinfo","service","payment"};
-	String[] buttonString5 = {"Settle","confirm","Finish","Cancel"};
-	String[] buttonString6 = {"Settle","OK","Canel"};
+	String[] buttonString5 = {"Settle","confirm","Finish","Clear"};
+	String[] buttonString6 = {"Settle","OK","Clear"};
 	String[] labelString1 = {"Check-in", "Name:","ID:"};
 	String[] labelString2 = {"Booking"};
 	String[] labelString5 = {"Check-out","Room #: ","Total: ","Paid-up: ","Change: "};
@@ -44,7 +44,8 @@ public class JPaneTest extends JFrame implements ActionListener{
 	Font font =  new Font("Times new Roman", Font.BOLD, 20);
 	Font font1 =  new Font("Times new Roman", Font.BOLD, 34);
 	Font font2 =  new Font("Times new Roman", Font.BOLD, 14);
-	
+	Font font3 =  new Font("Calibri", Font.PLAIN, 14);
+	Font font4 =  new Font("Calibri", Font.PLAIN, 50);
 	JLabel timeLabel;  
     JLabel displayArea;  
     String DEFAULT_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";  
@@ -68,22 +69,24 @@ public class JPaneTest extends JFrame implements ActionListener{
 	Double feeofservice = 0.0;
 	Double totalfee = 0.0;
 	JPanel p1 = new JPanel();
-	JPanel p2 = new JPanel();
 	JPanel p3 = new JPanel();
 	JPanel p4 = new JPanel();
 	JPanel p5 = new JPanel();
-	JPanel p6 = new JPanel();
+	JPanel p6 = new JPanel(); 
+	
 	
 	public JPaneTest() {
 		setTitle("Hotel management System");
 		Container c = getContentPane();
-		c.setLayout(new GridLayout(2,3,10,10));
-		
+		//c.setLayout(new GridLayout(2,3,10,10));
+		c.setLayout(new FlowLayout(3,10,10));
 		//******for Panel1(Check-in Part)******
 		for(int i = 0; i < 1; i++) {
 		    button1[i] = new JButton();
 		    button1[i].setText(buttonString1[i]);
 		    button1[i].setFont(font2);
+		    button1[i].setContentAreaFilled(false);
+		    button1[i].setBorder(BorderFactory.createRaisedBevelBorder());
 		    button1[i].addActionListener(this);
 		}
 		for(int i = 0; i < 3; i++) {
@@ -96,57 +99,60 @@ public class JPaneTest extends JFrame implements ActionListener{
 		for(int i = 0; i < 2; i++) {
 		    ta1[i] = new JTextArea();
 		    ta1[i].setFont(font);
+		    ta1[i].setBorder(BorderFactory.createLoweredBevelBorder());
 		}
 		p1.setLayout(null);
-		button1[0].setBounds(250,320,100,40);
-		label1[0].setBounds(120,30,160,50);
-		label1[1].setBounds(40,120,80,50);
-		label1[2].setBounds(40,190,80,50);
-		ta1[0].setBounds(140,130,180,30);
-		ta1[1].setBounds(140,200,180,30);
+		button1[0].setBounds(40,220,100,40);
+		label1[0].setBounds(270,10,160,50);
+		label1[1].setBounds(20,70,80,50);
+		label1[2].setBounds(20,140,80,50);
+		ta1[0].setBounds(110,80,180,30);
+		ta1[1].setBounds(110,150,180,30);
 		for(int i = 0; i < 1; i++)
 			p1.add(button1[i]);
 		for(int i = 0; i < 3; i++) 
 			p1.add(label1[i]);
 		for(int i = 0; i < 2; i++) 
 			p1.add(ta1[i]);
-		
 		// ******for Panel2(Booking Part)*******
 		for(int i = 0; i < 5; i++) {
 		    button2[i] = new JButton();
 		    button2[i].setText(buttonString2[i]);
 		    button2[i].setFont(font2);
+		    button2[i].setContentAreaFilled(false);
+		    button2[i].setBorder(BorderFactory.createRaisedBevelBorder());
 		    button2[i].addActionListener(this);
 		}
-		    label2[0] = new JLabel();
-		    label2[0].setText(labelString2[0]);
-		    label2[0].setFont(font1);
-		p2.setLayout(null);
-		button2[0].setBounds(50,120,80,80);
-		button2[1].setBounds(155,120,80,80);
-		button2[2].setBounds(260,120,80,80);
-		button2[4].setBounds(100,320,100,40);
-		button2[3].setBounds(72,230,240,60);
-		label2[0].setBounds(120,30,160,50);
+		p1.setLayout(null);
+		button2[0].setBounds(340,80,90,80);
+		button2[1].setBounds(445,80,90,80);
+		button2[2].setBounds(550,80,90,80);
+		button2[4].setBounds(200,220,100,40);
+		button2[3].setBounds(340,180,300,70);
 
 		for(int i = 0; i < 5; i++)
-			p2.add(button2[i]);
-		p2.add(label2[0]);
-		
+			p1.add(button2[i]);
+		p1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		p1.setPreferredSize(new Dimension(660, 270));
+		p1.setOpaque(false);
 		// ******for Panel3(show data list Part)******
 		for(int i = 0; i < 3; i++) {
 		    button3[i] = new JButton();
 		    button3[i].setText(buttonString3[i]);
 		    button3[i].setFont(font2);
+		    button3[i].setContentAreaFilled(false);
+		    button3[i].setBorder(BorderFactory.createRaisedBevelBorder());
 		    button3[i].addActionListener(this);
 		}
 		p3.setLayout(null);
-		button3[0].setBounds(0,320,100,50);
-		button3[1].setBounds(140,320,100,50);
-		button3[2].setBounds(280,320,100,50);
+		button3[0].setBounds(50,200,100,30);
+		button3[1].setBounds(355,200,100,30);
+		button3[2].setBounds(680,200,100,30);
 		for(int i = 0; i < 3; i++)
 			p3.add(button3[i]);
-		
+		p3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		p3.setPreferredSize(new Dimension(830,240));
+		p3.setOpaque(false);
 		// ******for Panel4(standard time Part)******
 		
 		timeLabel = new JLabel("CurrentTime: ");  
@@ -154,17 +160,21 @@ public class JPaneTest extends JFrame implements ActionListener{
         timeLabel.setFont(font);
         displayArea.setFont(font);
         p4.setLayout(null);
-        timeLabel.setBounds(120,100,140,50);
-        displayArea.setBounds(100,200,180,50);
+        timeLabel.setBounds(120,50,140,50);
+        displayArea.setBounds(100,120,180,50);
         configTimeArea();
 		p4.add(timeLabel);
 		p4.add(displayArea);
-		
+		p4.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		p4.setPreferredSize(new Dimension(380, 240));
+		p4.setOpaque(false);
 		// ******for Panel5(Check-out Part)******
 		for(int i = 0; i < 4; i++) {
 		    button5[i] = new JButton();
 		    button5[i].setText(buttonString5[i]);
 		    button5[i].setFont(font2);
+		    button5[i].setContentAreaFilled(false);
+		    button5[i].setBorder(BorderFactory.createRaisedBevelBorder());
 		    button5[i].addActionListener(this);
 		}
 		for(int i = 0; i < 5; i++) {
@@ -177,33 +187,38 @@ public class JPaneTest extends JFrame implements ActionListener{
 		for(int i = 0; i < 4; i++) {
 		    ta5[i] = new JTextArea();
 		    ta5[i].setFont(font);
+		    ta5[i].setBorder(BorderFactory.createLoweredBevelBorder());
 		}
 		p5.setLayout(null);
-		button5[0].setBounds(260,105,80,40);
-		button5[1].setBounds(250,215,100,40);
-		button5[2].setBounds(40,310,100,40);
-		button5[3].setBounds(240,310,100,40);
-		label5[0].setBounds(120,20,160,50);
-		label5[1].setBounds(40,80,80,50);
-		label5[2].setBounds(40,120,80,50);
-		label5[3].setBounds(40,190,80,50);
-		label5[4].setBounds(40,230,80,50);
-		ta5[0].setBounds(140,90,100,30);
-		ta5[1].setBounds(140,130,100,30);
-		ta5[2].setBounds(140,200,100,30);
-		ta5[3].setBounds(140,240,100,30);
+		button5[0].setBounds(120,170,100,40);
+		button5[1].setBounds(400,170,100,40);
+		button5[2].setBounds(120,220,100,40);
+		button5[3].setBounds(400,220,100,40);
+		label5[0].setBounds(200,10,160,50);
+		label5[1].setBounds(20,70,80,50);
+		label5[2].setBounds(20,110,80,50);
+		label5[3].setBounds(300,70,80,50);
+		label5[4].setBounds(300,110,80,50);
+		ta5[0].setBounds(120,80,100,30);
+		ta5[1].setBounds(120,120,100,30);
+		ta5[2].setBounds(400,80,100,30);
+		ta5[3].setBounds(400,120,100,30);
 		for(int i = 0; i < 4; i++)
 			p5.add(button5[i]);
 		for(int i = 0; i < 5; i++) 
 			p5.add(label5[i]);
 		for(int i = 0; i < 4; i++) 
 			p5.add(ta5[i]);
-		
+		p5.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		p5.setPreferredSize(new Dimension(550, 270));
+		p5.setOpaque(false);
 		// ******for Panel6(Order service Part)******
 		for(int i = 0; i < 3; i++) {
 		    button6[i] = new JButton();
 		    button6[i].setText(buttonString6[i]);
 		    button6[i].setFont(font2);
+		    button6[i].setContentAreaFilled(false);
+		    button6[i].setBorder(BorderFactory.createRaisedBevelBorder());
 		    button6[i].addActionListener(this);
 		}
 		for(int i = 0; i < 5; i++) {
@@ -216,11 +231,12 @@ public class JPaneTest extends JFrame implements ActionListener{
 		for(int i = 0; i < 4; i++) {
 		    ta6[i] = new JTextArea();
 		    ta6[i].setFont(font);
+		    ta6[i].setBorder(BorderFactory.createLoweredBevelBorder());
 		}
 		p6.setLayout(null);
 		button6[0].setBounds(250,155,100,40);
-		button6[1].setBounds(40,310,100,40);
-		button6[2].setBounds(240,310,100,40);
+		button6[1].setBounds(40,290,100,40);
+		button6[2].setBounds(240,290,100,40);
 		label6[0].setBounds(20,20,160,50);
 		label6[1].setBounds(50,80,80,50);
 		label6[2].setBounds(50,130,80,50);
@@ -236,15 +252,54 @@ public class JPaneTest extends JFrame implements ActionListener{
 			p6.add(label6[i]);
 		for(int i = 0; i < 4; i++) 
 			p6.add(ta6[i]);
-		
+		p6.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		p6.setPreferredSize(new Dimension(380, 345));
+		p6.setOpaque(false);
+		// for Panel7 (logo)
+		JPanel p7 = new JPanel(); 
+		JLabel label = new JLabel("Hotel Management System");
+		p7.add(label,BorderLayout.CENTER);
+		p7.setOpaque(false);
+		((JPanel)getContentPane()).setOpaque(false);
+		ImageIcon img = new ImageIcon("C:\\3.jpg");
+	    JLabel hy = new JLabel(img);
+	    getLayeredPane().add(hy, new Integer(Integer.MIN_VALUE));
+	    hy.setBounds(0,0,img.getIconWidth(),img.getIconHeight()); 
+	    p7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		p7.setPreferredSize(new Dimension(830, 345));
+		/*p7 = new JPanel(){
+			private static final long serialVersionUID = 1L;
+			public void paint(Graphics g){
+				ImageIcon icon = new ImageIcon("C:\\1.jpg");
+				Image img = icon.getImage();
+				g.drawImage(img, 0, 0, icon.getImageObserver());
+			}
+		};
+		p7.setOpaque(false);
+		JLabel label = new JLabel("Hotel Management System");
+		label.setForeground(Color.white);
+		p7.add(label,BorderLayout.CENTER);
+		p7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		p7.setPreferredSize(new Dimension(830, 345));*/
+		/*JLabel label = new JLabel("Hotel Management System");
+		label.setOpaque(true);
+		URL url = JPaneTest.class.getResource("1.jpg");
+		Icon icon = new ImageIcon(url);
+		JLabel label_1 = new JLabel();
+		label_1.setIcon(icon);
+		p7.add(label_1,BorderLayout.CENTER);
+		p7.add(label);
+		p7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		p7.setPreferredSize(new Dimension(830, 345));
+		*/
 		// add all of Panel to Container c
-		c.add(p1);
-		c.add(p2);
-		c.add(p3);
 		c.add(p4);
+		c.add(p3);
+		c.add(p1);
 		c.add(p5);
 		c.add(p6);
-		setSize(1200,800);
+		c.add(p7);
+		setSize(1250,930);
 		setVisible(true);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -551,6 +606,8 @@ public class JPaneTest extends JFrame implements ActionListener{
 		}
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setModel(defaultModel);
+		table.setFont(font3);
+		table.setBorder(BorderFactory.createLoweredBevelBorder());
 		//defaultModel.addRow(new Object[]{getId(),getItem(),getPrice(),getSrock()});
 		if(listnum == 0){
 			customer ccc = new customer();
@@ -581,7 +638,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 		}
 		scrollPane.setViewportView(table);
 		p3.setLayout(null);
-		scrollPane.setBounds(20,30,340,260);
+		scrollPane.setBounds(20,25,790,165);
 		scrollPane.setFont(font);
 		p3.add(scrollPane);
 	}
