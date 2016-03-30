@@ -40,12 +40,12 @@ public class JPaneTest extends JFrame implements ActionListener{
 	String[] labelString1 = {"Check-in", "Name:","ID:"};
 	String[] labelString2 = {"Booking"};
 	String[] labelString5 = {"Check-out","Room #: ","Total: ","Paid-up: ","Change: "};
-	String[] labelString6 = {"ORDER","Room #: ","Item: ","Num: ","Total: "};
+	String[] labelString6 = {"Order","Room #: ","Item: ","Num: ","Total: "};
 	Font font =  new Font("Times new Roman", Font.BOLD, 20);
 	Font font1 =  new Font("Times new Roman", Font.BOLD, 34);
 	Font font2 =  new Font("Times new Roman", Font.BOLD, 14);
 	Font font3 =  new Font("Calibri", Font.PLAIN, 14);
-	Font font4 =  new Font("Calibri", Font.PLAIN, 50);
+	Font font4 =  new Font("Calibri", Font.PLAIN, 64);
 	JLabel timeLabel;  
     JLabel displayArea;  
     String DEFAULT_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";  
@@ -103,7 +103,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 		}
 		p1.setLayout(null);
 		button1[0].setBounds(40,220,100,40);
-		label1[0].setBounds(270,10,160,50);
+		label1[0].setBounds(20,10,160,50);
 		label1[1].setBounds(20,70,80,50);
 		label1[2].setBounds(20,140,80,50);
 		ta1[0].setBounds(110,80,180,30);
@@ -194,7 +194,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 		button5[1].setBounds(400,170,100,40);
 		button5[2].setBounds(120,220,100,40);
 		button5[3].setBounds(400,220,100,40);
-		label5[0].setBounds(200,10,160,50);
+		label5[0].setBounds(20,10,160,50);
 		label5[1].setBounds(20,70,80,50);
 		label5[2].setBounds(20,110,80,50);
 		label5[3].setBounds(300,70,80,50);
@@ -258,40 +258,14 @@ public class JPaneTest extends JFrame implements ActionListener{
 		// for Panel7 (logo)
 		JPanel p7 = new JPanel(); 
 		JLabel label = new JLabel("Hotel Management System");
-		p7.add(label,BorderLayout.CENTER);
+		p7.setLayout(null);
+		label.setFont(font4);
+		label.setBounds(60,100,720,100);
+		//p7.add(label,BorderLayout.CENTER);
+		p7.add(label);
 		p7.setOpaque(false);
-		((JPanel)getContentPane()).setOpaque(false);
-		ImageIcon img = new ImageIcon("C:\\3.jpg");
-	    JLabel hy = new JLabel(img);
-	    getLayeredPane().add(hy, new Integer(Integer.MIN_VALUE));
-	    hy.setBounds(0,0,img.getIconWidth(),img.getIconHeight()); 
 	    p7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		p7.setPreferredSize(new Dimension(830, 345));
-		/*p7 = new JPanel(){
-			private static final long serialVersionUID = 1L;
-			public void paint(Graphics g){
-				ImageIcon icon = new ImageIcon("C:\\1.jpg");
-				Image img = icon.getImage();
-				g.drawImage(img, 0, 0, icon.getImageObserver());
-			}
-		};
-		p7.setOpaque(false);
-		JLabel label = new JLabel("Hotel Management System");
-		label.setForeground(Color.white);
-		p7.add(label,BorderLayout.CENTER);
-		p7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		p7.setPreferredSize(new Dimension(830, 345));*/
-		/*JLabel label = new JLabel("Hotel Management System");
-		label.setOpaque(true);
-		URL url = JPaneTest.class.getResource("1.jpg");
-		Icon icon = new ImageIcon(url);
-		JLabel label_1 = new JLabel();
-		label_1.setIcon(icon);
-		p7.add(label_1,BorderLayout.CENTER);
-		p7.add(label);
-		p7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		p7.setPreferredSize(new Dimension(830, 345));
-		*/
 		// add all of Panel to Container c
 		c.add(p4);
 		c.add(p3);
@@ -299,6 +273,11 @@ public class JPaneTest extends JFrame implements ActionListener{
 		c.add(p5);
 		c.add(p6);
 		c.add(p7);
+		((JPanel)getContentPane()).setOpaque(false);
+		ImageIcon img = new ImageIcon("C:\\3.jpg");
+	    JLabel hy = new JLabel(img);
+	    getLayeredPane().add(hy, new Integer(Integer.MIN_VALUE));
+	    hy.setBounds(0,0,img.getIconWidth(),img.getIconHeight()); 
 		setSize(1250,930);
 		setVisible(true);
 		setResizable(false);
@@ -859,12 +838,12 @@ public class JPaneTest extends JFrame implements ActionListener{
         JDialog jDialog1=null; 
 	    Popup_FRinfo(JFrame jFrame){
 	       jDialog1=new JDialog(jFrame,"Room Introduction",true);
-	       final JTextArea jt1 = new JTextArea("               Price: $ 220 /day\n      "
-	       		                             + "    Free Wifi, air condition\n   "
+	       final JTextArea jt1 = new JTextArea("              Price: $ 220 /day\n      "
+	       		                             + "   Free Wifi, air condition\n   "
 	       		                             + "   Free Morning Call service\n   "
 	       		                             + "      Hot water, toothbush\n     "
 	       		                             + "        one king-size bed\n      "
-	       		                             + "        one twin-size bed      ");
+	       		                             + "       one twin-size bed      ");
 	       jt1.setFont(font);
 	       JButton jButton1=new JButton("close");
 	       jButton1.addActionListener(this);
@@ -886,11 +865,11 @@ public class JPaneTest extends JFrame implements ActionListener{
         JDialog jDialog2=null; 
 	    Popup_DRinfo(JFrame jFrame){
 	       jDialog2=new JDialog(jFrame,"Room Introduction",true);
-	       final JTextArea jt2 = new JTextArea("               Price: $ 160 /day\n      "
+	       final JTextArea jt2 = new JTextArea("              Price: $ 160 /day\n      "
 	       		                             + "    Free Wifi, air condition\n   "
 	       		                             + "   Free Morning Call service\n   "
-	       		                             + "      Hot water, toothbush\n     "
-	       		                             + "        two Quence-size bed\n     ");
+	       		                             + "       Hot water, toothbush\n     "
+	       		                             + "     two Quence-size bed\n     ");
 	       jt2.setFont(font);
 	       JButton jButton1=new JButton("close");
 	       jButton1.addActionListener(this);
@@ -912,11 +891,11 @@ public class JPaneTest extends JFrame implements ActionListener{
         JDialog jDialog3=null; 
 	    Popup_SRinfo(JFrame jFrame){
 	       jDialog3=new JDialog(jFrame,"Room Introduction",true);
-	       final JTextArea jt3 = new JTextArea("               Price: $ 90 /day\n      "
+	       final JTextArea jt3 = new JTextArea("              Price: $ 90 /day\n      "
 	       		                             + "    Free Wifi, air condition\n   "
 	       		                             + "   Free Morning Call service\n   "
-	       		                             + "      Hot water, toothbush\n     "
-	       		                             + "        one Quence-size bed\n     ");
+	       		                             + "       Hot water, toothbush\n     "
+	       		                             + "     one Quence-size bed\n     ");
 	       jt3.setFont(font);
 	       JButton jButton1=new JButton("close");
 	       jButton1.addActionListener(this);
