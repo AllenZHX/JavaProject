@@ -12,6 +12,8 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.io.File;
 
+//Mainly include Swing and Database
+
 public class JPaneTest extends JFrame implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
