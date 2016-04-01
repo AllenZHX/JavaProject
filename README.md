@@ -1,4 +1,4 @@
-Proposal
+Proposal 
 Hotel management system
 Team Members: Hongxiang Zheng, Xiang Cao, Yingbin Zheng.
 Repository: http://github.com/AllenZHX/JavaProject
