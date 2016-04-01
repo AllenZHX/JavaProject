@@ -1,8 +1,9 @@
 # Proposal 
-#Hotel management system
-#Team Members: Hongxiang Zheng, Xiang Cao, Yingbin Zheng.
-#Repository: http://github.com/AllenZHX/JavaProject
-#Project Description: We develop a Hotel Management System used JAVA combine with MySQL. We focus on check in, service and check out.
+Hotel management system
+Team Members: Hongxiang Zheng, Xiang Cao, Yingbin Zheng.
+Repository: http://github.com/AllenZHX/JavaProject
+#Project Description:
+We develop a Hotel Management System used JAVA combine with MySQL. We focus on check in, service and check out.
 Swing:  mainly including the knowledge of JLabel, JTextField, JButton, JTabel, JPanel, FlowLayout, GridLayout, JScrollPane, JFrame, ActionListener. 
 DataBase: We will use the MySQL database.
 
