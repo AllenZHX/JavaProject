@@ -381,7 +381,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 			//1. Get a connection to database
 			Connection myConn = DriverManager.getConnection(url, user, password);
 			//2. Create a statement
-			String sql = "insert into checkin (name,idnum,room,status,roomid) values(?,?,?,?,?)";
+			String sql = "insert into checkin (name,idnum,room,status,roomid,intime) values(?,?,?,?,?,?)";
 			String sql2 = "insert into payment (roomnum,fee_room,fee_service,total) values(?,?,?,?)";
 			PreparedStatement myStmt = myConn.prepareStatement(sql);
 			myStmt.setString(1,ta1[0].getText());
@@ -389,6 +389,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 			myStmt.setString(3,room);
 			myStmt.setString(4,status);
 			myStmt.setInt(5,roomid);
+			myStmt.setString(6,displayArea.getText());
 			PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
 			myStmt2.setString(1,room);
 			myStmt2.setDouble(2,feeofroom);
@@ -600,7 +601,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 		DefaultTableModel defaultModel = (DefaultTableModel)table.getModel();
 		defaultModel.setRowCount(0);
 		if(listnum == 0){
-			defaultModel.setColumnIdentifiers(new Object[]{"id","name","idnum","room","status"});
+			defaultModel.setColumnIdentifiers(new Object[]{"id","name","idnum","room","status","intime"});
 		}
 		if(listnum == 1){
 			defaultModel.setColumnIdentifiers(new Object[]{"id","items","price","stock"});
@@ -619,7 +620,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 			for(int i = 0; i < list.size(); i++){
 				ccc = (customer)list.get(i);
 				defaultModel.addRow(new Object[]{ccc.getid1(),ccc.getname(),
-								ccc.getidnum(),ccc.getroom(),ccc.getstatus()});
+								ccc.getidnum(),ccc.getroom(),ccc.getstatus(),ccc.getintime()});
 			}			
 		}
 		if(listnum == 1){

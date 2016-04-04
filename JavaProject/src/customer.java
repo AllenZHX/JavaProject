@@ -7,6 +7,7 @@ public class customer {
 		private int idnum;
 		private String room;
 		private String status;
+		private String intime;
 		private int id2;
 		private String items;
 		private double price;
@@ -24,11 +25,13 @@ public class customer {
 		public void setidnum(int idnu){idnum = idnu;}
 		public void setroom(String roo){room = roo;}
 		public void setstatus(String statu){status = statu;}
+		public void setintime(String intim){intime = intim;}
 		public int getid1(){return id1;}
 		public String getname(){return name;}
 		public int getidnum(){return idnum;}
 		public String getroom(){return room;}
 		public String getstatus(){return status;}
+		public String getintime(){return intime;}
 		
 		public void setid2(int i2){id2 = i2;}
 		public void setitems(String item){items = item;}
@@ -64,6 +67,7 @@ public class customer {
 					cc.setidnum(myRs.getInt("idnum"));
 					cc.setroom(myRs.getString("room"));
 					cc.setstatus(myRs.getString("status"));
+					cc.setintime(myRs.getString("intime"));
 					ls.add(cc);
 				}	
 			}
