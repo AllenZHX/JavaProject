@@ -12,8 +12,6 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.io.File;
 
-//Mainly include Swing and Database
-
 public class JPaneTest extends JFrame implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
@@ -50,10 +48,11 @@ public class JPaneTest extends JFrame implements ActionListener{
 	Font font4 =  new Font("Calibri", Font.PLAIN, 64);
 	JLabel timeLabel;  
     JLabel displayArea;  
-    String DEFAULT_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";  
+    String DEFAULT_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";  
     String time;  
     int ONE_SECOND = 1000;
     int Ok = 1;
+    int roomtype = 0;
     int Can = 1;
     int roomid = 99;
     int num = 0;
@@ -75,12 +74,14 @@ public class JPaneTest extends JFrame implements ActionListener{
 	JPanel p4 = new JPanel();
 	JPanel p5 = new JPanel();
 	JPanel p6 = new JPanel(); 
-	
+	JPanel p7 = new JPanel(); 
+	JPanel p8 = new JPanel(); 
+	JPanel p9 = new JPanel(); 
+	JPanel p10 = new JPanel(); 
 	
 	public JPaneTest() {
 		setTitle("Hotel management System");
 		Container c = getContentPane();
-		//c.setLayout(new GridLayout(2,3,10,10));
 		c.setLayout(new FlowLayout(3,10,10));
 		//******for Panel1(Check-in Part)******
 		for(int i = 0; i < 1; i++) {
@@ -258,29 +259,47 @@ public class JPaneTest extends JFrame implements ActionListener{
 		p6.setPreferredSize(new Dimension(380, 345));
 		p6.setOpaque(false);
 		// for Panel7 (logo)
-		JPanel p7 = new JPanel(); 
 		JLabel label = new JLabel("Hotel Management System");
 		p7.setLayout(null);
 		label.setFont(font4);
 		label.setBounds(60,100,720,100);
-		//p7.add(label,BorderLayout.CENTER);
 		p7.add(label);
 		p7.setOpaque(false);
 	    p7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		p7.setPreferredSize(new Dimension(830, 345));
+		
+		//for Panel8 
+		p8.setLayout(null);
+		p8.setOpaque(false);
+	    p8.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		p8.setPreferredSize(new Dimension(295, 240));
+		//for Panel9
+		p9.setLayout(null);
+		p9.setOpaque(false);
+	    p9.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		p9.setPreferredSize(new Dimension(295, 270));
+		//for Panel10
+		p10.setLayout(null);
+		p10.setOpaque(false);
+	    p10.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		p10.setPreferredSize(new Dimension(295, 345));
 		// add all of Panel to Container c
 		c.add(p4);
 		c.add(p3);
+		c.add(p8);
 		c.add(p1);
 		c.add(p5);
+		c.add(p9);
 		c.add(p6);
 		c.add(p7);
+		c.add(p10);
+		
 		((JPanel)getContentPane()).setOpaque(false);
-		ImageIcon img = new ImageIcon("C:\\3.jpg");
+		ImageIcon img = new ImageIcon("C:\\3.jpg");  //add background picture
 	    JLabel hy = new JLabel(img);
 	    getLayeredPane().add(hy, new Integer(Integer.MIN_VALUE));
 	    hy.setBounds(0,0,img.getIconWidth(),img.getIconHeight()); 
-		setSize(1250,930);
+		setSize(1550,930);
 		setVisible(true);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -291,16 +310,19 @@ public class JPaneTest extends JFrame implements ActionListener{
         if(ae.getSource() == button1[0]) {
         	createANewUser();
         	Ok = 0;
-        	Popup pp = new Popup(this);
+        	Popup pp = new Popup(this,Ok);
         }
         if(ae.getSource() == button2[0]) {
-			Popup_FRinfo pp1 = new Popup_FRinfo(this);    //family room info
+        	roomtype = 0;
+			Popup_Rinfo pp1 = new Popup_Rinfo(this,roomtype);    //family room info
         }
 		if(ae.getSource() == button2[1]){
-            Popup_DRinfo pp2 = new Popup_DRinfo(this);   // double room info
+			roomtype = 1;
+            Popup_Rinfo pp2 = new Popup_Rinfo(this,roomtype);   // double room info
         }
 		if(ae.getSource() == button2[2]){
-            Popup_SRinfo pp3 = new Popup_SRinfo(this);   //single room info
+			roomtype = 2;
+            Popup_Rinfo pp3 = new Popup_Rinfo(this,roomtype);   //single room info
         }
 		if(ae.getSource() == button2[3]){
 			getRoomStatus();      // search database, get room status (empty or fill)
@@ -331,7 +353,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 		if(ae.getSource() == button5[2]){
             checkout();       // detele customer's info, update the room status
 			Ok = 1;
-			Popup pp = new Popup(this);
+			Popup pp = new Popup(this,Ok);
         }
 		if(ae.getSource() == button5[3]){
             Can = 2;
@@ -342,7 +364,7 @@ public class JPaneTest extends JFrame implements ActionListener{
         }
         if(ae.getSource() == button6[1]) {
         	Ok = 2;
-        	Popup pp = new Popup(this);
+        	Popup pp = new Popup(this,Ok);
         	addServiceinfo();     // add service info to database
         }
         if(ae.getSource() == button6[2]) {
@@ -456,8 +478,8 @@ public class JPaneTest extends JFrame implements ActionListener{
 			exc.printStackTrace();
 		}
 	}
-	
-	public class customer {
+	////////for table
+	/*public class customer {
 		private int id1;
 		private String name;
 		private int idnum;
@@ -571,6 +593,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 	
 		
 	}
+	*/
 	
 	public void showtable(){
 		
@@ -623,6 +646,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 		scrollPane.setFont(font);
 		p3.add(scrollPane);
 	}
+	/////////////
 	
 	public void calculateServPrice() {
 		try{
@@ -749,7 +773,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 	
     // for pop-up windows
     
-    class Popup implements ActionListener{
+    /*class Popup implements ActionListener{
         JDialog jDialog2=null; 
 	    Popup(JFrame jFrame){
 	       jDialog2=new JDialog(jFrame,"Notice",true);
@@ -776,6 +800,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 	        }
 	     }	
 	}
+	*/
     
 	class Popup_roomStatus implements ActionListener{
 	        JDialog jDialog=null; 
@@ -785,6 +810,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 			    	button22[i] = new JButton();
 				    button22[i].setText(buttonString22[i]);
 				    button22[i].setFont(font);
+				    button22[i].setBorder(BorderFactory.createRaisedBevelBorder());
 				    button22[i].setBackground(Color.GREEN);
 				    if (roomstatus[i] == true){
 				          button22[i].setBackground(Color.RED);
@@ -793,6 +819,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 				}
 			   for(int i = 0; i < 27; i++)
 			    	p22.add(button22[i]);
+			   
 		       jDialog=new JDialog(jFrame,"Room",true);
 		       JButton jButton=new JButton("close");
 		       jButton.addActionListener(this);
@@ -835,7 +862,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 		        }
 		     }
 	}
-	
+	/*
 	class Popup_FRinfo implements ActionListener{
         JDialog jDialog1=null; 
 	    Popup_FRinfo(JFrame jFrame){
@@ -871,7 +898,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 	       		                             + "    Free Wifi, air condition\n   "
 	       		                             + "   Free Morning Call service\n   "
 	       		                             + "       Hot water, toothbush\n     "
-	       		                             + "     two Quence-size bed\n     ");
+	       		                             + "     two Queen-size bed\n     ");
 	       jt2.setFont(font);
 	       JButton jButton1=new JButton("close");
 	       jButton1.addActionListener(this);
@@ -914,7 +941,7 @@ public class JPaneTest extends JFrame implements ActionListener{
 	        }
 	     }	
 	}
-	
+	*/
 	
 	public static void main(String[] args){
 		new JPaneTest();
