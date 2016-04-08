@@ -66,7 +66,6 @@ public class roominfo implements ActionListener{
 		 
 	     Font font =  new Font("Times new Roman", Font.BOLD, 20);
 	
-	     
 		 JPanel p22 = new JPanel(new GridLayout(3,9,10,15));
 		    for(int i = 0; i < 27; i++) {
 		    	button22[i] = new JButton();

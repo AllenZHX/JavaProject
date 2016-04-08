@@ -24,6 +24,7 @@ public class testclass extends JFrame implements ActionListener{
 	JButton[] button3 = new JButton[4];
 	JButton[] button5 = new JButton[4];
 	JButton[] button6 = new JButton[3];
+	JButton[] button8 = new JButton[3];
 	JLabel[] label1 = new JLabel[3];
 	JLabel[] label5 = new JLabel[5];
 	JLabel[] label6 = new JLabel[5];
@@ -37,6 +38,7 @@ public class testclass extends JFrame implements ActionListener{
 	String[] buttonString3 = {"userinfo","service","payment","checkout"};
 	String[] buttonString5 = {"Settle","confirm","Finish","Clear"};
 	String[] buttonString6 = {"Settle","OK","Clear"};
+	String[] buttonString8 = {"food", "massage","other"};
 	String[] labelString1 = {"Check-in", "Name:","ID:"};
 	String[] labelString2 = {"Booking"};
 	String[] labelString5 = {"Check-out","Room #: ","Total: ","Paid-up: ","Change: "};
@@ -257,7 +259,20 @@ public class testclass extends JFrame implements ActionListener{
 		p7.setPreferredSize(new Dimension(830, 345));
 		
 		//for Panel8 
+		for(int i = 0; i < 3; i++) {
+		    button8[i] = new JButton();
+		    button8[i].setText(buttonString8[i]);
+		    button8[i].setFont(font2);
+		    button8[i].setContentAreaFilled(false);
+		    button8[i].setBorder(BorderFactory.createRaisedBevelBorder());
+		    button8[i].addActionListener(this);
+		}
 		p8.setLayout(null);
+		button8[0].setBounds(80,20,90,40);
+		button8[1].setBounds(80,80,90,40);
+		button8[2].setBounds(80,140,90,40);
+		for(int i = 0; i < 3; i++)
+			p8.add(button8[i]);
 		p8.setOpaque(false);
 	    p8.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		p8.setPreferredSize(new Dimension(295, 240));
@@ -367,6 +382,11 @@ public class testclass extends JFrame implements ActionListener{
         }
         if(ae.getSource() == button6[2]) {
         	cancel(3);
+        }
+        if(ae.getSource() == button8[0]) {
+        	order oo = new order();
+        	oo.getitemname();
+        	oo.Popup_service(this);
         }
 	}
 
