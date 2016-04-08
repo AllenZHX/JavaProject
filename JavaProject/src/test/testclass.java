@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Timer;  
 import java.util.TimerTask;  
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
@@ -50,12 +51,6 @@ public class testclass extends JFrame implements ActionListener{
     String DEFAULT_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";  
     String time;  
     int ONE_SECOND = 1000;
-    int num = 0;
-    String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
-	String user = "root";
-	String password = ",26187108hoog";
-	Double feeofservice = 0.0;
-	Double toalfee = 0.0;
 	JPanel p1 = new JPanel();
 	JPanel p3 = new JPanel();
 	JPanel p4 = new JPanel();
@@ -143,6 +138,11 @@ public class testclass extends JFrame implements ActionListener{
 		p3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		p3.setPreferredSize(new Dimension(830,240));
 		p3.setOpaque(false);
+		scrollPane.setViewportView(table);
+		p3.setLayout(null);
+		scrollPane.setBounds(20,25,790,165);
+		scrollPane.setFont(font);
+		p3.add(scrollPane);
 		// ******for Panel4(standard time Part)******
 		
 		timeLabel = new JLabel("CurrentTime: ");  
@@ -297,6 +297,7 @@ public class testclass extends JFrame implements ActionListener{
         if(ae.getSource() == button1[0]) {
         	mm.createANewUser(ta1[0].getText(),ta1[1].getText(),rr.getroom(),rr.getstatus(),rr.getroomid(),displayArea.getText(),rr.getfeeofroom());
         	new Popup(this,0);
+        	showtable(0);
         }
         if(ae.getSource() == button2[0]) {
 			new Popup_Rinfo(this,0);    //family room info
@@ -326,14 +327,16 @@ public class testclass extends JFrame implements ActionListener{
         if(ae.getSource() == button5[0]) {
 			double total = mm.calculateTotalFee(ta5[0].getText());     //  get all of fees from database and sum them then show it on the interface
 			ta5[1].setText(Double.toString(total));
+			showtable(2);
         }
 		if(ae.getSource() == button5[1]){
             double change = mm.calculateChange(ta5[1].getText(),ta5[2].getText());    // according to paid-up money, get the amount of the change
             ta5[3].setText(Double.toString(change));
         }
 		if(ae.getSource() == button5[2]){
-            mm.checkout(ta5[0].getText());       // delete customer's info, update the room status
+            mm.checkout(ta5[0].getText(),displayArea.getText());       // delete customer's info, update the room status
 			new Popup(this,1);
+			showtable(0);
         }
 		if(ae.getSource() == button5[3]){
 			cancel(2);
@@ -345,9 +348,11 @@ public class testclass extends JFrame implements ActionListener{
         if(ae.getSource() == button6[1]) {
         	new Popup(this,2);
         	mm.addServiceinfo(ta6[0].getText(),ta6[3].getText(),ta6[1].getText());     // add service info to database
+        	showtable(2);
         }
         if(ae.getSource() == button6[2]) {
         	cancel(3);
+        	showtable(3);
         }
 	}
 
@@ -357,18 +362,26 @@ public class testclass extends JFrame implements ActionListener{
 		DefaultTableModel defaultModel = (DefaultTableModel)table.getModel();
 		defaultModel.setRowCount(0);
 		if(listnum == 0){
-			defaultModel.setColumnIdentifiers(new Object[]{"id","name","idnum","room","status","intime"});
+			defaultModel.setColumnIdentifiers(new Object[]{"id","name","idnum","room","status","check-in time"});
 		}
 		if(listnum == 1){
 			defaultModel.setColumnIdentifiers(new Object[]{"id","items","price","stock"});
 		}
 		if(listnum == 2){
-			defaultModel.setColumnIdentifiers(new Object[]{"id","roomnum","fee_room","fee_service","total"});
+			defaultModel.setColumnIdentifiers(new Object[]{"id","roomnum","fee_room","fee_service","total"});	
+		}
+		if(listnum == 3){
+			defaultModel.setColumnIdentifiers(new Object[]{"id","name","idnum","room","check-in time","check-out time","totalfee"});
 		}
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setModel(defaultModel);
+		table.getColumnModel().getColumn(0).setPreferredWidth(15);
+		table.getColumnModel().getColumn(1).setPreferredWidth(30);
 		table.setFont(font3);
-		table.setBorder(BorderFactory.createLoweredBevelBorder());
+		DefaultTableCellRenderer r = new DefaultTableCellRenderer();   
+		r.setHorizontalAlignment(JLabel.CENTER);   
+		table.setDefaultRenderer(Object.class, r);
+		//table.setBorder(BorderFactory.createLoweredBevelBorder());
 
 		if(listnum == 0){
 			customer ccc = new customer();
@@ -397,11 +410,17 @@ public class testclass extends JFrame implements ActionListener{
 						     ccc.getfee_room(),ccc.getfee_service(),ccc.gettotal()});
 			}
 		}
-		scrollPane.setViewportView(table);
-		p3.setLayout(null);
-		scrollPane.setBounds(20,25,790,165);
-		scrollPane.setFont(font);
-		p3.add(scrollPane);
+		if(listnum == 3){
+			customer ccc = new customer();
+			ArrayList list = ccc.selectAll4();
+			for(int i = 0; i < list.size(); i++){
+				ccc = (customer)list.get(i);
+				defaultModel.addRow(new Object[]{ccc.getid1(),ccc.getname(),
+								ccc.getidnum(),ccc.getroom(),ccc.getintime(),ccc.getouttime(),ccc.gettotal()});
+			}	
+			table.getColumnModel().getColumn(3).setPreferredWidth(30);
+			table.getColumnModel().getColumn(6).setPreferredWidth(30);
+		}
 	}
 	/////////////
 	

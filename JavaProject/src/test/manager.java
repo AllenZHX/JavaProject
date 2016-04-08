@@ -135,7 +135,6 @@ public class manager {
 					fee_service = myRs.getDouble("fee_service");
 					fee_room = myRs.getDouble("fee_room");
 					total = fee_service+fee_room;
-					//ta5[1].setText(Double.toString(total));
 				}	
 			}
 			String sql2 = "update payment set total = ? where roomnum = ?";
@@ -161,9 +160,46 @@ public class manager {
 		return change;
 	}
 	
-	public void checkout(String roo){
+	public void checkout(String roo,String outtime){
 		try{
 			Connection myConn = DriverManager.getConnection(url, user, password);
+			
+			String sql3 = "select * from payment";
+			Statement myStmt3 = myConn.createStatement();
+			ResultSet myRs3 = myStmt3.executeQuery(sql3);
+			double total = 0;
+			while (myRs3.next()) {
+				if(roo.equals(myRs3.getString("roomnum"))){
+					total = myRs3.getDouble("total");
+				}	
+			}
+			
+			String sql4 = "select * from checkin";
+			Statement myStmt4 = myConn.createStatement();
+			ResultSet myRs4 = myStmt4.executeQuery(sql4);
+			String name = "";
+			String idnum = "";
+			String intime = "";
+			while (myRs4.next()) {
+				if(roo.equals(myRs4.getString("room"))){
+					name = myRs4.getString("name");
+					idnum = myRs4.getString("idnum");
+					intime = myRs4.getString("intime");
+				}	
+			}
+
+			String sql5 = "insert into checkoutlist (name,idnum,room,intime,outtime,totalfee) values(?,?,?,?,?,?)";
+			PreparedStatement myStmt5 = myConn.prepareStatement(sql5);
+			myStmt5.setString(1,name);
+			myStmt5.setString(2,idnum);
+			myStmt5.setString(3,roo);
+			myStmt5.setString(4,intime);
+			myStmt5.setString(5,outtime);
+			myStmt5.setDouble(6,total);
+			
+			//3. Execute SQL 
+			myStmt5.executeUpdate();
+			
 			String sql = "delete from checkin where room = ?";
 			String sql2 = "delete from payment where roomnum = ?";
 			PreparedStatement myStmt = myConn.prepareStatement(sql);
@@ -172,7 +208,8 @@ public class manager {
 			myStmt2.setString(1,roo);
 			myStmt.executeUpdate();
 			myStmt2.executeUpdate();
-			//showtable(0);
+
+			
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();

@@ -19,6 +19,7 @@ public class customer {
 		private double fee_room;
 		private double fee_service;
 		private double total;
+		private String outtime;
 	    String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
 		String user = "root";
 		String password = ",26187108hoog";
@@ -54,6 +55,9 @@ public class customer {
 		public double getfee_room(){return fee_room;}
 		public double getfee_service(){return fee_service;}
 		public double gettotal(){return total;}
+		
+		public void setouttime(String outtim){outtime = outtim;}
+		public String getouttime(){return outtime;}
 		
 		@SuppressWarnings("rawtypes")
 		public ArrayList selectAll1(){
@@ -124,6 +128,30 @@ public class customer {
 			}
 			return ls;
 	   }
-	
+		@SuppressWarnings("rawtypes")
+		public ArrayList selectAll4(){
+			ArrayList<customer> ls = new ArrayList<customer>();
+			try{
+				Connection myConn = DriverManager.getConnection(url, user, password);
+				String sql = "select * from checkoutlist";
+				Statement myStmt = myConn.createStatement();
+				ResultSet myRs = myStmt.executeQuery(sql);
+				while (myRs.next()) {
+					customer cc= new customer();
+					cc.setid1(myRs.getInt("id"));
+					cc.setname(myRs.getString("name"));
+					cc.setidnum(myRs.getInt("idnum"));
+					cc.setroom(myRs.getString("room"));
+					cc.setintime(myRs.getString("intime"));
+					cc.setouttime(myRs.getString("outtime"));
+					cc.settotal(myRs.getDouble("totalfee"));
+					ls.add(cc);
+				}	
+			}
+			catch (Exception exc) {
+				exc.printStackTrace();
+			}
+			return ls;
+	   }
 		
 	}
