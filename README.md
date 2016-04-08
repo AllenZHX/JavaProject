@@ -13,7 +13,7 @@ DataBase: We will use the MySQL database.
 
 #The responsibility distribution:
 1.    Hongxiang Zheng and Yingbin Zheng will be in charge of  use Swing to design the system interface(4 parts: “check in” window,“order serve” window, “check out” window and “show table” window, in order to  landscaping interface, we will add a “current time” window and a “Logo” window)
-2.     Xiang cao will be responsible for  use JDBC to connect MySQL database(complete the operations like generate, delete, modify,save). We also need create some tables like service table, customers’ info table and so on.
+2.     Xiang cao and Hongxiang Zheng will be responsible for  use JDBC to connect MySQL database(complete the operations like generate, delete, modify,save). We also need create some tables like service table, customers’ info table and so on.
  
 #Main functions and classes:
 createANewUser();
