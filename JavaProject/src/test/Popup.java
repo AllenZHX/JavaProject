@@ -17,8 +17,9 @@ class Popup implements ActionListener{
 	    Popup(JFrame jFrame, int Ok){
 	       jDialog2=new JDialog(jFrame,"Notice",true);
 	       JTextArea jt2 = new JTextArea();
-	       String[] textinfo = {"      Successfully Check-in!","         Check-out Done!","     successfully purchase!"};
-	       for (int i = 0; i < 3; i++){
+	       String[] textinfo = {"      Successfully Check-in!","         Check-out Done!","     successfully purchase!",
+	    		   				"      IDnum must be 8 digits!","     Stock is not enough!"};
+	       for (int i = 0; i < 5; i++){
 	    	   if(Ok == i){
 	    		   jt2 = new JTextArea(textinfo[i]);
 	    	   }

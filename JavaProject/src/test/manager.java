@@ -11,6 +11,9 @@ public class manager {
 	private String user = "root";
 	private String password = ",26187108hoog";
 	private int num;
+	private boolean permitbuy = false;
+	
+	public boolean getpermit(){return permitbuy;}
 	
 	public void createANewUser(String name, String idnum, String room, String status, int roomid, String intime,double feeofroom) {
 		try{
@@ -34,7 +37,6 @@ public class manager {
 			//3. Execute SQL 
 			myStmt.executeUpdate();
 			myStmt2.executeUpdate();
-			//showtable(0);
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
@@ -57,10 +59,25 @@ public class manager {
 					num = Integer.parseInt(stocknum);
 					double price = myRs.getDouble("price");
 					total = num * price;
-					
-					//ta6[3].setText(Double.toString(total));
 				}
 				i++;
+			}
+			String sql3 = "select * from servicelist";
+			Statement myStmt3 = myConn.createStatement();
+			ResultSet myRs3 = myStmt3.executeQuery(sql3);
+			int j = 1;
+			int stock = 0;
+			while (myRs3.next()) {
+				int a = Integer.parseInt(itemid);
+				if(a == j){
+					stock = myRs3.getInt("stock");
+				}
+				j++;
+			}
+			if(stock >= num){
+				permitbuy = true;
+			}else{
+				permitbuy = false;
 			}
 			
 		}
@@ -71,51 +88,53 @@ public class manager {
 	}
 	
 	public void addServiceinfo(String roomnum, String newfee_service, String itemid) {
-		try{
-			//1. Get a connection to database
-			Connection myConn = DriverManager.getConnection(url, user, password);
-			//2. Create a statement
-			String sql = "select * from payment";
-			Statement myStmt = myConn.createStatement();
-			ResultSet myRs = myStmt.executeQuery(sql);
-			double fee_service = 0;
-			while (myRs.next()) {
-				if(roomnum.equals(myRs.getString("roomnum"))){
-					fee_service = myRs.getDouble("fee_service");
-				}	
-			}
-
-			String sql2 = "update payment set fee_service = ? where roomnum = ?";
-			PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
-			myStmt2.setDouble(1,Double.parseDouble(newfee_service) + fee_service);
-			myStmt2.setString(2,roomnum);
-			//3. Execute SQL 
-			myStmt2.executeUpdate();
-			
-			
-			String sql3 = "select * from servicelist";
-			Statement myStmt3 = myConn.createStatement();
-			ResultSet myRs3 = myStmt3.executeQuery(sql3);
-			int i = 1;
-			int stock = 0;
-			while (myRs3.next()) {
-				int a = Integer.parseInt(itemid);
-				if(a == i){
-					stock = myRs3.getInt("stock");
+		if (permitbuy == true){
+			try{
+				//1. Get a connection to database
+				Connection myConn = DriverManager.getConnection(url, user, password);
+				//2. Create a statement
+				String sql = "select * from payment";
+				Statement myStmt = myConn.createStatement();
+				ResultSet myRs = myStmt.executeQuery(sql);
+				double fee_service = 0;
+				while (myRs.next()) {
+					if(roomnum.equals(myRs.getString("roomnum"))){
+						fee_service = myRs.getDouble("fee_service");
+					}	
 				}
-				i++;
-			}	
-			String sql4 = "update servicelist set stock = ? where id = ?";
-			PreparedStatement myStmt4 = myConn.prepareStatement(sql4);
-			myStmt4.setInt(1,stock-num);
-			myStmt4.setInt(2,Integer.parseInt(itemid));
-			//3. Execute SQL 
-			myStmt4.executeUpdate();
-		
-			//showtable(2);
-		}
-		catch (Exception exc) {
-			exc.printStackTrace();
+	
+				String sql2 = "update payment set fee_service = ? where roomnum = ?";
+				PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
+				myStmt2.setDouble(1,Double.parseDouble(newfee_service) + fee_service);
+				myStmt2.setString(2,roomnum);
+				//3. Execute SQL 
+				myStmt2.executeUpdate();
+				
+				
+				String sql3 = "select * from servicelist";
+				Statement myStmt3 = myConn.createStatement();
+				ResultSet myRs3 = myStmt3.executeQuery(sql3);
+				int i = 1;
+				int stock = 0;
+				while (myRs3.next()) {
+					int a = Integer.parseInt(itemid);
+					if(a == i){
+						stock = myRs3.getInt("stock");
+					}
+					i++;
+				}	
+				String sql4 = "update servicelist set stock = ? where id = ?";
+				PreparedStatement myStmt4 = myConn.prepareStatement(sql4);
+				myStmt4.setInt(1,stock-num);
+				myStmt4.setInt(2,Integer.parseInt(itemid));
+				//3. Execute SQL 
+				myStmt4.executeUpdate();
+			
+				//showtable(2);
+			}
+			catch (Exception exc) {
+				exc.printStackTrace();
+			}
 		}
 	}
 	

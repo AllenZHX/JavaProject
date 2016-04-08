@@ -21,7 +21,7 @@ public class testclass extends JFrame implements ActionListener{
 	manager mm = new manager();
 	JButton[] button1 = new JButton[1];
 	JButton[] button2 = new JButton[5];
-	JButton[] button3 = new JButton[3];
+	JButton[] button3 = new JButton[4];
 	JButton[] button5 = new JButton[4];
 	JButton[] button6 = new JButton[3];
 	JLabel[] label1 = new JLabel[3];
@@ -34,7 +34,7 @@ public class testclass extends JFrame implements ActionListener{
 	JScrollPane scrollPane = new JScrollPane(table);
 	String[] buttonString1 = {"OK"};
 	String[] buttonString2 = {"Family","Double","Single","Check Current Rooms' Status","Clear"};
-	String[] buttonString3 = {"userinfo","service","payment"};
+	String[] buttonString3 = {"userinfo","service","payment","checkout"};
 	String[] buttonString5 = {"Settle","confirm","Finish","Clear"};
 	String[] buttonString6 = {"Settle","OK","Clear"};
 	String[] labelString1 = {"Check-in", "Name:","ID:"};
@@ -121,7 +121,7 @@ public class testclass extends JFrame implements ActionListener{
 		p1.setPreferredSize(new Dimension(660, 270));
 		p1.setOpaque(false);
 		// ******for Panel3(show data list Part)******
-		for(int i = 0; i < 3; i++) {
+		for(int i = 0; i < 4; i++) {
 		    button3[i] = new JButton();
 		    button3[i].setText(buttonString3[i]);
 		    button3[i].setFont(font2);
@@ -131,9 +131,10 @@ public class testclass extends JFrame implements ActionListener{
 		}
 		p3.setLayout(null);
 		button3[0].setBounds(50,200,100,30);
-		button3[1].setBounds(355,200,100,30);
+		button3[1].setBounds(475,200,100,30);
 		button3[2].setBounds(680,200,100,30);
-		for(int i = 0; i < 3; i++)
+		button3[3].setBounds(260,200,100,30);
+		for(int i = 0; i < 4; i++)
 			p3.add(button3[i]);
 		p3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		p3.setPreferredSize(new Dimension(830,240));
@@ -295,9 +296,14 @@ public class testclass extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent ae) {
         if(ae.getSource() == button1[0]) {
-        	mm.createANewUser(ta1[0].getText(),ta1[1].getText(),rr.getroom(),rr.getstatus(),rr.getroomid(),displayArea.getText(),rr.getfeeofroom());
-        	new Popup(this,0);
-        	showtable(0);
+        	if(ta1[1].getText().length() == 8){
+	        	mm.createANewUser(ta1[0].getText(),ta1[1].getText(),rr.getroom(),rr.getstatus(),rr.getroomid(),displayArea.getText(),rr.getfeeofroom());
+	        	new Popup(this,0);
+	        	showtable(0);
+	        	cancel(0);
+        	}else{
+        		new Popup(this,3);
+        	}
         }
         if(ae.getSource() == button2[0]) {
 			new Popup_Rinfo(this,0);    //family room info
@@ -324,6 +330,9 @@ public class testclass extends JFrame implements ActionListener{
         if(ae.getSource() == button3[2]) {
         	showtable(2);
         }
+        if(ae.getSource() == button3[3]) {
+        	showtable(3);
+        }
         if(ae.getSource() == button5[0]) {
 			double total = mm.calculateTotalFee(ta5[0].getText());     //  get all of fees from database and sum them then show it on the interface
 			ta5[1].setText(Double.toString(total));
@@ -337,6 +346,7 @@ public class testclass extends JFrame implements ActionListener{
             mm.checkout(ta5[0].getText(),displayArea.getText());       // delete customer's info, update the room status
 			new Popup(this,1);
 			showtable(0);
+			cancel(2);
         }
 		if(ae.getSource() == button5[3]){
 			cancel(2);
@@ -346,13 +356,17 @@ public class testclass extends JFrame implements ActionListener{
         	ta6[3].setText(Double.toString(total));
         }
         if(ae.getSource() == button6[1]) {
-        	new Popup(this,2);
-        	mm.addServiceinfo(ta6[0].getText(),ta6[3].getText(),ta6[1].getText());     // add service info to database
-        	showtable(2);
+        	if(mm.getpermit() == true){
+	        	new Popup(this,2);
+	        	mm.addServiceinfo(ta6[0].getText(),ta6[3].getText(),ta6[1].getText());     // add service info to database
+	        	showtable(2);
+	        	cancel(3);
+        	}else{
+        		new Popup(this,4);
+        	}
         }
         if(ae.getSource() == button6[2]) {
         	cancel(3);
-        	showtable(3);
         }
 	}
 
@@ -362,16 +376,16 @@ public class testclass extends JFrame implements ActionListener{
 		DefaultTableModel defaultModel = (DefaultTableModel)table.getModel();
 		defaultModel.setRowCount(0);
 		if(listnum == 0){
-			defaultModel.setColumnIdentifiers(new Object[]{"id","name","idnum","room","status","check-in time"});
+			defaultModel.setColumnIdentifiers(new Object[]{"id","Name","Idnum","Room","Status","Check-in time"});
 		}
 		if(listnum == 1){
-			defaultModel.setColumnIdentifiers(new Object[]{"id","items","price","stock"});
+			defaultModel.setColumnIdentifiers(new Object[]{"id","Items","Price","Stock"});
 		}
 		if(listnum == 2){
-			defaultModel.setColumnIdentifiers(new Object[]{"id","roomnum","fee_room","fee_service","total"});	
+			defaultModel.setColumnIdentifiers(new Object[]{"id","Roomnum","Fee_room","Fee_service","Total"});	
 		}
 		if(listnum == 3){
-			defaultModel.setColumnIdentifiers(new Object[]{"id","name","idnum","room","check-in time","check-out time","totalfee"});
+			defaultModel.setColumnIdentifiers(new Object[]{"id","Name","Idnum","Room","Check-in time","Check-out time","Totalfee"});
 		}
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setModel(defaultModel);
