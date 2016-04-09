@@ -14,6 +14,10 @@ public class Xsglxt extends JFrame implements ActionListener
 	JScrollPane gd1;
 	Xsxx xsxx2;
 		
+	
+	JMenuItem jmi1;
+	JMenuItem jmi2;
+	
 	public static void main(String[] args) 
 	{
 	   new Xsglxt();
@@ -22,10 +26,32 @@ public class Xsglxt extends JFrame implements ActionListener
 	
 	public Xsglxt()
 	{
+		Container c=getContentPane();
+//		c.setBackground(Color.WHITE);
+		
+		JMenuBar jmb=new JMenuBar();
+		
+		JMenu jm1=new JMenu("File");
+		jm1.setFont(new Font("Times New Roman", 1,12));
+		JMenu jm2=new JMenu("Help");
+		jm2.setFont(new Font("Times New Roman",1,12));
+		
+		jmi1=new JMenuItem("Exit");
+		jmi1.setFont(new Font("Times New Roman", 0,12));
+		jmi1.addActionListener(this);
+		jmi2=new JMenuItem("About the System");
+		jmi2.setFont(new Font("Times New Roman",0,12));
+		jmi2.addActionListener(this);
+		
+		jm1.add(jmi1);
+		jm2.add(jmi2);
+		jmb.add(jm1);
+		jmb.add(jm2);
+	
+		
 		mb1=new JPanel();
 		bq1=new JLabel("Input name:");
 		wbk1=new JTextField(20);
-//		wbk1.setText("xxx");
 		an1=new JButton("search");
 		an1.addActionListener(this);/////////////
 		an1.setActionCommand("chaxun");//////////////////////////////
@@ -45,14 +71,26 @@ public class Xsglxt extends JFrame implements ActionListener
 		
 		xsxx2=new Xsxx();
 		bg1=new JTable(xsxx2);
+		bg1.setRowHeight(30);
+		bg1.setAutoResizeMode(4);
 		gd1=new JScrollPane(bg1);
 		
+		JTabbedPane jtp=new JTabbedPane();
+		jtp.addTab("Search", new JButton("Search"));
+		jtp.addTab("Add",new JButton("Add"));
+		jtp.addTab("Modify", new JButton("Modify"));
+		jtp.addTab("Remove", new JButton("Remove"));
+		
+		this.add(jtp,BorderLayout.WEST);
 		this.add(gd1);
 		this.add(mb1,"North");
 		this.add(mb2,"South");
 		
+		this.setJMenuBar(jmb);
+		
 		this.setTitle("Student Management System");
-		this.setSize(500,400);
+//		this.setSize(500,400);
+		this.setSize(570, 400);
 		this.setLocation(201,181);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,7 +105,10 @@ public class Xsglxt extends JFrame implements ActionListener
 		{
 			
 			String xingming=this.wbk1.getText().trim();
-			String sql="select * from students where name='"+xingming+"'";
+//			String sql="select * from students where name='"+xingming+"'";
+			String sql="select * from students where name like '"+xingming+"'";
+//			String sql="select * from students where name like 'xingming%'";
+//			String sql="select * from students where name like 'x%'";
 			xsxx2=new Xsxx(sql);
 			bg1.setModel(xsxx2);
 		}
@@ -136,7 +177,75 @@ public class Xsglxt extends JFrame implements ActionListener
 			      xsxx2=new Xsxx();
 				  bg1.setModel(xsxx2);
 		}
+		else if(e.getSource()==jmi1){
+			System.exit(0);
+		}
+		else if(e.getSource()==jmi2){
+			new MyJDialog(this,"About the System");
+		}
 	}
 	
 	
+}
+
+class MyJDialog extends JDialog implements ActionListener{
+	JButton jb1;
+	MyJDialog(JFrame frame, String title){
+		super(frame,title);
+		Container c=getContentPane();
+		c.setBackground(Color.RED);
+		
+		JPanel jp1=new JPanel();
+		jp1.setBackground(Color.red);
+		
+		StringBuffer sb1=new StringBuffer();
+		sb1.append("This is a Student Management System.\n\n");
+		sb1.append("It mainly involves Swing and Database.\n\n");
+		sb1.append("Author: Xiang");
+		
+		JTextArea jta1=new JTextArea(5,20);
+		jta1.setText(sb1.toString());
+		jta1.setFont(new Font("Times New Roman",Font.BOLD,14));
+		jb1=new JButton("OK");
+		jb1.addActionListener(this);
+		
+		jp1.add(jta1,BorderLayout.CENTER);
+		jp1.add(jb1, BorderLayout.SOUTH);
+		
+		
+		c.add(jp1);
+		
+		setVisible(true);
+		setSize(260,200);
+		setLocation(201,181);
+	}
+	
+	public void actionPerfomed(ActionEvent e){
+		if(e.getSource()==jb1){
+			this.dispose();
+		}
+	}
+//	JDialog jd1=new JDialog(this, "About the System");
+//	JPanel jp1=new JPanel();
+//	
+//	StringBuffer sb=new StringBuffer();
+//	sb.append("This is a Student Management System.\n\n");
+//	sb.append("It mainly involves Swing and Database.\n\n");
+//	sb.append("Author: Xiang");
+//	
+//	
+//	JTextArea jta=new JTextArea(5,21);
+//	jta.setText(sb.toString());
+//	jp1.add(jta);
+//	getContentPane().add(jp1);
+//	
+//	jd1.setVisible(true);
+//	jd1.setLocation(201,181);
+//	jd1.setSize(200, 200);
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

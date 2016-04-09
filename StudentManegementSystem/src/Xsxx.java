@@ -11,6 +11,7 @@ class Xsxx extends AbstractTableModel
 	PreparedStatement ps=null;
     Connection ct=null;
     ResultSet rs=null;
+//    Vector<String> v=new Vector();
     
 	public int getRowCount()
 	{
@@ -49,7 +50,8 @@ class Xsxx extends AbstractTableModel
 		ziduan.add("Gender");
 		ziduan.add("Age");
 		ziduan.add("From");
-		ziduan.add("Department");		
+		ziduan.add("Department");	
+		ziduan.add("EditionDate");
 		
         jilu=new Vector();
 		
@@ -76,6 +78,7 @@ class Xsxx extends AbstractTableModel
 					hang.add(rs.getInt(4));
 					hang.add(rs.getString(5));
 					hang.add(rs.getString(6));
+					hang.add(rs.getString(7));
 //				  	hang.add(rs.getInt(1));
 //				  	hang.add(rs.getString(2));
 //				  	hang.add(rs.getString(3));

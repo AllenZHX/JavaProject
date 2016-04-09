@@ -8,8 +8,9 @@ import javax.swing.*;
 
 class Tianjia extends JDialog implements ActionListener
 {
-   JLabel bq1,bq2,bq3,bq4,bq5,bq6;
-   JTextField wbk1,wbk2,wbk3,wbk4,wbk5,wbk6;
+//   JLabel bq1,bq2,bq3,bq4,bq5,bq6;
+	 JLabel bq1,bq2,bq3,bq4,bq5,bq6,bq7;
+   JTextField wbk1,wbk2,wbk3,wbk4,wbk5,wbk6,wbk7;
    JButton an1,an2;
    JPanel mb1,mb2,mb3,mb4;
    
@@ -22,6 +23,8 @@ class Tianjia extends JDialog implements ActionListener
 	   bq4=new JLabel("               Age    ");
 	   bq5=new JLabel("               Place Of Birth     ");
 	   bq6=new JLabel("               Department    ");
+	   //
+//	   bq7=new JLabel("               Edition Date");
 	   
 	   wbk1=new JTextField(5);
 	   wbk2=new JTextField(5);
@@ -29,6 +32,8 @@ class Tianjia extends JDialog implements ActionListener
 	   wbk4=new JTextField(5);
 	   wbk5=new JTextField(5);
 	   wbk6=new JTextField(5);
+	   //
+//	   wbk7=new JTextField(5);
 	   
 	   an1=new JButton("Add");
 	   an1.addActionListener(this);
@@ -46,10 +51,12 @@ class Tianjia extends JDialog implements ActionListener
 	   mb2.setLayout(new GridLayout(6,1));
 	   
 	   mb1.add(bq1);  mb1.add(bq2);  mb1.add(bq3);
-	   mb1.add(bq4);  mb1.add(bq5);  mb1.add(bq6);
+	   mb1.add(bq4);  mb1.add(bq5);  mb1.add(bq6); 
+//	   mb1.add(bq7);
 	   
 	   mb2.add(wbk1);  mb2.add(wbk2);  mb2.add(wbk3);
-	   mb2.add(wbk4);  mb2.add(wbk5);  mb2.add(wbk6);
+	   mb2.add(wbk4);  mb2.add(wbk5);  mb2.add(wbk6); 
+//	   mb2.add(wbk7);
 	   
 	   mb3.add(an1);  mb3.add(an2);
 	   
@@ -77,8 +84,12 @@ class Tianjia extends JDialog implements ActionListener
 //			      Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 			      Class.forName("com.mysql.jdbc.Driver");
 //				  ct=DriverManager.getConnection("jdbc:odbc:sql server","sa","ydyd4488321");
+//				  ct=DriverManager.getConnection("jdbc:mysql://localhost:3306/sms","root","1");
 				  ct=DriverManager.getConnection("jdbc:mysql://localhost:3306/sms","root","1");
-			      String ss=("insert into students values(?,?,?,?,?,?)");
+			      String ss=("insert into students (id, name, gender,age, fromwhere, department) values (?,?,?,?,?,?)");
+//			      INSERT INTO `sms`.`students` (`id`, `name`, `gender`, `age`, `fromwhere`, `department`) VALUES ('8', '8', '8', '8', '8', '8');
+//			      String ss=("INSERT INTO `sms`.`students` (`id`, `name`, `gender`, `age`, `fromwhere`, `department`) VALUES ('?', '?', '?', бо?', '?', '?')");
+//			      INSERT INTO `sms`.`students` (`id`, `name`, `gender`, `age`, `fromwhere`, `department`) VALUES ('34', '879', '879', '789', '789', '78');
 				  ps=ct.prepareStatement(ss);	
 				  ps.setInt(1,Integer.parseInt(wbk1.getText()));
 				  ps.setString(2,wbk2.getText());
@@ -86,6 +97,8 @@ class Tianjia extends JDialog implements ActionListener
 				  ps.setInt(4,Integer.parseInt(wbk4.getText()));
 				  ps.setString(5,wbk5.getText());
 				  ps.setString(6,wbk6.getText());
+				  //
+				  
 				  ps.executeUpdate();
 				  
 				  this.dispose();				  

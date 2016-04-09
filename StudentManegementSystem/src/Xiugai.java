@@ -31,7 +31,8 @@ class Xiugai extends JDialog implements ActionListener
 	   wbk3=new JTextField(5);
 	   wbk3.setText((String)xsxx2.getValueAt(hang,2));
 	   wbk4=new JTextField(5);
-	   wbk4.setText((String)xsxx2.getValueAt(hang,3).toString());
+//	   wbk4.setText((String)xsxx2.getValueAt(hang,3).toString());
+	   wbk4.setText( ( (Integer)xsxx2.getValueAt(hang,3) ).toString());
 	   wbk5=new JTextField(5);
 	   wbk5.setText((String)xsxx2.getValueAt(hang,4));
 	   wbk6=new JTextField(5);
