@@ -11,6 +11,7 @@ public class manager {
 	private String user = "root";
 	private String password = ",26187108hoog";
 	private boolean permitbuy = false;
+	private int day = 1;
 	
 	public boolean getpermit(){return permitbuy;}
 	
@@ -42,12 +43,35 @@ public class manager {
 		}
 	}
 	
-	public double calculateTotalFee(String roomnum) {
+	public double calculateTotalFee(String roomnum,String outtime) {
 		double total = 0;
+		
 		try{
 			//1. Get a connection to database
 			Connection myConn = DriverManager.getConnection(url, user, password);
 			//2. Create a statement
+			String sql4 = "select * from checkin";
+			Statement myStmt4 = myConn.createStatement();
+			ResultSet myRs4 = myStmt4.executeQuery(sql4);
+			String intime = "";
+			while (myRs4.next()) {
+				if(roomnum.equals(myRs4.getString("room"))){
+					intime = myRs4.getString("intime");
+				}	
+			}
+			int checkinday = Integer.parseInt(intime.substring(8,10));
+			int checkoutday = Integer.parseInt(outtime.substring(8, 10));
+			int checkouthour = Integer.parseInt(outtime.substring(11, 13));
+			int tempday = checkoutday - checkinday;
+			if(tempday == 0){
+				day = 1;
+			}else{
+				if(checkouthour < 12){
+					day = tempday;
+				}else{
+					day = tempday + 1;
+				}
+			}
 			String sql = "select * from payment";
 			Statement myStmt = myConn.createStatement();
 			ResultSet myRs = myStmt.executeQuery(sql);
@@ -56,18 +80,23 @@ public class manager {
 			while (myRs.next()) {
 				if(roomnum.equals(myRs.getString("roomnum"))){
 					fee_service = myRs.getDouble("fee_service");
-					fee_room = myRs.getDouble("fee_room");
+					fee_room = myRs.getDouble("fee_room") * day;
 					total = fee_service+fee_room;
 				}	
 			}
-			String sql2 = "update payment set total = ? where roomnum = ?";
+			String sql2 = "update payment set fee_room = ? where roomnum = ?";
 			PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
-			myStmt2.setDouble(1,total);
+			myStmt2.setDouble(1,fee_room);
 			myStmt2.setString(2,roomnum);
 			//3. Execute SQL 
 			myStmt2.executeUpdate();
-
-			//showtable(2);
+			
+			String sql3 = "update payment set total = ? where roomnum = ?";
+			PreparedStatement myStmt3 = myConn.prepareStatement(sql3);
+			myStmt3.setDouble(1,total);
+			myStmt3.setString(2,roomnum);
+			//3. Execute SQL 
+			myStmt3.executeUpdate();
 			
 		}
 		catch (Exception exc) {

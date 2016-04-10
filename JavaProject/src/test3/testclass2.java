@@ -310,7 +310,7 @@ public class testclass2 extends JFrame implements ActionListener{
         	showtable(3);
         }
         if(ae.getSource() == button5[0]) {
-			double total = mm.calculateTotalFee(ta5[0].getText());     //  get all of fees from database and sum them then show it on the interface
+			double total = mm.calculateTotalFee(ta5[0].getText(),displayArea.getText());     //  get all of fees from database and sum them then show it on the interface
 			ta5[1].setText(Double.toString(total));
 			showtable(2);
         }
