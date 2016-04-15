@@ -15,6 +15,28 @@ public class manager {
 	
 	public boolean getpermit(){return permitbuy;}
 	
+	public void createANewBookingUser(String name, String idnum, String room, int roomid, String from, String to, String status) {
+		try{
+			//1. Get a connection to database
+			Connection myConn = DriverManager.getConnection(url, user, password);
+			//2. Create a statement
+			String sql = "insert into booking (name,idnum,room,roomid,fromday,today,status) values(?,?,?,?,?,?,?)";
+			PreparedStatement myStmt = myConn.prepareStatement(sql);
+			myStmt.setString(1,name);
+			myStmt.setString(2,idnum);
+			myStmt.setString(3,room);
+			myStmt.setInt(4,roomid);
+			myStmt.setString(5,from);
+			myStmt.setString(6,to);
+			myStmt.setString(7,status);
+			//3. Execute SQL 
+			myStmt.executeUpdate();
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	
 	public void createANewUser(String name, String idnum, String room, String status, int roomid, String intime,double feeofroom) {
 		try{
 			//1. Get a connection to database

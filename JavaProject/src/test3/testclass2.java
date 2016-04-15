@@ -3,6 +3,8 @@ package test3;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;  
@@ -18,6 +20,7 @@ public class testclass2 extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	roominfo rr = new roominfo();
 	manager mm = new manager();
+	booking bb = new booking();
 	JButton[] button1 = new JButton[1];
 	JButton[] button2 = new JButton[5];
 	JButton[] button3 = new JButton[4];
@@ -50,7 +53,7 @@ public class testclass2 extends JFrame implements ActionListener{
 	String[] jcbString_mon = {"01","02","03","04","05","06","07","08","09","10","11","12"};
 	String[] jcbString_day = {"01","02","03","04","05","06","07","08","09","10",
 							  "11","12","13","14","15","16","17","18","19","20",
-							  "21","22","23","24","25","26","27","28","29","30"};
+							  "21","22","23","24","25","26","27","28","29","30","31"};
 	Font font =  new Font("Times new Roman", Font.BOLD, 20);
 	Font font1 =  new Font("Times new Roman", Font.BOLD, 34);
 	Font font2 =  new Font("Times new Roman", Font.BOLD, 14);
@@ -161,9 +164,30 @@ public class testclass2 extends JFrame implements ActionListener{
 				for(int j = 0; j < 12; j++)
 					jcb[i].addItem(jcbString_mon[j]);
 			}else{
-				for(int j = 0; j < 30; j++)
+				for(int j = 0; j < 31; j++)
 					jcb[i].addItem(jcbString_day[j]);
 			}
+			jcb[i].addItemListener(new ItemListener(){
+                 public void itemStateChanged(ItemEvent event){
+                	 if(event.getStateChange() == ItemEvent.SELECTED){
+                		 int y = jcb[0].getSelectedIndex();
+         				 int m = jcb[1].getSelectedIndex();
+         				 int yy = Integer.parseInt(jcbString_year[y]);
+         				 int mm = Integer.parseInt(jcbString_mon[m]);
+         				 Calendar calendar = Calendar.getInstance();
+         				 calendar.set(Calendar.YEAR,yy);   
+         				 calendar.set(Calendar.MONTH,mm-1);   
+         				 int  maxDate = calendar.getActualMaximum(Calendar.DATE);
+         				 for(int j = 0; j < maxDate; j++){
+         					jcb[2].addItem(jcbString_day[j]);
+         				 }
+         				 int count = jcb[2].getItemCount() - maxDate;
+         				 for(int j = 0; j < count; j++){
+         					jcb[2].removeItemAt(1);
+         				 }
+                     }
+                 }
+             });
 		    jcb[i].setFont(font);
 		    jcb[i].setBorder(BorderFactory.createLoweredBevelBorder());
 		}
@@ -183,9 +207,9 @@ public class testclass2 extends JFrame implements ActionListener{
 		jcb[5].setBounds(880,130,80,30);
 		label9[3].setBounds(600,60,80,50);
 		label9[4].setBounds(600,120,80,50);
-		label9[5].setBounds(700,10,80,50);
-		label9[6].setBounds(795,10,80,50);
-		label9[7].setBounds(900,10,80,50);
+		label9[5].setBounds(700,15,80,50);
+		label9[6].setBounds(795,15,80,50);
+		label9[7].setBounds(900,15,80,50);
 		ta9[0].setBounds(290,80,180,30);
 		ta9[1].setBounds(290,150,180,30);
 		for(int i = 0; i < 3; i++){
@@ -418,6 +442,35 @@ public class testclass2 extends JFrame implements ActionListener{
         	pickup pp = new pickup();
         	pp.Popup_service(this);
         }
+        if(ae.getSource() == button9[2]) {
+        	bb.getRoomStatus(jcbString_year[jcb[0].getSelectedIndex()],jcbString_mon[jcb[1].getSelectedIndex()],
+        			jcbString_day[jcb[2].getSelectedIndex()],jcbString_year[jcb[3].getSelectedIndex()],
+        			jcbString_mon[jcb[4].getSelectedIndex()],jcbString_day[jcb[5].getSelectedIndex()]);    
+			bb.Popup_roomStatus(this);    // show the current room status
+        }
+        if(ae.getSource() == button9[0]) {
+        	mm.createANewBookingUser(ta9[0].getText(),ta9[1].getText(),bb.getroom(),bb.getroomid(),bb.getfrom(),bb.getto(),bb.getstatus());
+        	new Popup(this,4);
+        	cancel(1);
+        }
+        if(ae.getSource() == button9[1]) {
+        	cancel(1);
+        }
+        
+        /*if(ae.getSource() == button9[2]) {
+        	int y = jcb[0].getSelectedIndex();
+    		int m = jcb[1].getSelectedIndex();
+    		int yy = Integer.parseInt(jcbString_year[y]);
+    		int mm = Integer.parseInt(jcbString_mon[m]);
+    		Calendar calendar = Calendar.getInstance();
+    		calendar.set(Calendar.YEAR,yy-1);   
+    		calendar.set(Calendar.MONTH,mm-1);   
+    		int  maxDate = calendar.getActualMaximum(Calendar.DATE);
+    		System.out.println(maxDate);
+    		for(int j = 0; j < maxDate; j++)
+    			jcb[i].addItem(jcbString_day[j]);
+        }*/
+        
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -492,7 +545,8 @@ public class testclass2 extends JFrame implements ActionListener{
 				ta1[i].setText("");	
 		}
 		if(Can == 1){
-			//  cancel the booking.
+			for(int i = 0; i < 2; i++)
+				ta9[i].setText("");	
 		}
 		if(Can == 2){
 			for(int i = 0; i < 4; i++)
