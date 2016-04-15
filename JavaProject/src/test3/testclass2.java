@@ -27,8 +27,11 @@ public class testclass2 extends JFrame implements ActionListener{
 	JButton[] button9 = new JButton[3];
 	JLabel[] label1 = new JLabel[3];
 	JLabel[] label5 = new JLabel[5];
+	JLabel[] label9 = new JLabel[8];   //////
 	JTextArea[] ta1 = new JTextArea[2];
 	JTextArea[] ta5 = new JTextArea[4];
+	JTextArea[] ta9 = new JTextArea[8];   /////////
+	JComboBox[] jcb = new JComboBox[6];
 	JTable table = new JTable();
 	JScrollPane scrollPane = new JScrollPane(table);
 	String[] buttonString1 = {"OK"};
@@ -36,11 +39,18 @@ public class testclass2 extends JFrame implements ActionListener{
 	String[] buttonString3 = {"userinfo","service","payment","checkout"};
 	String[] buttonString5 = {"Settle","confirm","Finish","Clear"};
 	String[] buttonString6 = {"Food and Drink","Massage","Pick-up"};
-	String[] buttonString8 = {"food", "massage","other"};
+	String[] buttonString8 = {"food", "massage","Pick-up"};
+	String[] buttonString9 = {"Ok", "Clear","Check Current Rooms' Status"};
 	String[] labelString1 = {"Check-in", "Name:","ID:"};
 	String[] labelString2 = {"Booking"};
 	String[] labelString5 = {"Check-out","Room #: ","Total: ","Paid-up: ","Change: "};
 	String[] labelString6 = {"Order","Room #: ","Item: ","Num: ","Total: "};
+	String[] labelString9 = {"Booking","Name: ","ID:","From: ","To: ","Year","Month","Day"};
+	String[] jcbString_year = {"2016","2017","2018","2019","2020"};
+	String[] jcbString_mon = {"01","02","03","04","05","06","07","08","09","10","11","12"};
+	String[] jcbString_day = {"01","02","03","04","05","06","07","08","09","10",
+							  "11","12","13","14","15","16","17","18","19","20",
+							  "21","22","23","24","25","26","27","28","29","30"};
 	Font font =  new Font("Times new Roman", Font.BOLD, 20);
 	Font font1 =  new Font("Times new Roman", Font.BOLD, 34);
 	Font font2 =  new Font("Times new Roman", Font.BOLD, 14);
@@ -120,45 +130,75 @@ public class testclass2 extends JFrame implements ActionListener{
 			p1.add(button2[i]);
 		p1.setOpaque(false);
 		///////////////////////////////////////////////////
-/*
+
 		for(int i = 0; i < 3; i++) {
 		    button9[i] = new JButton();
-		    button9[i].setText(buttonString6[i]);
+		    button9[i].setText(buttonString9[i]);
 		    button9[i].setFont(font2);
 		    button9[i].setContentAreaFilled(false);
 		    button9[i].setBorder(BorderFactory.createRaisedBevelBorder());
 		    button9[i].addActionListener(this);
 		}
-		for(int i = 0; i < 3; i++) {
-		    label1[i] = new JLabel();
-		    label1[i].setText(labelString1[i]);
-		    label1[i].setFont(font);
+		for(int i = 0; i < 8; i++) {
+		    label9[i] = new JLabel();
+		    label9[i].setText(labelString9[i]);
+		    label9[i].setFont(font);
 		    if (i==0)
-		    	label1[i].setFont(font1);
+		    	label9[i].setFont(font1);
 		}
-		for(int i = 0; i < 2; i++) {
-		    ta1[i] = new JTextArea();
-		    ta1[i].setFont(font);
-		    ta1[i].setBorder(BorderFactory.createLoweredBevelBorder());
+		for(int i = 0; i < 8; i++) {
+		    ta9[i] = new JTextArea();
+		    ta9[i].setFont(font);
+		    ta9[i].setBorder(BorderFactory.createLoweredBevelBorder());
 		}
+		for(int i = 0; i < 6; i++) {
+			jcb[i] = new JComboBox<String>();
+			jcb[i].setEnabled(true);
+			if(i == 0 | i == 3){
+				for(int j = 0; j < 5; j++)
+					jcb[i].addItem(jcbString_year[j]);
+			}else if(i==1 | i==4){
+				for(int j = 0; j < 12; j++)
+					jcb[i].addItem(jcbString_mon[j]);
+			}else{
+				for(int j = 0; j < 30; j++)
+					jcb[i].addItem(jcbString_day[j]);
+			}
+		    jcb[i].setFont(font);
+		    jcb[i].setBorder(BorderFactory.createLoweredBevelBorder());
+		}
+		
 		p9.setLayout(null);
-		button9[0].setBounds(150,50,150,200);
-		button9[1].setBounds(480,50,150,200);
-		button9[2].setBounds(780,50,150,200);
-		label1[0].setBounds(220,10,160,50);
-		label1[1].setBounds(220,70,80,50);
-		label1[2].setBounds(220,140,80,50);
-		ta1[0].setBounds(310,80,180,30);
-		ta1[1].setBounds(310,150,180,30);
+		button9[0].setBounds(210,220,100,40);
+		button9[1].setBounds(370,220,100,40);
+		button9[2].setBounds(620,180,330,80);
+		label9[0].setBounds(200,10,160,50);
+		label9[1].setBounds(200,70,80,50);
+		label9[2].setBounds(200,140,80,50);
+		jcb[0].setBounds(680,70,80,30);
+		jcb[1].setBounds(780,70,80,30);
+		jcb[2].setBounds(880,70,80,30);
+		jcb[3].setBounds(680,130,80,30);
+		jcb[4].setBounds(780,130,80,30);
+		jcb[5].setBounds(880,130,80,30);
+		label9[3].setBounds(600,60,80,50);
+		label9[4].setBounds(600,120,80,50);
+		label9[5].setBounds(700,10,80,50);
+		label9[6].setBounds(795,10,80,50);
+		label9[7].setBounds(900,10,80,50);
+		ta9[0].setBounds(290,80,180,30);
+		ta9[1].setBounds(290,150,180,30);
 		for(int i = 0; i < 3; i++){
 	    	p9.add(button9[i]);
 		}
-		for(int i = 0; i < 3; i++) 
-			p9.add(label1[i]);
-		for(int i = 0; i < 2; i++) 
-			p9.add(ta1[i]);
+		for(int i = 0; i < 8; i++) 
+			p9.add(label9[i]);
+		for(int i = 0; i < 8; i++) 
+			p9.add(ta9[i]);
+		for(int i = 0; i < 6; i++) 
+			p9.add(jcb[i]);
 		p9.setOpaque(false);
-		*/
+		
 		
 		// ******for Panel3(show data list Part)******
 		for(int i = 0; i < 4; i++) {
@@ -274,7 +314,7 @@ public class testclass2 extends JFrame implements ActionListener{
 		// for Panel8
 		UIManager.put("TabbedPane.contentOpaque", false);
 		JTabbedPane jtp = new JTabbedPane();
-		//jtp.addTab("Booking",p9);
+		jtp.addTab("Booking",p9);
 		jtp.addTab("Check in",p1);
 	    jtp.addTab("Check out", p5);
 	    jtp.addTab("Order", p6);
