@@ -74,6 +74,7 @@ public class roominfo implements ActionListener{
 			    button22[i].setBackground(Color.GREEN);
 			    if (roomstatus[i] == true){
 			          button22[i].setBackground(Color.RED);
+			          button22[i].setEnabled(false);
 			    }
 			    button22[i].addActionListener(this);
 			}

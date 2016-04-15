@@ -24,6 +24,7 @@ public class testclass2 extends JFrame implements ActionListener{
 	JButton[] button5 = new JButton[4];
 	JButton[] button6 = new JButton[3];
 	JButton[] button8 = new JButton[3];
+	JButton[] button9 = new JButton[3];
 	JLabel[] label1 = new JLabel[3];
 	JLabel[] label5 = new JLabel[5];
 	JTextArea[] ta1 = new JTextArea[2];
@@ -52,6 +53,7 @@ public class testclass2 extends JFrame implements ActionListener{
     String time;  
     int ONE_SECOND = 1000;
 	JPanel p1 = new JPanel();
+	JPanel p9 = new JPanel();
 	JPanel p3 = new JPanel();
 	JPanel p4 = new JPanel();
 	JPanel p5 = new JPanel();
@@ -97,6 +99,7 @@ public class testclass2 extends JFrame implements ActionListener{
 			p1.add(label1[i]);
 		for(int i = 0; i < 2; i++) 
 			p1.add(ta1[i]);
+		
 		// ******for Panel2(Booking Part)*******
 		for(int i = 0; i < 5; i++) {
 		    button2[i] = new JButton();
@@ -115,10 +118,48 @@ public class testclass2 extends JFrame implements ActionListener{
 
 		for(int i = 0; i < 5; i++)
 			p1.add(button2[i]);
-		//p1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		//p1.setPreferredSize(new Dimension(660, 270));
 		p1.setOpaque(false);
-		//
+		///////////////////////////////////////////////////
+/*
+		for(int i = 0; i < 3; i++) {
+		    button9[i] = new JButton();
+		    button9[i].setText(buttonString6[i]);
+		    button9[i].setFont(font2);
+		    button9[i].setContentAreaFilled(false);
+		    button9[i].setBorder(BorderFactory.createRaisedBevelBorder());
+		    button9[i].addActionListener(this);
+		}
+		for(int i = 0; i < 3; i++) {
+		    label1[i] = new JLabel();
+		    label1[i].setText(labelString1[i]);
+		    label1[i].setFont(font);
+		    if (i==0)
+		    	label1[i].setFont(font1);
+		}
+		for(int i = 0; i < 2; i++) {
+		    ta1[i] = new JTextArea();
+		    ta1[i].setFont(font);
+		    ta1[i].setBorder(BorderFactory.createLoweredBevelBorder());
+		}
+		p9.setLayout(null);
+		button9[0].setBounds(150,50,150,200);
+		button9[1].setBounds(480,50,150,200);
+		button9[2].setBounds(780,50,150,200);
+		label1[0].setBounds(220,10,160,50);
+		label1[1].setBounds(220,70,80,50);
+		label1[2].setBounds(220,140,80,50);
+		ta1[0].setBounds(310,80,180,30);
+		ta1[1].setBounds(310,150,180,30);
+		for(int i = 0; i < 3; i++){
+	    	p9.add(button9[i]);
+		}
+		for(int i = 0; i < 3; i++) 
+			p9.add(label1[i]);
+		for(int i = 0; i < 2; i++) 
+			p9.add(ta1[i]);
+		p9.setOpaque(false);
+		*/
+		
 		// ******for Panel3(show data list Part)******
 		for(int i = 0; i < 4; i++) {
 		    button3[i] = new JButton();
@@ -143,8 +184,8 @@ public class testclass2 extends JFrame implements ActionListener{
 		scrollPane.setBounds(20,25,790,210);
 		scrollPane.setFont(font);
 		p3.add(scrollPane);
-		// ******for Panel4(standard time Part)******
 		
+		// ******for Panel4(standard time Part)******
 		timeLabel = new JLabel("CurrentTime: ");  
         displayArea = new JLabel();  
         timeLabel.setFont(font);
@@ -158,6 +199,7 @@ public class testclass2 extends JFrame implements ActionListener{
 		p4.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		p4.setPreferredSize(new Dimension(380, 295));
 		p4.setOpaque(false);
+		
 		// ******for Panel5(Check-out Part)******
 		for(int i = 0; i < 4; i++) {
 		    button5[i] = new JButton();
@@ -199,9 +241,8 @@ public class testclass2 extends JFrame implements ActionListener{
 			p5.add(label5[i]);
 		for(int i = 0; i < 4; i++) 
 			p5.add(ta5[i]);
-		//p5.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		//p5.setPreferredSize(new Dimension(550, 270));
 		p5.setOpaque(false);
+		
 		// ******for Panel6(Order service Part)******
 		for(int i = 0; i < 3; i++) {
 		    button6[i] = new JButton();
@@ -218,9 +259,8 @@ public class testclass2 extends JFrame implements ActionListener{
 		for(int i = 0; i < 3; i++){
 	    	p6.add(button6[i]);
 		}
-		//p6.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		//p6.setPreferredSize(new Dimension(380, 345));
 		p6.setOpaque(false);
+		
 		// for Panel7 (logo)
 		JLabel label = new JLabel("Hotel Management System");
 		p7.setLayout(null);
@@ -234,6 +274,7 @@ public class testclass2 extends JFrame implements ActionListener{
 		// for Panel8
 		UIManager.put("TabbedPane.contentOpaque", false);
 		JTabbedPane jtp = new JTabbedPane();
+		//jtp.addTab("Booking",p9);
 		jtp.addTab("Check in",p1);
 	    jtp.addTab("Check out", p5);
 	    jtp.addTab("Order", p6);
@@ -254,9 +295,6 @@ public class testclass2 extends JFrame implements ActionListener{
 		c.add(p8);
 		c.add(p4);
 		c.add(p3);
-		//c.add(p1);
-		//c.add(p5);
-		//c.add(p6);
 		
 		((JComponent) c).setOpaque(false);
 		ImageIcon img = new ImageIcon("C:\\3.jpg");  //add background picture
@@ -332,6 +370,14 @@ public class testclass2 extends JFrame implements ActionListener{
         	oo.getitemname();
         	oo.Popup_service(this);
         }
+        if(ae.getSource() == button6[1]) {
+        	massage mmm = new massage();
+        	mmm.Popup_service(this);
+        }
+        if(ae.getSource() == button6[2]) {
+        	pickup pp = new pickup();
+        	pp.Popup_service(this);
+        }
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -340,21 +386,21 @@ public class testclass2 extends JFrame implements ActionListener{
 		DefaultTableModel defaultModel = (DefaultTableModel)table.getModel();
 		defaultModel.setRowCount(0);
 		if(listnum == 0){
-			defaultModel.setColumnIdentifiers(new Object[]{"id","Name","Idnum","Room","Status","Check-in time"});
+			defaultModel.setColumnIdentifiers(new Object[]{"Name","Idnum","Room","Status","Check-in time"});
 		}
 		if(listnum == 1){
 			defaultModel.setColumnIdentifiers(new Object[]{"id","Items","Price","Stock"});
 		}
 		if(listnum == 2){
-			defaultModel.setColumnIdentifiers(new Object[]{"id","Roomnum","Fee_room","Fee_service","Total"});	
+			defaultModel.setColumnIdentifiers(new Object[]{"Roomnum","Fee_room","Fee_service","Total"});	
 		}
 		if(listnum == 3){
-			defaultModel.setColumnIdentifiers(new Object[]{"id","Name","Idnum","Room","Check-in time","Check-out time","Totalfee"});
+			defaultModel.setColumnIdentifiers(new Object[]{"Name","Idnum","Room","Check-in time","Check-out time","Totalfee"});
 		}
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setModel(defaultModel);
-		table.getColumnModel().getColumn(0).setPreferredWidth(15);
-		table.getColumnModel().getColumn(1).setPreferredWidth(30);
+		//table.getColumnModel().getColumn(0).setPreferredWidth(15);
+		//table.getColumnModel().getColumn(1).setPreferredWidth(30);
 		table.setFont(font3);
 		DefaultTableCellRenderer r = new DefaultTableCellRenderer();   
 		r.setHorizontalAlignment(JLabel.CENTER);   
@@ -366,7 +412,7 @@ public class testclass2 extends JFrame implements ActionListener{
 			ArrayList list = ccc.selectAll1();
 			for(int i = 0; i < list.size(); i++){
 				ccc = (customer)list.get(i);
-				defaultModel.addRow(new Object[]{ccc.getid1(),ccc.getname(),
+				defaultModel.addRow(new Object[]{ ccc.getname(),
 								ccc.getidnum(),ccc.getroom(),ccc.getstatus(),ccc.getintime()});
 			}			
 		}
@@ -384,7 +430,7 @@ public class testclass2 extends JFrame implements ActionListener{
 			ArrayList list = ccc.selectAll3();
 			for(int i = 0; i < list.size(); i++){
 				ccc = (customer)list.get(i);
-				defaultModel.addRow(new Object[]{ccc.getid3(),ccc.getroomnum(),
+				defaultModel.addRow(new Object[]{ccc.getroomnum(),
 						     ccc.getfee_room(),ccc.getfee_service(),ccc.gettotal()});
 			}
 		}
@@ -393,11 +439,9 @@ public class testclass2 extends JFrame implements ActionListener{
 			ArrayList list = ccc.selectAll4();
 			for(int i = 0; i < list.size(); i++){
 				ccc = (customer)list.get(i);
-				defaultModel.addRow(new Object[]{ccc.getid1(),ccc.getname(),
+				defaultModel.addRow(new Object[]{ccc.getname(),
 								ccc.getidnum(),ccc.getroom(),ccc.getintime(),ccc.getouttime(),ccc.gettotal()});
 			}	
-			table.getColumnModel().getColumn(3).setPreferredWidth(30);
-			table.getColumnModel().getColumn(6).setPreferredWidth(30);
 		}
 	}
 	/////////////

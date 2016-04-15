@@ -130,6 +130,7 @@ public class order implements ActionListener {
 		}else if(e.getActionCommand().equals("Ok")){
 			addServiceinfo(ta333[0].getText(),ta333[1].getText(),idlist);
 			new Popup(new JFrame(),2);
+			jDialog.dispose();
 		}else if(e.getActionCommand().equals("Clear")){
 			cancel();
 		}else{
@@ -166,7 +167,7 @@ public class order implements ActionListener {
 			r.setHorizontalAlignment(JLabel.CENTER);   
 			table.setDefaultRenderer(Object.class, r);
 			
-			ArrayList list = ccc.selectAll2();
+			ArrayList<?> list = ccc.selectAll2();
 			for(int i = 0; i < list.size(); i++){
 				ccc = (customer)list.get(i);
 				if(buttonString33[itemid].equals(ccc.getitems()) & clear == false){
