@@ -59,10 +59,16 @@ public class manager {
 					intime = myRs4.getString("intime");
 				}	
 			}
+			int checkinyear = Integer.parseInt(intime.substring(0,4));
+			int checkinmon = Integer.parseInt(intime.substring(5,7));
 			int checkinday = Integer.parseInt(intime.substring(8,10));
+			int checkoutyear = Integer.parseInt(intime.substring(0,4));
+			int checkoutmon = Integer.parseInt(intime.substring(5,7));
 			int checkoutday = Integer.parseInt(outtime.substring(8, 10));
 			int checkouthour = Integer.parseInt(outtime.substring(11, 13));
-			int tempday = checkoutday - checkinday;
+			JulianDate in = new JulianDate(checkinyear,checkinmon,checkinday);
+			JulianDate out = new JulianDate(checkoutyear,checkoutmon,checkoutday);
+			int tempday = out.getJulianDate() - in.getJulianDate();
 			if(tempday == 0){
 				day = 1;
 			}else{
