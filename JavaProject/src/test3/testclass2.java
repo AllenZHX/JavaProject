@@ -167,6 +167,7 @@ public class testclass2 extends JFrame implements ActionListener{
 				for(int j = 0; j < 31; j++)
 					jcb[i].addItem(jcbString_day[j]);
 			}
+			if(i==0|i==1){
 			jcb[i].addItemListener(new ItemListener(){
                  public void itemStateChanged(ItemEvent event){
                 	 if(event.getStateChange() == ItemEvent.SELECTED){
@@ -188,6 +189,30 @@ public class testclass2 extends JFrame implements ActionListener{
                      }
                  }
              });
+			}
+			if(i==3|i==4){
+				jcb[i].addItemListener(new ItemListener(){
+	                 public void itemStateChanged(ItemEvent event){
+	                	 if(event.getStateChange() == ItemEvent.SELECTED){
+	                		 int y = jcb[3].getSelectedIndex();
+	         				 int m = jcb[4].getSelectedIndex();
+	         				 int yy = Integer.parseInt(jcbString_year[y]);
+	         				 int mm = Integer.parseInt(jcbString_mon[m]);
+	         				 Calendar calendar = Calendar.getInstance();
+	         				 calendar.set(Calendar.YEAR,yy);   
+	         				 calendar.set(Calendar.MONTH,mm-1);   
+	         				 int  maxDate = calendar.getActualMaximum(Calendar.DATE);
+	         				 for(int j = 0; j < maxDate; j++){
+	         					jcb[5].addItem(jcbString_day[j]);
+	         				 }
+	         				 int count = jcb[2].getItemCount() - maxDate;
+	         				 for(int j = 0; j < count; j++){
+	         					jcb[5].removeItemAt(1);
+	         				 }
+	                     }
+	                 }
+	             });
+			}
 		    jcb[i].setFont(font);
 		    jcb[i].setBorder(BorderFactory.createLoweredBevelBorder());
 		}

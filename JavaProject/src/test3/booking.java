@@ -74,7 +74,20 @@ public class booking implements ActionListener{
 			ResultSet myRs2 = myStmt2.executeQuery(sql2);
 			while (myRs2.next()) {
 				int aa = myRs2.getInt("roomid");
-				roomstatus[aa] = 2;  // 2 means booking
+				String cc = myRs2.getString("fromday");
+				String dd = myRs2.getString("today");
+				int fyear2 = Integer.parseInt(cc.substring(0,4));
+				int fmon2 = Integer.parseInt(cc.substring(5,7));
+				int fday2 = Integer.parseInt(cc.substring(8,10));
+				int tyear2 = Integer.parseInt(dd.substring(0,4));
+				int tmon2 = Integer.parseInt(dd.substring(5,7));
+				int tday2 = Integer.parseInt(dd.substring(8, 10));
+				JulianDate c = new JulianDate(fyear2,fmon2,fday2);
+				JulianDate d = new JulianDate(tyear2,tmon2,tday2);
+				if(a.getJulianDate() >= c.getJulianDate() & a.getJulianDate() <= d.getJulianDate())
+					roomstatus[aa] = 2;  // 2 means booking
+				if(b.getJulianDate() >= c.getJulianDate() & b.getJulianDate() <= d.getJulianDate())
+					roomstatus[aa] = 2; 
 			}
 		}
 		catch (Exception exc) {
