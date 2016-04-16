@@ -20,6 +20,8 @@ public class customer {
 		private double fee_service;
 		private double total;
 		private String outtime;
+		private String fromday;
+		private String today;
 	    String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
 		String user = "root";
 		String password = ",26187108hoog";
@@ -58,6 +60,10 @@ public class customer {
 		
 		public void setouttime(String outtim){outtime = outtim;}
 		public String getouttime(){return outtime;}
+		public void setfromday(String fromda){fromday = fromda;}
+		public String getfromday(){return fromday;}
+		public void settoday(String toda){today = toda;}
+		public String gettoday(){return today;}
 		
 		@SuppressWarnings("rawtypes")
 		public ArrayList selectAll1(){
@@ -153,5 +159,27 @@ public class customer {
 			}
 			return ls;
 	   }
-		
+		public ArrayList selectAll5(){
+			ArrayList<customer> ls = new ArrayList<customer>();
+			try{
+				Connection myConn = DriverManager.getConnection(url, user, password);
+				String sql = "select * from booking";
+				Statement myStmt = myConn.createStatement();
+				ResultSet myRs = myStmt.executeQuery(sql);
+				while (myRs.next()) {
+					customer cc= new customer();
+					cc.setid1(myRs.getInt("id"));
+					cc.setname(myRs.getString("name"));
+					cc.setidnum(myRs.getInt("idnum"));
+					cc.setroom(myRs.getString("room"));
+					cc.setfromday(myRs.getString("fromday"));
+					cc.settoday(myRs.getString("today"));
+					ls.add(cc);
+				}	
+			}
+			catch (Exception exc) {
+				exc.printStackTrace();
+			}
+			return ls;
+	   }
 	}

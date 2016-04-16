@@ -182,12 +182,17 @@ public class manager {
 			
 			String sql = "delete from checkin where room = ?";
 			String sql2 = "delete from payment where roomnum = ?";
+			String sql6 = "delete from booking where name = ?";
 			PreparedStatement myStmt = myConn.prepareStatement(sql);
 			myStmt.setString(1,roo);
 			PreparedStatement myStmt2 = myConn.prepareStatement(sql2);
 			myStmt2.setString(1,roo);
+			PreparedStatement myStmt6 = myConn.prepareStatement(sql6);
+			myStmt6.setString(1,name);
 			myStmt.executeUpdate();
 			myStmt2.executeUpdate();
+			myStmt.executeUpdate();
+			myStmt6.executeUpdate();
 
 			
 		}

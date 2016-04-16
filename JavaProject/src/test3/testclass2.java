@@ -23,7 +23,7 @@ public class testclass2 extends JFrame implements ActionListener{
 	booking bb = new booking();
 	JButton[] button1 = new JButton[1];
 	JButton[] button2 = new JButton[5];
-	JButton[] button3 = new JButton[4];
+	JButton[] button3 = new JButton[5];
 	JButton[] button5 = new JButton[4];
 	JButton[] button6 = new JButton[3];
 	JButton[] button8 = new JButton[3];
@@ -39,7 +39,7 @@ public class testclass2 extends JFrame implements ActionListener{
 	JScrollPane scrollPane = new JScrollPane(table);
 	String[] buttonString1 = {"OK"};
 	String[] buttonString2 = {"Family","Double","Single","Check Current Rooms' Status","Clear"};
-	String[] buttonString3 = {"userinfo","service","payment","checkout"};
+	String[] buttonString3 = {"userinfo","service","payment","checkout","booking"};
 	String[] buttonString5 = {"Settle","confirm","Finish","Clear"};
 	String[] buttonString6 = {"Food and Drink","Massage","Pick-up"};
 	String[] buttonString8 = {"food", "massage","Pick-up"};
@@ -250,7 +250,7 @@ public class testclass2 extends JFrame implements ActionListener{
 		
 		
 		// ******for Panel3(show data list Part)******
-		for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < 5; i++) {
 		    button3[i] = new JButton();
 		    button3[i].setText(buttonString3[i]);
 		    button3[i].setFont(font2);
@@ -259,11 +259,13 @@ public class testclass2 extends JFrame implements ActionListener{
 		    button3[i].addActionListener(this);
 		}
 		p3.setLayout(null);
-		button3[0].setBounds(50,250,100,30);
-		button3[1].setBounds(475,250,100,30);
-		button3[2].setBounds(680,250,100,30);
-		button3[3].setBounds(260,250,100,30);
-		for(int i = 0; i < 4; i++)
+		button3[4].setBounds(30,250,100,30);
+		button3[0].setBounds(195,250,100,30);
+		button3[1].setBounds(540,250,100,30);
+		button3[2].setBounds(700,250,100,30);
+		button3[3].setBounds(360,250,100,30);
+		
+		for(int i = 0; i < 5; i++)
 			p3.add(button3[i]);
 		p3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		p3.setPreferredSize(new Dimension(830,295));
@@ -436,6 +438,9 @@ public class testclass2 extends JFrame implements ActionListener{
         if(ae.getSource() == button3[3]) {
         	showtable(3);
         }
+        if(ae.getSource() == button3[4]) {
+        	showtable(4);
+        }
         if(ae.getSource() == button5[0]) {
 			double total = mm.calculateTotalFee(ta5[0].getText(),displayArea.getText());     //  get all of fees from database and sum them then show it on the interface
 			ta5[1].setText(Double.toString(total));
@@ -515,6 +520,9 @@ public class testclass2 extends JFrame implements ActionListener{
 		if(listnum == 3){
 			defaultModel.setColumnIdentifiers(new Object[]{"Name","Idnum","Room","Check-in time","Check-out time","Totalfee"});
 		}
+		if(listnum == 4){
+			defaultModel.setColumnIdentifiers(new Object[]{"Name","Idnum","Room","Fromday","Today"});
+		}
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setModel(defaultModel);
 		//table.getColumnModel().getColumn(0).setPreferredWidth(15);
@@ -559,6 +567,15 @@ public class testclass2 extends JFrame implements ActionListener{
 				ccc = (customer)list.get(i);
 				defaultModel.addRow(new Object[]{ccc.getname(),
 								ccc.getidnum(),ccc.getroom(),ccc.getintime(),ccc.getouttime(),ccc.gettotal()});
+			}	
+		}
+		if(listnum == 4){
+			customer ccc = new customer();
+			ArrayList list = ccc.selectAll5();
+			for(int i = 0; i < list.size(); i++){
+				ccc = (customer)list.get(i);
+				defaultModel.addRow(new Object[]{ccc.getname(),
+								ccc.getidnum(),ccc.getroom(),ccc.getfromday(),ccc.gettoday()});
 			}	
 		}
 	}
