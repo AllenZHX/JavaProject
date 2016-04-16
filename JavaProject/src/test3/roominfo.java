@@ -74,6 +74,7 @@ public class roominfo implements ActionListener{
 			roomid = 99;
 			for(int i = 0; i < 27; i++){
 				roomstatus[i] = 0;   // 0 means empty
+				buttonenable[i] = false;
 			}
 			//1. Get a connection to database
 			Connection myConn = DriverManager.getConnection(url, user, password);
