@@ -482,24 +482,11 @@ public class testclass2 extends JFrame implements ActionListener{
         	mm.createANewBookingUser(ta9[0].getText(),ta9[1].getText(),bb.getroom(),bb.getroomid(),bb.getfrom(),bb.getto(),bb.getstatus());
         	new Popup(this,4);
         	cancel(1);
+        	showtable(4);
         }
         if(ae.getSource() == button9[1]) {
         	cancel(1);
         }
-        
-        /*if(ae.getSource() == button9[2]) {
-        	int y = jcb[0].getSelectedIndex();
-    		int m = jcb[1].getSelectedIndex();
-    		int yy = Integer.parseInt(jcbString_year[y]);
-    		int mm = Integer.parseInt(jcbString_mon[m]);
-    		Calendar calendar = Calendar.getInstance();
-    		calendar.set(Calendar.YEAR,yy-1);   
-    		calendar.set(Calendar.MONTH,mm-1);   
-    		int  maxDate = calendar.getActualMaximum(Calendar.DATE);
-    		System.out.println(maxDate);
-    		for(int j = 0; j < maxDate; j++)
-    			jcb[i].addItem(jcbString_day[j]);
-        }*/
         
 	}
 

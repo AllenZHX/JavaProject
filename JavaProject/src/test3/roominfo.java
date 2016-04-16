@@ -1,5 +1,12 @@
 package test3;
-
+/*
+ * Color meannings:
+ * Red: someone in the room today;
+ * Black: someone in the room today and have to check out today
+ * Yellow: someone booked the room and need to check in today but he/she haven't
+ * Blue: when u enter the right name and idnum, the blue one is the room you booked.
+ * Green: room is available
+ */
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -7,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DateFormat;
@@ -90,6 +98,15 @@ public class roominfo implements ActionListener{
 			ResultSet myRs2 = myStmt2.executeQuery(sql2);
 			while (myRs2.next()) {
 				int aa = myRs2.getInt("roomid");
+				if(roomstatus[aa] == 1){
+					String dd = myRs2.getString("today");
+					int tyear2 = Integer.parseInt(dd.substring(0,4));
+					int tmon2 = Integer.parseInt(dd.substring(5,7));
+					int tday2 = Integer.parseInt(dd.substring(8,10));
+					JulianDate d = new JulianDate(tyear2,tmon2,tday2);
+					if(e.getJulianDate() >= d.getJulianDate())
+						roomstatus[aa] = 3;   // 3 means should check out today
+				}
 				if(roomstatus[aa] == 0){
 					String cc = myRs2.getString("fromday");
 					String bookname = myRs2.getString("name");
@@ -100,10 +117,15 @@ public class roominfo implements ActionListener{
 					int fmon2 = Integer.parseInt(cc.substring(5,7));
 					int fday2 = Integer.parseInt(cc.substring(8,10));
 					JulianDate c = new JulianDate(fyear2,fmon2,fday2);
-					if(e.getJulianDate() > c.getJulianDate())
+					if(e.getJulianDate() > c.getJulianDate()){
 						roomstatus[aa] = 0;  // cancel booking
+						String sql3 = "delete from booking where name = ?";
+						PreparedStatement myStmt3 = myConn.prepareStatement(sql3);
+						myStmt3.setString(1,bookname);
+						myStmt3.executeUpdate();
+					}
 					if(e.getJulianDate() == c.getJulianDate())
-						roomstatus[aa] = 2; 
+						roomstatus[aa] = 2; // 2 means someone has already booked a room but haven't check in
 				}
 			}
 		}
@@ -126,12 +148,16 @@ public class roominfo implements ActionListener{
 			          button22[i].setBackground(Color.RED);
 			          button22[i].setEnabled(false);
 			    }
+			    if (roomstatus[i] == 3){
+			          button22[i].setBackground(Color.BLACK);
+			          button22[i].setEnabled(false);
+			    }
 			    if (roomstatus[i] == 2){
 			          if(buttonenable[i] == false){
 			        	  button22[i].setBackground(Color.YELLOW);
 			        	  button22[i].setEnabled(false);
 			          }else{
-			        	  button22[i].setBackground(new Color(150,100,250));
+			        	  button22[i].setBackground(Color.CYAN);
 			          }
 			    }
 			    button22[i].addActionListener(this);
