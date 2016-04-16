@@ -9,6 +9,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -18,9 +22,12 @@ import javax.swing.JPanel;
 
 public class roominfo implements ActionListener{
 	private int roomid;
-	private Boolean[] roomstatus = {false,false,false,false,false,false,false,false,false,
-									false,false,false,false,false,false,false,false,false,
-									false,false,false,false,false,false,false,false,false};
+	private int[] roomstatus = {0,0,0,0,0,0,0,0,0,
+								0,0,0,0,0,0,0,0,0,
+								0,0,0,0,0,0,0,0,0};
+	private boolean[] buttonenable = {false,false,false,false,false,false,false,false,false,
+										false,false,false,false,false,false,false,false,false,
+										false,false,false,false,false,false,false,false,false,};
 	private String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
 	private String user = "root";
 	private String password = ",26187108hoog";
@@ -39,8 +46,27 @@ public class roominfo implements ActionListener{
 	public String getroom(){return room;}
 	public Double getfeeofroom(){return feeofroom;}
 	
-	public void getRoomStatus() {   
+	public String getDate(){
+		Calendar ca = Calendar.getInstance();
+		String date = ca.get(Calendar.YEAR)+"-"+(ca.get(Calendar.MONTH)+1)+"-"+ca.get(Calendar.DATE);
+		DateFormat src = new SimpleDateFormat("yyyy-M-d");
+		DateFormat tar = new SimpleDateFormat("yyyy-MM-dd");
+		String tarDate = "";
+		try {
+			tarDate = tar.format(src.parse(date));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return tarDate;
+	}
+	
+	public void getRoomStatus(String name, String idnum) {   
 		try{
+			roomid = 99;
+			for(int i = 0; i < 27; i++){
+				roomstatus[i] = 0;   // 0 means empty
+			}
 			//1. Get a connection to database
 			Connection myConn = DriverManager.getConnection(url, user, password);
 			//2. Create a statement
@@ -48,14 +74,38 @@ public class roominfo implements ActionListener{
 			Statement myStmt = myConn.createStatement();
 			//3. Execute SQL 
 			ResultSet myRs = myStmt.executeQuery(sql);
-			roomid = 99;
-			for(int i = 0; i < 27; i++){
-				roomstatus[i] = false;
-			}
+			
 			while (myRs.next()) {
 				int aa = myRs.getInt("roomid");
-				roomstatus[aa] = true;
-			}	
+				roomstatus[aa] = 1;  // 1 means checkined
+			}		
+			String current = getDate();
+			int cyear = Integer.parseInt(current.substring(0,4));
+			int cmon = Integer.parseInt(current.substring(5,7));
+			int cday = Integer.parseInt(current.substring(8,10));
+			JulianDate e = new JulianDate(cyear,cmon,cday);
+			String sql2 = "select * from booking";
+			Statement myStmt2 = myConn.createStatement();
+			//3. Execute SQL 
+			ResultSet myRs2 = myStmt2.executeQuery(sql2);
+			while (myRs2.next()) {
+				int aa = myRs2.getInt("roomid");
+				if(roomstatus[aa] == 0){
+					String cc = myRs2.getString("fromday");
+					String bookname = myRs2.getString("name");
+					String bookidnum = myRs2.getString("idnum");
+					if(bookname.equals(name) & bookidnum.equals(idnum))
+						buttonenable[aa] = true;
+					int fyear2 = Integer.parseInt(cc.substring(0,4));
+					int fmon2 = Integer.parseInt(cc.substring(5,7));
+					int fday2 = Integer.parseInt(cc.substring(8,10));
+					JulianDate c = new JulianDate(fyear2,fmon2,fday2);
+					if(e.getJulianDate() > c.getJulianDate())
+						roomstatus[aa] = 0;  // cancel booking
+					if(e.getJulianDate() == c.getJulianDate())
+						roomstatus[aa] = 2; 
+				}
+			}
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
@@ -72,9 +122,17 @@ public class roominfo implements ActionListener{
 			    button22[i].setFont(font);
 			    button22[i].setBorder(BorderFactory.createRaisedBevelBorder());
 			    button22[i].setBackground(Color.GREEN);
-			    if (roomstatus[i] == true){
+			    if (roomstatus[i] == 1){
 			          button22[i].setBackground(Color.RED);
 			          button22[i].setEnabled(false);
+			    }
+			    if (roomstatus[i] == 2){
+			          if(buttonenable[i] == false){
+			        	  button22[i].setBackground(Color.YELLOW);
+			        	  button22[i].setEnabled(false);
+			          }else{
+			        	  button22[i].setBackground(new Color(150,100,250));
+			          }
 			    }
 			    button22[i].addActionListener(this);
 			}
@@ -94,11 +152,11 @@ public class roominfo implements ActionListener{
 	 public void actionPerformed(ActionEvent e){
         	for(int i = 0; i<27; i++){
         		if(e.getSource() == button22[i]){
-        			if(roomstatus[i] == false){
+        			if(roomstatus[i] == 0 | roomstatus[i] == 2){
 	        			button22[i].setBackground(Color.RED);
 	        			if(roomid < 27){
 	        				button22[roomid].setBackground(Color.GREEN);
-	        				roomstatus[roomid] = false;
+	        				roomstatus[roomid] = 0;
 	        			}
         		        room = buttonString22[i];
         		        roomid = i;
@@ -110,7 +168,7 @@ public class roominfo implements ActionListener{
         		        }else{
         		        	feeofroom = roomprice[2];
         		        }
-        		        roomstatus[i] = true;
+        		        roomstatus[i] = 1;
         			}else{
         				
         			}

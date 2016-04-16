@@ -9,6 +9,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -40,7 +44,6 @@ public class booking implements ActionListener{
 	public String getfrom(){return from;}
 	public String getto(){return to;}
 	
-	
 	public void getRoomStatus(String fy, String fm, String fd, String ty, String tm, String td) {   
 		int fyear = Integer.parseInt(fy);
 		int fmon = Integer.parseInt(fm);
@@ -53,21 +56,28 @@ public class booking implements ActionListener{
 		from = fy+"-"+fm+"-"+fd;
 		to = ty+"-"+tm+"-"+td;
 		try{
-			//1. Get a connection to database
-			Connection myConn = DriverManager.getConnection(url, user, password);
-			//2. Create a statement
-			String sql = "select * from checkin";
-			Statement myStmt = myConn.createStatement();
-			//3. Execute SQL 
-			ResultSet myRs = myStmt.executeQuery(sql);
 			roomid = 99;
 			for(int i = 0; i < 27; i++){
 				roomstatus[i] = 0;   // 0 means empty
 			}
+			//1. Get a connection to database
+			Connection myConn = DriverManager.getConnection(url, user, password);
+			//2. Create a statement
+			/*String sql = "select * from checkin";
+			Statement myStmt = myConn.createStatement();
+			//3. Execute SQL 
+			ResultSet myRs = myStmt.executeQuery(sql);
+			
 			while (myRs.next()) {
 				int aa = myRs.getInt("roomid");
+				String current = getDate();
+				int cyear = Integer.parseInt(current.substring(0,4));
+				int cmon = Integer.parseInt(current.substring(5,7));
+				int cday = Integer.parseInt(current.substring(8,10));
+				JulianDate e = new JulianDate(cyear,cmon,cday);
+				if(a.getJulianDate() >= e.getJulianDate())
 				roomstatus[aa] = 1;  // 1 means checkined
-			}	
+			}	*/
 			String sql2 = "select * from booking";
 			Statement myStmt2 = myConn.createStatement();
 			//3. Execute SQL 

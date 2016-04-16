@@ -205,7 +205,7 @@ public class testclass2 extends JFrame implements ActionListener{
 	         				 for(int j = 0; j < maxDate; j++){
 	         					jcb[5].addItem(jcbString_day[j]);
 	         				 }
-	         				 int count = jcb[2].getItemCount() - maxDate;
+	         				 int count = jcb[5].getItemCount() - maxDate;
 	         				 for(int j = 0; j < count; j++){
 	         					jcb[5].removeItemAt(1);
 	         				 }
@@ -224,17 +224,17 @@ public class testclass2 extends JFrame implements ActionListener{
 		label9[0].setBounds(200,10,160,50);
 		label9[1].setBounds(200,70,80,50);
 		label9[2].setBounds(200,140,80,50);
-		jcb[0].setBounds(680,70,80,30);
-		jcb[1].setBounds(780,70,80,30);
-		jcb[2].setBounds(880,70,80,30);
-		jcb[3].setBounds(680,130,80,30);
-		jcb[4].setBounds(780,130,80,30);
-		jcb[5].setBounds(880,130,80,30);
-		label9[3].setBounds(600,60,80,50);
-		label9[4].setBounds(600,120,80,50);
-		label9[5].setBounds(700,15,80,50);
-		label9[6].setBounds(795,15,80,50);
-		label9[7].setBounds(900,15,80,50);
+		jcb[0].setBounds(670,70,80,30);
+		jcb[1].setBounds(770,70,80,30);
+		jcb[2].setBounds(870,70,80,30);
+		jcb[3].setBounds(670,130,80,30);
+		jcb[4].setBounds(770,130,80,30);
+		jcb[5].setBounds(870,130,80,30);
+		label9[3].setBounds(590,60,80,50);
+		label9[4].setBounds(590,120,80,50);
+		label9[5].setBounds(690,15,80,50);
+		label9[6].setBounds(785,15,80,50);
+		label9[7].setBounds(890,15,80,50);
 		ta9[0].setBounds(290,80,180,30);
 		ta9[1].setBounds(290,150,180,30);
 		for(int i = 0; i < 3; i++){
@@ -418,7 +418,7 @@ public class testclass2 extends JFrame implements ActionListener{
             new Popup_Rinfo(this,2);   //single room info
         }
 		if(ae.getSource() == button2[3]){
-			rr.getRoomStatus();      // search database, get room status (empty or fill)
+			rr.getRoomStatus(ta1[0].getText(),ta1[1].getText());      // search database, get room status (empty or fill)
 			rr.Popup_roomStatus(this);    // show the current room status
         }
         if(ae.getSource() == button2[4]) {
