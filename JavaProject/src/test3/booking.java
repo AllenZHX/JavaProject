@@ -33,6 +33,7 @@ public class booking implements ActionListener{
     private String[] buttonString22 = {"F1","F2","D1","D2","D3","D4","S1","S2","S3",
 					           "F3","F4","D5","D6","D7","D8","S4","S5","S6",
 					           "F5","F6","D9","D10","D11","D12","S7","S8","S9"};
+    private String[] roominfo = {"","","","","","","","","","","","","","","","","","","","","","","","","","",""};
     private String room;
 	private String status;
 	private String from;
@@ -63,27 +64,13 @@ public class booking implements ActionListener{
 			//1. Get a connection to database
 			Connection myConn = DriverManager.getConnection(url, user, password);
 			//2. Create a statement
-			/*String sql = "select * from checkin";
-			Statement myStmt = myConn.createStatement();
-			//3. Execute SQL 
-			ResultSet myRs = myStmt.executeQuery(sql);
-			
-			while (myRs.next()) {
-				int aa = myRs.getInt("roomid");
-				String current = getDate();
-				int cyear = Integer.parseInt(current.substring(0,4));
-				int cmon = Integer.parseInt(current.substring(5,7));
-				int cday = Integer.parseInt(current.substring(8,10));
-				JulianDate e = new JulianDate(cyear,cmon,cday);
-				if(a.getJulianDate() >= e.getJulianDate())
-				roomstatus[aa] = 1;  // 1 means checkined
-			}	*/
 			String sql2 = "select * from booking";
 			Statement myStmt2 = myConn.createStatement();
 			//3. Execute SQL 
 			ResultSet myRs2 = myStmt2.executeQuery(sql2);
 			while (myRs2.next()) {
 				int aa = myRs2.getInt("roomid");
+				String booker = myRs2.getString("name");
 				String cc = myRs2.getString("fromday");
 				String dd = myRs2.getString("today");
 				int fyear2 = Integer.parseInt(cc.substring(0,4));
@@ -94,10 +81,14 @@ public class booking implements ActionListener{
 				int tday2 = Integer.parseInt(dd.substring(8, 10));
 				JulianDate c = new JulianDate(fyear2,fmon2,fday2);
 				JulianDate d = new JulianDate(tyear2,tmon2,tday2);
-				if(a.getJulianDate() >= c.getJulianDate() & a.getJulianDate() <= d.getJulianDate())
+				if(a.getJulianDate() >= c.getJulianDate() & a.getJulianDate() <= d.getJulianDate()){
 					roomstatus[aa] = 2;  // 2 means booking
-				if(b.getJulianDate() >= c.getJulianDate() & b.getJulianDate() <= d.getJulianDate())
+					roominfo[aa] = booker + ": " + cc + " ~ " + dd.substring(5,10);
+				}
+				if(b.getJulianDate() >= c.getJulianDate() & b.getJulianDate() <= d.getJulianDate()){
 					roomstatus[aa] = 2; 
+					roominfo[aa] = booker + ": " + cc + " ~ " + dd.substring(5,10);
+				}
 			}
 		}
 		catch (Exception exc) {
@@ -122,6 +113,7 @@ public class booking implements ActionListener{
 			    if (roomstatus[i] == 2){
 			          button22[i].setBackground(Color.YELLOW);
 			          button22[i].setEnabled(false);
+			          button22[i].setToolTipText(roominfo[i]);
 			    }
 			    button22[i].addActionListener(this);
 			}
