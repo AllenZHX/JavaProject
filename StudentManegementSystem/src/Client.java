@@ -1,32 +1,58 @@
-import java.io.*;  
-import java.net.*;  
-/**  
- * @author hnyer  
- *  
- */ 
-public class Client {  
-    public static void main(String[] args) throws Exception, IOException {  
-        Socket client=new Socket("127.0.0.1",9000);//访问其他电脑时,ip地址改成相应的。  
-        System.out.println("连接服务端成功！");  
-        System.out.println("请在控制台输入信息(bye表示结束对话)：");  
-        BufferedReader br1;  
-        BufferedReader br2=new BufferedReader(new InputStreamReader(client.getInputStream()));//从服务端获得输入流  
-        BufferedWriter bw1=new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));//发给服务器  
-        String line=null;  
-        String line2=null;  
-        while(true){  
-            br1=new BufferedReader(new InputStreamReader(System.in));//控制台输入流  
-            line=br1.readLine();  
-            if(line==null){break;}  
-            bw1.write(line);  
-            bw1.newLine();  
-            bw1.flush();  
-            if("bye".equalsIgnoreCase(line)){  
-                System.out.println("对话结束！谢谢使用");  
-                break;  
-            }  
-            line2=br2.readLine();//接收服务器的反馈  
-            System.out.println("服务器说："+line2);//显示服务器的消息  
-        }//while  
-    }  
-}  
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.io.*;
+import java.net.*;
+
+
+public class Client extends JFrame{
+	private PrintWriter printWriter;
+	private JTextArea jta;
+	private JScrollPane jsp;
+	private Socket socket;
+	
+	
+	public Client(){
+		Container c=getContentPane();
+		c.setBackground(Color.RED);
+		
+		JTextField jtf=new JTextField();
+		jtf.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				printWriter.println(jtf.getText());
+				jta.append(jtf.getText()+"\n");
+				jta.setSelectionEnd(jta.getText().length());
+				jtf.setText("");
+			}
+		});
+		c.add(jtf, BorderLayout.SOUTH);
+		
+		jta=new JTextArea();
+		
+		jsp=new JScrollPane(jta);
+		c.add(jsp, BorderLayout.CENTER);
+		
+		setSize(600,400);
+		setTitle("send message to server");
+		setVisible(true);
+	}
+
+	
+	
+	
+	
+	public void connect() throws Exception{
+		jta.append("Trying to connect...\n");
+		socket=new Socket("Xiang-Cao",8087);
+		printWriter=new PrintWriter(socket.getOutputStream(),true);
+		jta.append("Connected to server!");
+		
+	}
+	
+	
+	
+	public static void main(String[] args) throws Exception{
+		Client client=new Client();
+		client.connect();
+	}
+}

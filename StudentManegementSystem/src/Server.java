@@ -1,35 +1,41 @@
-import java.io.*;  
-import java.net.*;  
-/**  
- * @author hnyer  
- *  
- */ 
-public class Server {  
-    public static void main(String[] args) throws Exception {  
-        ServerSocket ss=new ServerSocket(9001);//开放端口 888  
-        System.out.println("服务器启动！");  
-        Socket s=ss.accept();//等待客户端来连接  
-        System.out.println("有客户端连接成功！");  
-        BufferedReader br2;  
-        BufferedReader br1=new BufferedReader(new InputStreamReader(s.getInputStream()));//从客户端获得输入流  
-        BufferedWriter bw1=new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));//发送给客户端的输出流  
-        String line=null;  
-        String line2=null;  
-        while(true){  
-            line=br1.readLine();  
-            if(line==null){break;}  
-            if("bye".equalsIgnoreCase(line)){  
-                System.out.println("对话结束！谢谢使用");  
-                break;  
-            }  
-            System.out.println("客户端说："+line);  
-            br2=new BufferedReader(new InputStreamReader(System.in));//控制台输入流.  
-            System.out.println("输入回答客户端的信息:");  
-            line2=br2.readLine();  
-            bw1.write(line2);//服务端回应客户端  
-            bw1.newLine();  
-            bw1.flush();  
-              
-        }  
-    }  
-}  
+import java.io.*;
+import java.net.*;
+
+public class Server{
+	
+	private ServerSocket serverSocket;
+	private Socket socket;
+	private BufferedReader bufferedReader;
+	
+	public void getServer() throws Exception{
+		serverSocket=new ServerSocket(8087);
+		System.out.println("server socket created!");
+		
+		while(true){
+			System.out.println("Waiting client to connect...");
+			socket=serverSocket.accept();
+			bufferedReader=new BufferedReader( new InputStreamReader( socket.getInputStream()) );
+			
+			getClientMessage();
+		}
+	}
+	
+	public void getClientMessage() throws Exception{
+		while(true){
+			System.out.println("Client says:"+bufferedReader.readLine());
+		}
+	}
+	
+	public static void main(String[] args) throws Exception{
+
+		InetAddress inetAddress=InetAddress.getLocalHost();
+		String name=inetAddress.getHostName();
+		String ip=inetAddress.getHostAddress();
+		
+		System.out.println(name);
+		System.out.println(ip);
+		
+		Server server=new Server();
+		server.getServer();
+	}
+}
