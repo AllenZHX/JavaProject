@@ -10,7 +10,7 @@ public class Server extends ServerSocket {
         try {
             while (true) {
                 Socket socket = accept();
-                new CreateServerThread(socket);//当有请求时，启一个线程处理
+                new CreateServerThread(socket);
             }
         }catch (IOException e) {
         }finally {
