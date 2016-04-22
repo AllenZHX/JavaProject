@@ -10,10 +10,10 @@ public class manager {
 	private String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
 	private String user = "root";
 	private String password = ",26187108hoog";
-	private boolean permitbuy = false;
+	//private boolean permitbuy = false;
 	private int day = 1;
 	
-	public boolean getpermit(){return permitbuy;}
+	//public boolean getpermit(){return permitbuy;}
 	
 	public void createANewBookingUser(String name, String idnum, String room, int roomid, String from, String to, String status) {
 		try{

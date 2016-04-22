@@ -96,7 +96,6 @@ public class booking implements ActionListener{
 		}
 	}
 	public void Popup_roomStatus(JFrame jFrame){
-		 
 	     Font font =  new Font("Times new Roman", Font.BOLD, 20);
 	
 		 JPanel p22 = new JPanel(new GridLayout(3,9,10,15));
