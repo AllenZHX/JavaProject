@@ -3,6 +3,8 @@ package test3;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+
 import javax.swing.*;
 
 public class pickup implements ActionListener {
@@ -12,6 +14,7 @@ public class pickup implements ActionListener {
 	private JTextArea[] ta1 = new JTextArea[5];
     private String[] buttonString1 = {"Ok","cancel"};
     private String[] labelString1 = {"Name:","Phone","Pick up Time:","From:","To:"};
+    private String info = "";
 	Font font =  new Font("Times new Roman", Font.BOLD, 20);
 	
 	public void Popup_service(JFrame jFrame){
@@ -74,9 +77,26 @@ public class pickup implements ActionListener {
 	}
 		
 	 public void actionPerformed(ActionEvent e){
-		if(e.getActionCommand().equals("settle")){
-			//calculateServPrice();
+		if(e.getActionCommand().equals("Ok")){
+			sendInfoToServer();
 		}
+		if(e.getActionCommand().equals("cancel")){
+			clear();
+		}
+	 }
+	 public void sendInfoToServer(){
+		 for(int i = 0; i < 5; i++){
+			 info += ta1[i].getText();
+			 if(i != 4){
+				 info += "\n";
+			 }
+		 }	 
+		 new Client(info);
+	 }
+	 public void clear(){
+		 for(int i = 0; i < 5; i++){
+			 ta1[i].setText("");
+		 }
 	 }
 }
 
