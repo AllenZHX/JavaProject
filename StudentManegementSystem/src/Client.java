@@ -1,58 +1,32 @@
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.io.*;
-import java.net.*;
-
-
-public class Client extends JFrame{
-	private PrintWriter printWriter;
-	private JTextArea jta;
-	private JScrollPane jsp;
-	private Socket socket;
-	
-	
-	public Client(){
-		Container c=getContentPane();
-		c.setBackground(Color.RED);
-		
-		JTextField jtf=new JTextField();
-		jtf.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				printWriter.println(jtf.getText());
-				jta.append(jtf.getText()+"\n");
-				jta.setSelectionEnd(jta.getText().length());
-				jtf.setText("");
-			}
-		});
-		c.add(jtf, BorderLayout.SOUTH);
-		
-		jta=new JTextArea();
-		
-		jsp=new JScrollPane(jta);
-		c.add(jsp, BorderLayout.CENTER);
-		
-		setSize(600,400);
-		setTitle("send message to server");
-		setVisible(true);
-	}
-
-	
-	
-	
-	
-	public void connect() throws Exception{
-		jta.append("Trying to connect...\n");
-		socket=new Socket("Xiang-Cao",8087);
-		printWriter=new PrintWriter(socket.getOutputStream(),true);
-		jta.append("Connected to server!");
-		
-	}
-	
-	
-	
-	public static void main(String[] args) throws Exception{
-		Client client=new Client();
-		client.connect();
-	}
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+  
+public class Client {
+    public static void main(String[] args) {
+        try {
+            Socket socket =new Socket("155.246.161.87",8005);
+            socket.setSoTimeout(60000);
+  
+            PrintWriter printWriter =new PrintWriter(socket.getOutputStream(),true);
+            BufferedReader bufferedReader =new BufferedReader(new InputStreamReader(socket.getInputStream()));
+              
+            String result ="";
+            while(result.indexOf("bye") == -1){
+                BufferedReader sysBuff =new BufferedReader(new InputStreamReader(System.in));
+                printWriter.println(sysBuff.readLine());
+                printWriter.flush();
+                  
+                result = bufferedReader.readLine();
+                System.out.println("Server say : " + result);////////////////
+            }
+  
+            printWriter.close();
+            bufferedReader.close();
+            socket.close();
+        }catch (Exception e) {
+            System.out.println("Exception:" + e);
+        }
+    }
 }
