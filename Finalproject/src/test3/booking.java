@@ -59,7 +59,7 @@ public class booking extends JDBCinfo implements ActionListener{
 				roomstatus[i] = 0;   // 0 means empty
 			}
 			//1. Get a connection to database
-			Connection myConn = DriverManager.getConnection(url, user, password);
+			//Connection myConn = DriverManager.getConnection(url, user, password);
 			//2. Create a statement
 			String sql2 = "select * from booking";
 			Statement myStmt2 = myConn.createStatement();
@@ -90,7 +90,7 @@ public class booking extends JDBCinfo implements ActionListener{
 		}
 		catch (Exception exc) {
 			exc.printStackTrace();
-		}
+		} 
 	}
 	public void Popup_roomStatus(JFrame jFrame){
 	     Font font =  new Font("Times new Roman", Font.BOLD, 20);

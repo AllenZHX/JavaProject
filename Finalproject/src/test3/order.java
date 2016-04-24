@@ -189,7 +189,7 @@ public class order extends JDBCinfo implements ActionListener {
 	 public void addServiceinfo(String roomnum,String newfee_service, int[] idlist){
 				try{
 					//1. Get a connection to database
-					Connection myConn = DriverManager.getConnection(url, user, password);
+					//Connection myConn = DriverManager.getConnection(url, user, password);
 					//2. Create a statement
 					String sql = "select * from payment";
 					Statement myStmt = myConn.createStatement();

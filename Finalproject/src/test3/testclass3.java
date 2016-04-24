@@ -8,7 +8,8 @@ import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;  
-import java.util.Date;  
+import java.util.Date;
+import java.util.Observable;
 import java.util.Timer;  
 import java.util.TimerTask;  
 import javax.swing.*;
@@ -19,7 +20,7 @@ public class testclass3 extends JFrame implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
 	roominfo rr = new roominfo();
-	manager mm = new manager();
+	private static manager mm = new manager();
 	booking bb = new booking();
 	JButton[] button1 = new JButton[1];
 	JButton[] button2 = new JButton[5];
@@ -524,6 +525,22 @@ public class testclass3 extends JFrame implements ActionListener{
 	
 	public static void main(String[] args){
 		new testclass3();
+		while(true){
+			
+			if(mm.getdatabaseinfo() == 1){
+				new Popup(new JFrame(), 4);
+				mm.reset();
+			}else if(mm.getdatabaseinfo() == 2){
+				new Popup(new JFrame(), 6);
+				mm.reset();
+			}
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+			}
+			
+		}
+		
 	}
 
 }

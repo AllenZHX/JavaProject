@@ -1,7 +1,18 @@
 package test3;
 
+import java.sql.*;
+
 public class JDBCinfo {
-	protected String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
-	protected String user = "root";
-	protected String password = ",26187108hoog";
+	private static String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
+	private static String user = "root";
+	private static String password = ",26187108hoog";
+	protected static Connection myConn = get();
+	public static Connection get(){
+		try {
+			 myConn = DriverManager.getConnection(url, user, password);
+			 return myConn;
+		} catch (SQLException e) {
+		}
+		return null;
+	}
 }

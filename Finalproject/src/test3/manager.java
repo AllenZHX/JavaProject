@@ -7,15 +7,44 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class manager extends JDBCinfo{
-	//private boolean permitbuy = false;
 	private int day = 1;
+	private int databaseinfo = 0;
+	private int current = 0;
 	
-	//public boolean getpermit(){return permitbuy;}
+	public int getdatabaseinfo(){
+		try{
+			
+			//myConn = DriverManager.getConnection(url, user, password);
+			//2. Create a statement
+			String sql = "select * from booking";
+			Statement myStmt = myConn.createStatement();
+			ResultSet myRs = myStmt.executeQuery(sql);
+			int i = 0;
+			while (myRs.next()) {
+				i++;
+			}
+			if(current == 0){current = i;}
+			if(current - i == -1){
+				databaseinfo = 1;
+				current = i;
+			}else if(current -i == 1){
+				databaseinfo = 2;
+				current = i;
+			}
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		return databaseinfo;
+	}
+	public void reset(){
+		databaseinfo = 0;
+	}
 	
 	public void createANewBookingUser(String name, String idnum, String room, int roomid, String from, String to, String status) {
 		try{
 			//1. Get a connection to database
-			Connection myConn = DriverManager.getConnection(url, user, password);
+			//Connection myConn = DriverManager.getConnection(url, user, password);
 			//2. Create a statement
 			String sql = "insert into booking (name,idnum,room,roomid,fromday,today,status) values(?,?,?,?,?,?,?)";
 			PreparedStatement myStmt = myConn.prepareStatement(sql);
@@ -37,7 +66,7 @@ public class manager extends JDBCinfo{
 	public void createANewUser(String name, String idnum, String room, String status, int roomid, String intime,double feeofroom) {
 		try{
 			//1. Get a connection to database
-			Connection myConn = DriverManager.getConnection(url, user, password);
+			//Connection myConn = DriverManager.getConnection(url, user, password);
 			//2. Create a statement
 			String sql = "insert into checkin (name,idnum,room,status,roomid,intime) values(?,?,?,?,?,?)";
 			String sql2 = "insert into payment (roomnum,fee_room,fee_service,total) values(?,?,?,?)";
@@ -67,7 +96,7 @@ public class manager extends JDBCinfo{
 		
 		try{
 			//1. Get a connection to database
-			Connection myConn = DriverManager.getConnection(url, user, password);
+			//Connection myConn = DriverManager.getConnection(url, user, password);
 			//2. Create a statement
 			String sql4 = "select * from checkin";
 			Statement myStmt4 = myConn.createStatement();
@@ -139,7 +168,7 @@ public class manager extends JDBCinfo{
 	
 	public void checkout(String roo,String outtime){
 		try{
-			Connection myConn = DriverManager.getConnection(url, user, password);
+			//Connection myConn = DriverManager.getConnection(url, user, password);
 			
 			String sql3 = "select * from payment";
 			Statement myStmt3 = myConn.createStatement();

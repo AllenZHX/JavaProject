@@ -66,7 +66,7 @@ public class customer extends JDBCinfo {
 		public ArrayList selectAll1(){
 			ArrayList<customer> ls = new ArrayList<customer>();
 			try{
-				Connection myConn = DriverManager.getConnection(url, user, password);
+				//Connection myConn = DriverManager.getConnection(url, user, password);
 				String sql = "select * from checkin";
 				Statement myStmt = myConn.createStatement();
 				ResultSet myRs = myStmt.executeQuery(sql);
@@ -90,7 +90,7 @@ public class customer extends JDBCinfo {
 		public ArrayList selectAll2(){
 			ArrayList<customer> ls = new ArrayList<customer>();
 			try{
-				Connection myConn = DriverManager.getConnection(url, user, password);
+				//Connection myConn = DriverManager.getConnection(url, user, password);
 				String sql = "select * from servicelist";
 				Statement myStmt = myConn.createStatement();
 				ResultSet myRs = myStmt.executeQuery(sql);
@@ -112,7 +112,7 @@ public class customer extends JDBCinfo {
 		public ArrayList selectAll3(){
 			ArrayList<customer> ls = new ArrayList<customer>();
 			try{
-				Connection myConn = DriverManager.getConnection(url, user, password);
+				//Connection myConn = DriverManager.getConnection(url, user, password);
 				String sql = "select * from payment";
 				Statement myStmt = myConn.createStatement();
 				ResultSet myRs = myStmt.executeQuery(sql);
@@ -135,7 +135,7 @@ public class customer extends JDBCinfo {
 		public ArrayList selectAll4(){
 			ArrayList<customer> ls = new ArrayList<customer>();
 			try{
-				Connection myConn = DriverManager.getConnection(url, user, password);
+				//Connection myConn = DriverManager.getConnection(url, user, password);
 				String sql = "select * from checkoutlist";
 				Statement myStmt = myConn.createStatement();
 				ResultSet myRs = myStmt.executeQuery(sql);
@@ -159,7 +159,7 @@ public class customer extends JDBCinfo {
 		public ArrayList selectAll5(){
 			ArrayList<customer> ls = new ArrayList<customer>();
 			try{
-				Connection myConn = DriverManager.getConnection(url, user, password);
+				//Connection myConn = DriverManager.getConnection(url, user, password);
 				String sql = "select * from booking";
 				Statement myStmt = myConn.createStatement();
 				ResultSet myRs = myStmt.executeQuery(sql);
