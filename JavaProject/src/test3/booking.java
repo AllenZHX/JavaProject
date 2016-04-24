@@ -20,14 +20,11 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class booking implements ActionListener{
+public class booking extends JDBCinfo implements ActionListener{
 	private int roomid;
 	private int[] roomstatus = {0,0,0,0,0,0,0,0,0,
 								0,0,0,0,0,0,0,0,0,
 								0,0,0,0,0,0,0,0,0};
-	private String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
-	private String user = "root";
-	private String password = ",26187108hoog";
 	private JDialog jDialog=null; 
 	private JButton[] button22 = new JButton[27];
     private String[] buttonString22 = {"F1","F2","D1","D2","D3","D4","S1","S2","S3",

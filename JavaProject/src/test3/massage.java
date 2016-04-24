@@ -14,11 +14,8 @@ import javax.swing.table.DefaultTableModel;
 
 import test3.Popup;
 
-public class massage implements ActionListener {
+public class massage extends JDBCinfo implements ActionListener {
 	private JDialog jDialog=null; 
-	private String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
-	private String user = "root";
-	private String password = ",26187108hoog";
 	private JButton[] button1 = new JButton[3];
 	private JButton[] button2 = new JButton[3];
 	private JButton[] button3 = new JButton[3];

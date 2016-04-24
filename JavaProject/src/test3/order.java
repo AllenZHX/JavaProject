@@ -10,10 +10,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 
-public class order implements ActionListener {
-	private String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
-	private String user = "root";
-	private String password = ",26187108hoog";
+public class order extends JDBCinfo implements ActionListener {
 	private JDialog jDialog=null; 
 	private JButton[] button33 = new JButton[30];
 	private JButton[] button333 = new JButton[3];

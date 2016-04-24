@@ -6,10 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class manager {
-	private String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
-	private String user = "root";
-	private String password = ",26187108hoog";
+public class manager extends JDBCinfo{
 	//private boolean permitbuy = false;
 	private int day = 1;
 	

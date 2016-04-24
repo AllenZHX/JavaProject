@@ -3,7 +3,7 @@ package test3;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class customer {
+public class customer extends JDBCinfo {
 		private int id1;
 		private String name;
 		private int idnum;
@@ -22,9 +22,6 @@ public class customer {
 		private String outtime;
 		private String fromday;
 		private String today;
-	    String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
-		String user = "root";
-		String password = ",26187108hoog";
 		public void setid1(int i1){id1 = i1;}
 		public void setname(String nam){name = nam;}
 		public void setidnum(int idnu){idnum = idnu;}

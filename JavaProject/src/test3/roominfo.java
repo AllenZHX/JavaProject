@@ -28,7 +28,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class roominfo implements ActionListener{
+public class roominfo extends JDBCinfo implements ActionListener{
 	private int roomid;
 	private int[] roomstatus = {0,0,0,0,0,0,0,0,0,
 								0,0,0,0,0,0,0,0,0,

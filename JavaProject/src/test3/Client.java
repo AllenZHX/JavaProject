@@ -13,13 +13,11 @@ public class Client {
     public Client(String info) {
         try {
  
-            client = new Socket("155.246.161.90", 8888);
+            client = new Socket("155.246.161.87", 8005);
             BufferedReader input = new BufferedReader(new StringReader(info));
             BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             PrintStream out = new PrintStream(client.getOutputStream());;
             boolean flag = true;
-            
-            new Popup(new JFrame(),5);
             //System.out.println("Successfully connected! Start communicating!");
             int n = 0;
             while (flag & n < 5) {

@@ -113,7 +113,6 @@ public class testclass3 extends JFrame implements ActionListener{
 		for(int i = 0; i < 2; i++) 
 			p1.add(ta1[i]);
 		
-		// ******for Panel2(Booking Part)*******
 		for(int i = 0; i < 5; i++) {
 		    button2[i] = new JButton();
 		    button2[i].setText(buttonString2[i]);
@@ -132,7 +131,7 @@ public class testclass3 extends JFrame implements ActionListener{
 		for(int i = 0; i < 5; i++)
 			p1.add(button2[i]);
 		p1.setOpaque(false);
-		///////////////////////////////////////////////////
+		/////////////////////(Booking Part)//////////////////////////////
 
 		for(int i = 0; i < 3; i++) {
 		    button9[i] = new JButton();
