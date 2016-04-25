@@ -19,5 +19,6 @@ DataBase: We will use the MySQL database.(use JDBC to connect database with Java
 4.     Xiang Cao will create a car rental interface, which can receive the order info from hotel, then send a notice back to hotel.
 
 #Main classes and structure:
+just see the classStructure.vsd
 
 
