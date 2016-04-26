@@ -1,4 +1,5 @@
 package test3;
+import java.awt.Color;
 /*
  * @ author: Hongxiang Zheng
  * 
@@ -46,6 +47,7 @@ public Table(int listnum,JTable table){
 		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(defaultModel);  
         table.setRowSorter(sorter); 
 		table.setFont(font3);
+		table.setBackground(Color.cyan);
 		DefaultTableCellRenderer r = new DefaultTableCellRenderer();   
 		r.setHorizontalAlignment(JLabel.CENTER);   
 		table.setDefaultRenderer(Object.class, r);

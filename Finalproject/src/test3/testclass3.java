@@ -45,7 +45,7 @@ public class testclass3 extends JFrame implements ActionListener{
 	JScrollPane scrollPane = new JScrollPane(table);
 	String[] buttonString1 = {"OK"};
 	String[] buttonString2 = {"Family","Double","Single","Check Current Rooms' Status","Clear"};
-	String[] buttonString3 = {"userinfo","service","payment","checkout","booking"};
+	String[] buttonString3 = {"checkin","service","payment","checkout","booking"};
 	String[] buttonString5 = {"Settle","confirm","Finish","Clear"};
 	String[] buttonString6 = {"Food and Drink","Massage","Pick-up"};
 	String[] buttonString8 = {"food", "massage","Pick-up"};
@@ -394,7 +394,7 @@ public class testclass3 extends JFrame implements ActionListener{
 		c.add(p3);
 		
 		((JComponent) c).setOpaque(false);
-		ImageIcon img = new ImageIcon("C:\\3.jpg");  //add background picture
+		ImageIcon img = new ImageIcon("lib/7.jpg");  //add background picture
 	    JLabel hy = new JLabel(img);
 	    getLayeredPane().add(hy, new Integer(Integer.MIN_VALUE));
 	    hy.setBounds(0,0,img.getIconWidth(),img.getIconHeight()); 

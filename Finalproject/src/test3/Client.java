@@ -1,6 +1,6 @@
 package test3;
 /*
- * @ author: Hongxiang Zheng, Xiang Cao, Yingbin Zheng
+ * @ author: Hongxiang Zheng, Xiang Cao
  * 
  * ***************************************************
  * **********   Client for pickup part    ************

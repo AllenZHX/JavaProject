@@ -117,7 +117,7 @@ public class food extends JDBCinfo implements ActionListener {
 		   jDialog.getContentPane().add(p33);
 		   jDialog.getContentPane().add(p333);
 		   ((JPanel)jDialog.getContentPane()).setOpaque(false);
-			ImageIcon img = new ImageIcon("C:\\3.jpg");  //add background picture
+			ImageIcon img = new ImageIcon("lib/7.jpg");  //add background picture
 		    JLabel hy = new JLabel(img);
 		    jDialog.getLayeredPane().add(hy, new Integer(Integer.MIN_VALUE));
 		    hy.setBounds(0,0,img.getIconWidth(),img.getIconHeight()); 
