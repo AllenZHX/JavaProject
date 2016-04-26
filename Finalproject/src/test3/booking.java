@@ -1,19 +1,20 @@
 package test3;
-
+/*
+ * @ author: Hongxiang Zheng, Xiang Cao, Yingbin Zheng
+ * 
+ * ***************************************************
+ * **********   booking popup window      ************
+ * ***************************************************
+ * 
+ */
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -145,4 +146,55 @@ public class booking extends JDBCinfo implements ActionListener{
         		}
         	}
     }
+	private int databaseinfo = 0;
+	private int current = 0;
+	
+	public int getdatabaseinfo(){
+		try{
+			//2. Create a statement
+			String sql = "select * from booking";
+			Statement myStmt = myConn.createStatement();
+			ResultSet myRs = myStmt.executeQuery(sql);
+			int i = 0;
+			while (myRs.next()) {
+				i++;
+			}
+			if(current == 0){current = i;}
+			if(current - i == -1){
+				databaseinfo = 1;
+				current = i;
+			}else if(current -i == 1){
+				databaseinfo = 2;
+				current = i;
+			}
+			//myConn.close();
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		return databaseinfo;
+	}
+	public void reset(){
+		databaseinfo = 0;
+	}
+	
+	public void createANewBookingUser(String name, String idnum, String room, int roomid, String from, String to, String status) {
+		try{
+			//2. Create a statement
+			String sql = "insert into booking (name,idnum,room,roomid,fromday,today,status) values(?,?,?,?,?,?,?)";
+			PreparedStatement myStmt = myConn.prepareStatement(sql);
+			myStmt.setString(1,name);
+			myStmt.setString(2,idnum);
+			myStmt.setString(3,room);
+			myStmt.setInt(4,roomid);
+			myStmt.setString(5,from);
+			myStmt.setString(6,to);
+			myStmt.setString(7,status);
+			//3. Execute SQL 
+			myStmt.executeUpdate();
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
 }

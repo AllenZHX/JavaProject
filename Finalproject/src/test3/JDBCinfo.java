@@ -1,5 +1,12 @@
 package test3;
-
+/*
+ * @ author: Xiang Cao
+ * 
+ * ***************************************************
+ * ********** Basic info for jDBC connect  ***********
+ * ***************************************************
+ * 
+ */
 import java.sql.*;
 
 public class JDBCinfo {

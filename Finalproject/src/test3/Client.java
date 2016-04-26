@@ -1,5 +1,12 @@
 package test3;
-
+/*
+ * @ author: Hongxiang Zheng, Xiang Cao, Yingbin Zheng
+ * 
+ * ***************************************************
+ * **********   Client for pickup part    ************
+ * ***************************************************
+ * 
+ */
 import java.net.*;
 
 import javax.swing.JFrame;

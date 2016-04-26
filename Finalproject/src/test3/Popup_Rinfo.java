@@ -1,5 +1,12 @@
 package test3;
-
+/*
+ * @ author: Hongxiang Zheng, Yingbin Zheng
+ * 
+ * ***************************************************
+ * **********      notice room info       ************
+ * ***************************************************
+ * 
+ */
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;

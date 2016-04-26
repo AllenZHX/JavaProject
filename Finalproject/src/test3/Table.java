@@ -1,5 +1,12 @@
 package test3;
-
+/*
+ * @ author: Hongxiang Zheng
+ * 
+ * ***************************************************
+ * ********** draw the table & show the data *********
+ * ***************************************************
+ * 
+ */
 import java.awt.Font;
 import java.util.ArrayList;
 

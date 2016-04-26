@@ -1,10 +1,15 @@
 package test3;
-
+/*
+ * @ author: Hongxiang Zheng, Xiang Cao
+ * 
+ * ***************************************************
+ * **********    pickup popup window      ************
+ * ***************************************************
+ * 
+ */
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-
 import javax.swing.*;
 
 public class pickup implements ActionListener {

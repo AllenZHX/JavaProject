@@ -1,27 +1,32 @@
 package test3;
-
+/*
+ * @ author: Hongxiang Zheng, Xiang Cao, Yingbin Zheng
+ * JavaProject: Hotel management system
+ * ***************************************************
+ * **********       main class            ************
+ * ***************************************************
+ * 
+ */
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;  
 import java.util.Date;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.Timer;  
 import java.util.TimerTask;  
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 
 public class testclass3 extends JFrame implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
-	roominfo rr = new roominfo();
-	private static manager mm = new manager();
-	booking bb = new booking();
+	checkin rr = new checkin();
+	private static checkout mm = new checkout();
+	static booking bb = new booking();
 	JButton[] button1 = new JButton[1];
 	JButton[] button2 = new JButton[5];
 	JButton[] button3 = new JButton[5];
@@ -75,11 +80,13 @@ public class testclass3 extends JFrame implements ActionListener{
 	JPanel p7 = new JPanel();  
 	JPanel p8 = new JPanel(); 
 	
+	///////////// drawing the interface  //////////
 	public testclass3() {
 		setTitle("Hotel management System");
 		Container c = getContentPane();
 		c.setLayout(new FlowLayout(3,10,10));
-		//******for Panel1(Check-in Part)******
+		
+		//********** Check-in Part ************
 		for(int i = 0; i < 1; i++) {
 		    button1[i] = new JButton();
 		    button1[i].setText(buttonString1[i]);
@@ -132,8 +139,8 @@ public class testclass3 extends JFrame implements ActionListener{
 		for(int i = 0; i < 5; i++)
 			p1.add(button2[i]);
 		p1.setOpaque(false);
-		/////////////////////(Booking Part)//////////////////////////////
-
+		
+		//*************(Booking Part)****************
 		for(int i = 0; i < 3; i++) {
 		    button9[i] = new JButton();
 		    button9[i].setText(buttonString9[i]);
@@ -167,7 +174,7 @@ public class testclass3 extends JFrame implements ActionListener{
 				for(int j = 0; j < 31; j++)
 					jcb[i].addItem(jcbString_day[j]);
 			}
-			if(i==0|i==1){
+			if(i==0|i==1){  // for booking checkin day part. when you change Year & month, days of month will change too.
 			jcb[i].addItemListener(new ItemListener(){
                  public void itemStateChanged(ItemEvent event){
                 	 if(event.getStateChange() == ItemEvent.SELECTED){
@@ -190,7 +197,7 @@ public class testclass3 extends JFrame implements ActionListener{
                  }
              });
 			}
-			if(i==3|i==4){
+			if(i==3|i==4){  // for booking checkout day part. when you change Year & month, days of month will change too.
 				jcb[i].addItemListener(new ItemListener(){
 	                 public void itemStateChanged(ItemEvent event){
 	                	 if(event.getStateChange() == ItemEvent.SELECTED){
@@ -248,8 +255,7 @@ public class testclass3 extends JFrame implements ActionListener{
 			p9.add(jcb[i]);
 		p9.setOpaque(false);
 		
-		
-		// ******for Panel3(show data list Part)******
+		// ********** show data table Part **********
 		for(int i = 0; i < 5; i++) {
 		    button3[i] = new JButton();
 		    button3[i].setText(buttonString3[i]);
@@ -276,7 +282,7 @@ public class testclass3 extends JFrame implements ActionListener{
 		scrollPane.setFont(font);
 		p3.add(scrollPane);
 		
-		// ******for Panel4(standard time Part)******
+		// ************ standard time Part *********
 		timeLabel = new JLabel("CurrentTime: ");  
         displayArea = new JLabel();  
         timeLabel.setFont(font);
@@ -291,7 +297,7 @@ public class testclass3 extends JFrame implements ActionListener{
 		p4.setPreferredSize(new Dimension(380, 295));
 		p4.setOpaque(false);
 		
-		// ******for Panel5(Check-out Part)******
+		// ************ Check-out Part ***********
 		for(int i = 0; i < 4; i++) {
 		    button5[i] = new JButton();
 		    button5[i].setText(buttonString5[i]);
@@ -334,7 +340,7 @@ public class testclass3 extends JFrame implements ActionListener{
 			p5.add(ta5[i]);
 		p5.setOpaque(false);
 		
-		// ******for Panel6(Order service Part)******
+		// *********** Order service Part **********
 		for(int i = 0; i < 3; i++) {
 		    button6[i] = new JButton();
 		    button6[i].setText(buttonString6[i]);
@@ -352,7 +358,7 @@ public class testclass3 extends JFrame implements ActionListener{
 		}
 		p6.setOpaque(false);
 		
-		// for Panel7 (logo)
+		// ********* logo ***********
 		JLabel label = new JLabel("Hotel Management System");
 		p7.setLayout(null);
 		label.setFont(font4);
@@ -362,7 +368,7 @@ public class testclass3 extends JFrame implements ActionListener{
 	    p7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		p7.setPreferredSize(new Dimension(1220, 100));
 		
-		// for Panel8
+		// *********** TabbedPane **********
 		UIManager.put("TabbedPane.contentOpaque", false);
 		JTabbedPane jtp = new JTabbedPane();
 		jtp.addTab("Booking",p9);
@@ -381,7 +387,7 @@ public class testclass3 extends JFrame implements ActionListener{
 	    p8.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		p8.setPreferredSize(new Dimension(1220, 295));
 		
-		// add all of Panel to Container c
+		//********** add all of Panel to Container c *********
 		c.add(p7);
 		c.add(p8);
 		c.add(p4);
@@ -399,10 +405,11 @@ public class testclass3 extends JFrame implements ActionListener{
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	
+	///////////// ActionListener  /////////////
 	public void actionPerformed(ActionEvent ae) {
-        if(ae.getSource() == button1[0]) {
+        if(ae.getSource() == button1[0]) {  // "Ok" button for make sure to check in
         	if(ta1[1].getText().length() == 8){
-	        	mm.createANewUser(ta1[0].getText(),ta1[1].getText(),rr.getroom(),rr.getstatus(),rr.getroomid(),displayArea.getText(),rr.getfeeofroom());
+	        	rr.createANewUser(ta1[0].getText(),ta1[1].getText(),rr.getroom(),rr.getstatus(),rr.getroomid(),displayArea.getText(),rr.getfeeofroom());
 	        	new Popup(this,0);
 	        	new Table(0,table);
 	        	cancel(0);
@@ -410,86 +417,86 @@ public class testclass3 extends JFrame implements ActionListener{
         		new Popup(this,3);
         	}
         }
-        if(ae.getSource() == button2[0]) {
-			new Popup_Rinfo(this,0);    //family room info
+        if(ae.getSource() == button2[0]) {  //family room info
+			new Popup_Rinfo(this,0);    
         }
-		if(ae.getSource() == button2[1]){
-            new Popup_Rinfo(this,1);   // double room info
+		if(ae.getSource() == button2[1]){  // double room info
+            new Popup_Rinfo(this,1);   
         }
-		if(ae.getSource() == button2[2]){
-            new Popup_Rinfo(this,2);   //single room info
+		if(ae.getSource() == button2[2]){  //single room info
+            new Popup_Rinfo(this,2);   
         }
-		if(ae.getSource() == button2[3]){
-			rr.getRoomStatus(ta1[0].getText(),ta1[1].getText());      // search database, get room status (empty or fill)
-			rr.Popup_roomStatus(this);    // show the current room status
+		if(ae.getSource() == button2[3]){  // "check room status" button for showing today's roomstatus
+			rr.getRoomStatus(ta1[0].getText(),ta1[1].getText());     
+			rr.Popup_roomStatus(this);  
         }
-        if(ae.getSource() == button2[4]) {
+        if(ae.getSource() == button2[4]) {  // clear check in info
         	cancel(0);
         }
-        if(ae.getSource() == button3[0]) {
+        if(ae.getSource() == button3[0]) {  // show the table of checkin info
         	new Table(0,table);
         }
-        if(ae.getSource() == button3[1]) {
+        if(ae.getSource() == button3[1]) {  // show the table of food info
         	new Table(1,table);
         }
-        if(ae.getSource() == button3[2]) {
+        if(ae.getSource() == button3[2]) {  // show the table of payment info
         	new Table(2,table);
         }
-        if(ae.getSource() == button3[3]) {
+        if(ae.getSource() == button3[3]) {  // show the table of checkout info
         	new Table(3,table);
         }
-        if(ae.getSource() == button3[4]) {
+        if(ae.getSource() == button3[4]) {  // show the table of booking info
         	new Table(4,table);
         }
-        if(ae.getSource() == button5[0]) {
-			double total = mm.calculateTotalFee(ta5[0].getText(),displayArea.getText());     //  get all of fees from database and sum them then show it on the interface
+        if(ae.getSource() == button5[0]) {  // "Settle" button for compute the fee of all when someone wants to check out
+			double total = mm.calculateTotalFee(ta5[0].getText(),displayArea.getText()); 
 			ta5[1].setText(Double.toString(total));
 			new Table(2,table);
         }
-		if(ae.getSource() == button5[1]){
-            double change = mm.calculateChange(ta5[1].getText(),ta5[2].getText());    // according to paid-up money, get the amount of the change
+		if(ae.getSource() == button5[1]){   // "Confirm" button for compute the change money
+            double change = mm.calculateChange(ta5[1].getText(),ta5[2].getText()); 
             ta5[3].setText(Double.toString(change));
         }
-		if(ae.getSource() == button5[2]){
-            mm.checkout(ta5[0].getText(),displayArea.getText());       // delete customer's info, update the room status
+		if(ae.getSource() == button5[2]){  // "Finish" button for all operations of checking out
+            mm.checkout(ta5[0].getText(),displayArea.getText());  
 			new Popup(this,1);
 			new Table(0,table);
 			cancel(2);
         }
-		if(ae.getSource() == button5[3]){
+		if(ae.getSource() == button5[3]){  // clear check out info
 			cancel(2);
         }
-        if(ae.getSource() == button6[0]) {
-        	order oo = new order();
+        if(ae.getSource() == button6[0]) {  // "food and drink" button for popup a new order interface
+        	food oo = new food();
         	oo.getitemname();
         	oo.Popup_service(this);
         }
-        if(ae.getSource() == button6[1]) {
+        if(ae.getSource() == button6[1]) {  // "massage" button for popup a new order interface
         	massage mmm = new massage();
         	mmm.Popup_service(this);
         }
-        if(ae.getSource() == button6[2]) {
+        if(ae.getSource() == button6[2]) {  // "pickup" button for popup a new oder interface
         	pickup pp = new pickup();
         	pp.Popup_service(this);
         }
-        if(ae.getSource() == button9[2]) {
+        if(ae.getSource() == button9[2]) {  // "check room status" button for showing the roomstaus according to the booking day from * to *
         	bb.getRoomStatus(jcbString_year[jcb[0].getSelectedIndex()],jcbString_mon[jcb[1].getSelectedIndex()],
         			jcbString_day[jcb[2].getSelectedIndex()],jcbString_year[jcb[3].getSelectedIndex()],
         			jcbString_mon[jcb[4].getSelectedIndex()],jcbString_day[jcb[5].getSelectedIndex()]);    
-			bb.Popup_roomStatus(this);    // show the current room status
+			bb.Popup_roomStatus(this);  
         }
-        if(ae.getSource() == button9[0]) {
-        	mm.createANewBookingUser(ta9[0].getText(),ta9[1].getText(),bb.getroom(),bb.getroomid(),bb.getfrom(),bb.getto(),bb.getstatus());
-        	new Popup(this,4);
+        if(ae.getSource() == button9[0]) {  // "Ok" button for making sure to create a booking customer
+        	bb.createANewBookingUser(ta9[0].getText(),ta9[1].getText(),bb.getroom(),bb.getroomid(),bb.getfrom(),bb.getto(),bb.getstatus());
         	cancel(1);
         	Table tt = new Table(4,table);
         }
-        if(ae.getSource() == button9[1]) {
+        if(ae.getSource() == button9[1]) {  // clear the booking info
         	cancel(1);
         }
         
 	}
 	
+	///////////// clear content /////////////
 	public void cancel(int Can) {
 		if(Can == 0){
 			for(int i = 0; i < 2; i++)
@@ -505,13 +512,11 @@ public class testclass3 extends JFrame implements ActionListener{
 		}
 	}
 	
-	// for current time
-	
+	///////////// for showing current time //////////////
 	public void configTimeArea() {  
         Timer tmr = new Timer();  
         tmr.scheduleAtFixedRate(new JLabelTimerTask(), new Date(), ONE_SECOND);  
     }  
-  
     public class JLabelTimerTask extends TimerTask {  
         SimpleDateFormat dateFormatter = new SimpleDateFormat(  
                 DEFAULT_TIME_FORMAT);  
@@ -523,22 +528,22 @@ public class testclass3 extends JFrame implements ActionListener{
         }  
     } 
 	
+    ///////////// main /////////////////
 	public static void main(String[] args){
 		new testclass3();
+		
 		while(true){
-			
-			if(mm.getdatabaseinfo() == 1){
+			if(bb.getdatabaseinfo() == 1){
 				new Popup(new JFrame(), 4);
-				mm.reset();
-			}else if(mm.getdatabaseinfo() == 2){
+				bb.reset();
+			}else if(bb.getdatabaseinfo() == 2){
 				new Popup(new JFrame(), 6);
-				mm.reset();
+				bb.reset();
 			}
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 			}
-			
 		}
 		
 	}

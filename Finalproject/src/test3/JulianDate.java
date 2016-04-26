@@ -1,5 +1,12 @@
 package test3;
-
+/*
+ * @ author: Hongxiang Zheng
+ * 
+ * ***************************************************
+ * ********** for booking and checkin part  **********
+ * ***************************************************
+ * 
+ */
 public class JulianDate { 
 	private int year, mon, day;
 	private int julianDate;
