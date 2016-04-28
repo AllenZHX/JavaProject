@@ -6,7 +6,7 @@ import java.net.Socket;
 public class Client {
     public static void main(String[] args) {
         try {
-            Socket socket =new Socket("155.246.161.87",8005);
+            Socket socket =new Socket("10.0.0.165",8000);
             socket.setSoTimeout(60000);
   
             PrintWriter printWriter =new PrintWriter(socket.getOutputStream(),true);
@@ -19,8 +19,9 @@ public class Client {
                 printWriter.flush();
                   
                 result = bufferedReader.readLine();
-                System.out.println("Server say : " + result);////////////////
-            }
+//                System.out.println("Server say : " + result);////////////////
+                System.out.println(result);
+            } 
   
             printWriter.close();
             bufferedReader.close();

@@ -3,7 +3,7 @@ import java.net.*;
 import java.util.ArrayList;
   
 public class Server extends ServerSocket {
-    private static final int SERVER_PORT =8005;
+    private static final int SERVER_PORT =8000;
   
     public Server()throws IOException {
         super(SERVER_PORT);
@@ -24,36 +24,43 @@ public class Server extends ServerSocket {
         private Socket client;
         private BufferedReader bufferedReader;
         private PrintWriter printWriter;
-        private ArrayList<String> arraylist=new ArrayList();
-        
-        
-        public CreateServerThread(Socket s)throws IOException {
-            client = s;
+        private ArrayList arrayList;
   
+        public CreateServerThread(Socket s)throws IOException {
+        	arrayList=new ArrayList();
+            client = s;
+            
             bufferedReader =new BufferedReader(new InputStreamReader(client.getInputStream()));
               
             printWriter =new PrintWriter(client.getOutputStream(),true);
-            System.out.println("Client(" + getName() +") connected!");
-              
+            System.out.println("Client(" + getName() +") come in...");
+             
             start();
         }
   
         public void run() {
             try {
                 String line = bufferedReader.readLine();
-  
-                while (!line.equals("bye")) {                	
-                  printWriter.println("continue, Client(" + getName() +")!");//////
-                    line = bufferedReader.readLine();
-                    arraylist.add(line);
-                    System.out.println(arraylist.size());
-                    for(int i=0 ;i<arraylist.size();i++){
-                        System.out.print("arraylist"+"[i]"+arraylist.get(i)+"\t");
-                    }
-               
-                    System.out.println("Client(" + getName() +") say: " + line);////////////////////
-                }
+                System.out.println("Client(" + getName() +") say: " + line);
+                arrayList.add(line);
                 
+                while (!line.equals("bye")) {
+                    printWriter.println("continue, Client(" + getName() +")!");
+                    line = bufferedReader.readLine();
+                    System.out.println("Client(" + getName() +") say: " + line);
+                    arrayList.add(line);
+                    if(arrayList.size()==5){
+                    	for(int i=0; i<arrayList.size(); i++){
+                    		System.out.println(i+": "+arrayList.get(i));
+                    	}
+                    	new Network(arrayList);
+                    	ManagementSystem ms=new ManagementSystem();
+                    	ms.update();
+                    	arrayList.clear();
+                    	
+                    	
+                    }
+                }
                 printWriter.println("bye, Client(" + getName() +")!");
                   
                 System.out.println("Client(" + getName() +") exit!");
@@ -61,6 +68,7 @@ public class Server extends ServerSocket {
                 bufferedReader.close();
                 client.close();
             }catch (IOException e) {
+            	
             }
         }
     }
