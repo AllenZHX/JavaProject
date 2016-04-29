@@ -17,9 +17,9 @@ class Popup implements ActionListener{
 	    Popup(JFrame jFrame, int Ok){
 	       jDialog2=new JDialog(jFrame,"Notice",true);
 	       JTextArea jt2 = new JTextArea();
-	       String[] textinfo = {"      Please enter your name and ID!","      Successfully Booked!","      Successfully Canceled!",
-	    		   				"      IDnum must be 8 digits!","       Name or ID wrong!","       Find your information!"};
-	       for (int i = 0; i < 6; i++){
+	       String[] textinfo = {"      Successfully Booked!","      Successfully Canceled!","      Successfully Register!",
+	    		   				"       Find your information!","       Wrong verification code!","       Email or password wrong!","       6-digit number had sent!","       Can not find your information!"};
+	       for (int i = 0; i < 8; i++){
 	    	   if(Ok == i){
 	    		   jt2 = new JTextArea(textinfo[i]);
 	    	   }

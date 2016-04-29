@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import java.util.Properties;
+import java.util.Random;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -38,7 +39,27 @@ public class manager extends JDBCinfo{
 			exc.printStackTrace();
 		}
 	}
-	
+	public void createANewRegisterUser(String name, String idnum, String email, String password) {
+		try{
+			//1. Get a connection to database
+			
+			//2. Create a statement
+			String sql = "insert into register (name,idnum,email,password) values(?,?,?,?)";
+			PreparedStatement myStmt = myConn.prepareStatement(sql);
+			myStmt.setString(1,name);
+			myStmt.setString(2,idnum);
+			myStmt.setString(3,email);
+			myStmt.setString(4,password);
+			
+			
+			//3. Execute SQL 
+			myStmt.executeUpdate();
+			//generateAndSendEmail(email,"booking",name,idnum,room,from,to);
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
 
 	public boolean canceling(String name,String id){
 		try{
@@ -76,6 +97,7 @@ public class manager extends JDBCinfo{
 			Statement myStmt4 = myConn.createStatement();
 			ResultSet myRs4 = myStmt4.executeQuery(sql4);
 			String[] tmp=new String[6];
+			tmp[0]="no";
 			while (myRs4.next()) {
 				if(name.equals(myRs4.getString("name"))){
 					if(id.equals(myRs4.getString("idnum"))){
@@ -92,6 +114,59 @@ public class manager extends JDBCinfo{
 			exc.printStackTrace();
 		}
 		return null;
+	}
+	public String[] getnameidemail(String email,String password){
+		try{
+			//Connection myConn = DriverManager.getConnection(url, user, password);
+			//3. Execute SQL 
+			String sql4 = "select * from register";
+			Statement myStmt4 = myConn.createStatement();
+			ResultSet myRs4 = myStmt4.executeQuery(sql4);
+			String[] tmp=new String[3];
+			while (myRs4.next()) {
+				if(email.equals(myRs4.getString("email"))){
+					if(password.equals(myRs4.getString("password"))){
+					tmp[0]=myRs4.getString("name");tmp[1]=myRs4.getString("idnum");tmp[2]=myRs4.getString("email");
+					return tmp;
+					}
+				}	
+			}
+			
+
+			
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		return null;
+	}
+	public boolean searchregister(String name,String id){
+		try{
+			//Connection myConn = DriverManager.getConnection(url, user, password);
+			//3. Execute SQL 
+			String sql4 = "select * from register";
+			Statement myStmt4 = myConn.createStatement();
+			ResultSet myRs4 = myStmt4.executeQuery(sql4);
+			//boolean tmp;
+			while (myRs4.next()) {
+				if(name.equals(myRs4.getString("email"))){
+					if(id.equals(myRs4.getString("password"))){
+					
+					return true;
+					}
+				}	
+			}
+			
+
+			
+		}
+		
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		return false;
+	
+		
 	}
 	 //gmail
 		static Properties mailServerProperties;
@@ -114,8 +189,44 @@ public class manager extends JDBCinfo{
 			generateMailMessage = new MimeMessage(getMailSession);
 			generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailaddress));
 			generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress(emailaddress));
-			generateMailMessage.setSubject("Successfully "+borc+" from Java810Hotel..");
+			generateMailMessage.setSubject("Successfully "+borc+" from Java810Hotel!");
 			String emailBody = "This is your "+ borc +" information: "+"<br>Your name: "+name+"<br>ID: "+idnum+"<br>Room: "+room+"<br>From: "+fromday+"<br>To: "+today+ "<br>We are so glad to serve you."+"<br><br> Regards, <br>Java810Hotel";
+			generateMailMessage.setContent(emailBody, "text/html");
+			//System.out.println("Mail Session has been created successfully..");
+	 
+			// Step3
+			//System.out.println("\n\n 3rd ===> Get Session and Send mail");
+			Transport transport = getMailSession.getTransport("smtp");
+	 
+			// Enter your correct gmail UserID and Password
+			// if you have 2FA enabled then provide App Specific Password
+			transport.connect("smtp.gmail.com", "java810hotel@gmail.com", "55webster");
+			transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
+			transport.close();
+		}
+		public static String vcode="";
+		public  static String getvcode(){
+		return vcode;
+		}
+		public static void VerificationEmail(String emailaddress, String vcode ) throws AddressException, MessagingException {
+			 
+			// Step1
+			//System.out.println("\n 1st ===> setup Mail Server Properties..");
+			mailServerProperties = System.getProperties();
+			mailServerProperties.put("mail.smtp.port", "587");
+			mailServerProperties.put("mail.smtp.auth", "true");
+			mailServerProperties.put("mail.smtp.starttls.enable", "true");
+			//System.out.println("Mail Server Properties have been setup successfully..");
+			
+			
+			// Step2
+			//System.out.println("\n\n 2nd ===> get Mail Session..");
+			getMailSession = Session.getDefaultInstance(mailServerProperties, null);
+			generateMailMessage = new MimeMessage(getMailSession);
+			generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailaddress));
+			generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress(emailaddress));
+			generateMailMessage.setSubject("Verification code from Java810Hotel!");
+			String emailBody = "This is your Verification code: "+vcode+"<br>Thank you for your register."+"<br><br> Regards, <br>Java810Hotel";
 			generateMailMessage.setContent(emailBody, "text/html");
 			//System.out.println("Mail Session has been created successfully..");
 	 

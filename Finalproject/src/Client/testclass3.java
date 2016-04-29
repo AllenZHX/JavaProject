@@ -19,6 +19,7 @@ public class testclass3 extends JFrame implements ActionListener{
 	roominfo rr = new roominfo();
 	manager mm = new manager();
 	booking bb = new booking();
+	private static String name, idnum,email;
 	JButton[] button5 = new JButton[4];
 	JButton[] button9 = new JButton[3];
 	JLabel[] label1 = new JLabel[3];
@@ -57,7 +58,10 @@ public class testclass3 extends JFrame implements ActionListener{
 	JPanel p8 = new JPanel(); 
 	JPanel p9 = new JPanel(); 
 	
-	public testclass3() {
+	public testclass3(String name, String idnum,String email) {
+		this.name=name;
+		this.idnum=idnum;
+		this.email=email;
 		setTitle("Hotel Order System");
 		Container c = getContentPane();
 		c.setLayout(new FlowLayout(3,10,10));
@@ -72,7 +76,7 @@ public class testclass3 extends JFrame implements ActionListener{
 		    button9[i].setBorder(BorderFactory.createRaisedBevelBorder());
 		    button9[i].addActionListener(this);
 		}
-		for(int i = 0; i < 8; i++) {
+		for(int i =3; i < 8; i++) {
 		    label9[i] = new JLabel();
 		    label9[i].setText(labelString9[i]);
 		    label9[i].setFont(font);
@@ -150,9 +154,9 @@ public class testclass3 extends JFrame implements ActionListener{
 		button9[0].setBounds(210,220,100,40);
 		button9[1].setBounds(370,220,100,40);
 		button9[2].setBounds(620,180,330,80);
-		label9[0].setBounds(140,0,160,50);
-		label9[1].setBounds(140,70,80,50);
-		label9[2].setBounds(140,140,80,50);
+		//label9[0].setBounds(140,0,160,50);
+		//label9[1].setBounds(140,70,80,50);
+		//label9[2].setBounds(140,140,80,50);
 		jcb[0].setBounds(670,70,80,30);
 		jcb[1].setBounds(770,70,80,30);
 		jcb[2].setBounds(870,70,80,30);
@@ -164,15 +168,15 @@ public class testclass3 extends JFrame implements ActionListener{
 		label9[5].setBounds(690,15,80,50);
 		label9[6].setBounds(785,15,80,50);
 		label9[7].setBounds(890,15,80,50);
-		ta9[0].setBounds(220,80,250,30);
-		ta9[1].setBounds(220,150,250,30);
-		ta9[8].setBounds(220,10,250,30);
+		//ta9[0].setBounds(220,80,250,30);
+		//ta9[1].setBounds(220,150,250,30);
+		//ta9[8].setBounds(220,10,250,30);
 		for(int i = 0; i < 3; i++){
 	    	p9.add(button9[i]);
 		}
-		for(int i = 0; i < 8; i++) 
+		for(int i = 3; i < 8; i++) 
 			p9.add(label9[i]);
-		for(int i = 0; i < 9; i++) 
+		for(int i = 2; i < 8; i++) 
 			p9.add(ta9[i]);
 		for(int i = 0; i < 6; i++) 
 			p9.add(jcb[i]);
@@ -204,34 +208,25 @@ public class testclass3 extends JFrame implements ActionListener{
 		    button5[i].setBorder(BorderFactory.createRaisedBevelBorder());
 		    button5[i].addActionListener(this);
 		}
-		for(int i = 0; i < 3; i++) {
+		for(int i = 0; i < 1; i++) {
 		    label5[i] = new JLabel();
 		    label5[i].setText(labelString5[i]);
 		    label5[i].setFont(font);
 		    if (i==0)
 		    	label5[i].setFont(font1);
 		}
-		for(int i = 0; i < 2; i++) {
-		    ta5[i] = new JTextArea();
-		    ta5[i].setFont(font);
-		    ta5[i].setBorder(BorderFactory.createLoweredBevelBorder());
-		}
+		
 		p5.setLayout(null);
 		button5[0].setBounds(210,220,100,40);
 		button5[1].setBounds(520,220,100,40);
 		button5[2].setBounds(370,220,100,40);
 		label5[0].setBounds(200,10,160,50);
-		label5[1].setBounds(200,70,80,50);
-		label5[2].setBounds(200,140,80,50);
-		ta5[0].setBounds(290,80,180,30);
-		ta5[1].setBounds(290,150,180,30);
+		
 		for(int i = 0; i < 3; i++)
 			p5.add(button5[i]);
-		for(int i = 0; i < 3; i++) 
+		for(int i = 0; i < 1; i++) 
 			p5.add(label5[i]);
-		for(int i = 0; i < 2; i++) 
-			p5.add(ta5[i]);
-
+		
 
 		// for Panel7 (logo)
 		JLabel label = new JLabel("Welcome To Java810 Hotel");
@@ -284,36 +279,26 @@ public class testclass3 extends JFrame implements ActionListener{
         
 
 		if(ae.getSource() == button5[0]){
-			String[] tmp=mm.search(ta5[0].getText(),ta5[1].getText()); 
-			if(tmp!=null){
-            boolean t=mm.canceling(ta5[0].getText(),ta5[1].getText());       // delete customer's info, update the room status
-			if(t){
-				new Popup(this,2);
-			}
-			else{
-				new Popup(this,4);
-			}
-			cancel(2);
 			
-			}else{
-				new Popup(this,0);
-			}
+            boolean t=mm.canceling(name,idnum);       // delete customer's info, update the room status
+            new Popup(this,1);
 			
 		}
 		if(ae.getSource() == button5[1]){
 			cancel(2);
         }
 		if(ae.getSource() == button5[2]){
-			 String[] t=mm.search(ta5[0].getText(),ta5[1].getText()); 
-			if(t!=null){
-				new Popup(this,5);
+			 String[] t=mm.search(name,idnum); 
+			//if(t[0].equals("no")){
+				//new Popup(this,7);
+				
+			//}
+			//else{
+				new Popup(this,3);
 				TextArea text=p3();
-				text.setText("This is your booking information: \n\n"+"Name: "+t[0]+"\n"+"ID: "+t[1]+"\n"+"Room: "+t[2]+"\n"+"From: "+t[4]+"\n"+"To: "+t[5]);
+				text.setText("Finded your booking information: \n\n"+"Name: "+t[0]+"\n"+"ID: "+t[1]+"\n"+"Room: "+t[2]+"\n"+"From: "+t[4]+"\n"+"To: "+t[5]);
 	    		p3.add(text);
-			}
-			else{
-				new Popup(this,0);
-			}
+			//}
         }
         if(ae.getSource() == button9[2]) {
         	bb.getRoomStatus(jcbString_year[jcb[0].getSelectedIndex()],jcbString_mon[jcb[1].getSelectedIndex()],
@@ -323,19 +308,16 @@ public class testclass3 extends JFrame implements ActionListener{
         	
         }
         if(ae.getSource() == button9[0]) {
-			if(ta9[2].getText()!=null){
 				TextArea text=p3();
-        	mm.createANewBookingUser(ta9[0].getText(),ta9[1].getText(),bb.getroom(),bb.getroomid(),bb.getfrom(),bb.getto(),bb.getstatus(),ta9[8].getText());
-    		text.setText("This is your booking information: \n\n"+"Name: "+ta9[0].getText()+"\n"+"ID: "+ta9[1].getText()+"\n"+"Room: "+bb.getroom()+"\n"+"From: "+bb.getfrom()+"\n"+"To: "+bb.getto());
+        	mm.createANewBookingUser(name,idnum,bb.getroom(),bb.getroomid(),bb.getfrom(),bb.getto(),bb.getstatus(),email);
+    		text.setText("This is your booking information: \n\n"+"Name: "+name+"\n"+"ID: "+idnum+"\n"+"Room: "+bb.getroom()+"\n"+"From: "+bb.getfrom()+"\n"+"To: "+bb.getto());
     		p3.add(text);
     		
-    		new Popup(this,1);
+    		new Popup(this,0);
         	cancel(1);
         	//Table tt = new Table(4,table);
-        }
-			else{
-				new Popup(this,0);
-			}
+        
+			
         }
         
         if(ae.getSource() == button9[1]) {
@@ -347,6 +329,7 @@ public class testclass3 extends JFrame implements ActionListener{
 	public void cancel(int Can) {
 		
 		if(Can == 1){
+			ta9[8].setText("");
 			for(int i = 0; i < 2; i++)
 				ta9[i].setText("");	
 		}
@@ -382,7 +365,7 @@ public class testclass3 extends JFrame implements ActionListener{
     } 
 	
 	public static void main(String[] args){
-		new testclass3();
+		//new testclass3();
 	}
 
 }
