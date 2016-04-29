@@ -8,6 +8,7 @@ package test3;
  * 
  */
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,18 +39,19 @@ class Popup_Rinfo implements ActionListener{
 	                             + "    Free Wifi, air condition\n   "
 	                             + "   Free Morning Call service\n   "
 	                             + "       Hot water, toothbush\n     "
-	                             + "     one Quence-size bed\n     "};
+	                             + "     one Queen-size bed\n     "};
 	       for (int i = 0; i < 3; i++){
 	    	   if(roomtype == i){
 	    		   jt1 = new JTextArea(textinfo[i]);
 	    	   }
 	       }
 	       jt1.setFont(font);
+	       jt1.setBackground(Color.cyan);
 	       JButton jButton1=new JButton("close");
 	       jButton1.addActionListener(this);
 	       jDialog1.getContentPane().add(BorderLayout.SOUTH,jButton1);
 	       jDialog1.getContentPane().add(jt1);
-	       jDialog1.setSize(300,250);
+	       jDialog1.setSize(300,220);
 	       jDialog1.setLocationRelativeTo(null);
 	       jDialog1.setVisible(true);
 	       jDialog1.setResizable(false);

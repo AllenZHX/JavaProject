@@ -15,8 +15,6 @@ import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;  
 import java.util.Date;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Timer;  
 import java.util.TimerTask;  
 import javax.swing.*;
@@ -27,6 +25,7 @@ public class testclass3 extends JFrame implements ActionListener{
 	checkin rr = new checkin();
 	private static checkout mm = new checkout();
 	static booking bb = new booking();
+	bill bi = new bill();
 	JButton[] button1 = new JButton[1];
 	JButton[] button2 = new JButton[5];
 	JButton[] button3 = new JButton[5];
@@ -34,15 +33,20 @@ public class testclass3 extends JFrame implements ActionListener{
 	JButton[] button6 = new JButton[3];
 	JButton[] button8 = new JButton[3];
 	JButton[] button9 = new JButton[3];
+	JButton[] button10 = new JButton[1];
 	JLabel[] label1 = new JLabel[3];
 	JLabel[] label5 = new JLabel[5];
 	JLabel[] label9 = new JLabel[8];   //////
+	JLabel[] label10 = new JLabel[2];
 	JTextArea[] ta1 = new JTextArea[2];
 	JTextArea[] ta5 = new JTextArea[4];
 	JTextArea[] ta9 = new JTextArea[8];   /////////
 	JComboBox[] jcb = new JComboBox[6];
+	JComboBox[] jcb2 = new JComboBox[2];
 	JTable table = new JTable();
 	JScrollPane scrollPane = new JScrollPane(table);
+	JTable table2 = new JTable();
+	JScrollPane scrollPane2 = new JScrollPane(table2);
 	String[] buttonString1 = {"OK"};
 	String[] buttonString2 = {"Family","Double","Single","Check Current Rooms' Status","Clear"};
 	String[] buttonString3 = {"checkin","service","payment","checkout","booking"};
@@ -55,6 +59,7 @@ public class testclass3 extends JFrame implements ActionListener{
 	String[] labelString5 = {"Check-out","Room #: ","Total: ","Paid-up: ","Change: "};
 	String[] labelString6 = {"Order","Room #: ","Item: ","Num: ","Total: "};
 	String[] labelString9 = {"Booking","Name: ","ID:","From: ","To: ","Year","Month","Day"};
+	String[] labelString10 = {"Year","Month"};
 	String[] jcbString_year = {"2016","2017","2018","2019","2020"};
 	String[] jcbString_mon = {"01","02","03","04","05","06","07","08","09","10","11","12"};
 	String[] jcbString_day = {"01","02","03","04","05","06","07","08","09","10",
@@ -79,6 +84,7 @@ public class testclass3 extends JFrame implements ActionListener{
 	JPanel p6 = new JPanel(); 
 	JPanel p7 = new JPanel();  
 	JPanel p8 = new JPanel(); 
+	JPanel p10 = new JPanel();
 	
 	///////////// drawing the interface  //////////
 	public testclass3() {
@@ -139,6 +145,57 @@ public class testclass3 extends JFrame implements ActionListener{
 		for(int i = 0; i < 5; i++)
 			p1.add(button2[i]);
 		p1.setOpaque(false);
+		//
+		//
+		
+		for(int i = 0; i < 1; i++) {
+		    button10[i] = new JButton();
+		    button10[i].setText("check monthly bill");
+		    button10[i].setFont(font2);
+		    button10[i].setContentAreaFilled(false);
+		    button10[i].setBorder(BorderFactory.createRaisedBevelBorder());
+		    button10[i].addActionListener(this);
+		}
+		for(int i = 0; i < 2; i++) {
+		    label10[i] = new JLabel();
+		    label10[i].setText(labelString10[i]);
+		    label10[i].setFont(font);
+		}
+		for(int i = 0; i < 2; i++) {
+			jcb2[i] = new JComboBox<String>();
+			jcb2[i].setEnabled(true);
+			if(i == 0){
+				for(int j = 0; j < 5; j++)
+					jcb2[i].addItem(jcbString_year[j]);
+			}else if(i == 1){
+				for(int j = 0; j < 12; j++)
+					jcb2[i].addItem(jcbString_mon[j]);
+			}
+			jcb2[i].setFont(font);
+		    jcb2[i].setBorder(BorderFactory.createLoweredBevelBorder());
+		}
+		p10.setLayout(null);
+		button10[0].setBounds(220,40,150,200);
+		label10[0].setBounds(100,40,80,30);
+		label10[1].setBounds(100,140,80,30);
+		jcb2[0].setBounds(100,70,80,30);
+		jcb2[1].setBounds(100,170,80,30);
+
+		for(int i = 0; i < 1; i++){
+	    	p10.add(button10[i]);
+		}
+		for(int i = 0; i < 2; i++){
+	    	p10.add(label10[i]);
+		}
+		for(int i = 0; i < 2; i++){
+	    	p10.add(jcb2[i]);
+		}
+		p10.setOpaque(false);
+		scrollPane2.setViewportView(table2);
+		p10.setLayout(null);
+		scrollPane2.setBounds(400,10,650,250);
+		scrollPane2.setFont(font);
+		p10.add(scrollPane2);
 		
 		//*************(Booking Part)****************
 		for(int i = 0; i < 3; i++) {
@@ -351,7 +408,7 @@ public class testclass3 extends JFrame implements ActionListener{
 		}
 		p6.setLayout(null);
 		button6[0].setBounds(150,50,150,200);
-		button6[1].setBounds(480,50,150,200);
+		button6[1].setBounds(470,50,150,200);
 		button6[2].setBounds(780,50,150,200);
 		for(int i = 0; i < 3; i++){
 	    	p6.add(button6[i]);
@@ -368,6 +425,9 @@ public class testclass3 extends JFrame implements ActionListener{
 	    p7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		p7.setPreferredSize(new Dimension(1220, 100));
 		
+		// ********** monthly bill/annual bill *********
+		
+		
 		// *********** TabbedPane **********
 		UIManager.put("TabbedPane.contentOpaque", false);
 		JTabbedPane jtp = new JTabbedPane();
@@ -375,6 +435,7 @@ public class testclass3 extends JFrame implements ActionListener{
 		jtp.addTab("Check in",p1);
 	    jtp.addTab("Check out", p5);
 	    jtp.addTab("Order", p6);
+	    jtp.addTab("Bill", p10);
 	    jtp.setFont(font5);
 	    jtp.setBackground(new Color(0,0,0,0));
 	    jtp.setOpaque(false);
@@ -492,6 +553,11 @@ public class testclass3 extends JFrame implements ActionListener{
         }
         if(ae.getSource() == button9[1]) {  // clear the booking info
         	cancel(1);
+        }
+        if(ae.getSource() == button10[0]) {  // show the monthly check
+        	bi.truncate();
+        	bi.ddd(jcbString_year[jcb2[0].getSelectedIndex()],jcbString_mon[jcb2[1].getSelectedIndex()]);
+        	new Table(5,table2);
         }
         
 	}

@@ -20,7 +20,7 @@ public class Client {
     public Client(String info) {
         try {
  
-            client = new Socket("155.246.161.87", 8005);
+            client = new Socket("172.20.10.", 8000);
             BufferedReader input = new BufferedReader(new StringReader(info));
             BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             PrintStream out = new PrintStream(client.getOutputStream());;

@@ -38,7 +38,10 @@ public Table(int listnum,JTable table){
 			defaultModel.setColumnIdentifiers(new Object[]{"Name","Idnum","Room","Check-in time","Check-out time","Totalfee"});
 		}
 		if(listnum == 4){
-			defaultModel.setColumnIdentifiers(new Object[]{"Name","Idnum","Room","Fromday","Today"});
+			defaultModel.setColumnIdentifiers(new Object[]{"Name","Idnum","Email","Room","Fromday","Today"});
+		}
+		if(listnum == 5){
+			defaultModel.setColumnIdentifiers(new Object[]{"Day","Num of Checkin","Num of Checkout","Total"});
 		}
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setModel(defaultModel);
@@ -47,7 +50,7 @@ public Table(int listnum,JTable table){
 		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(defaultModel);  
         table.setRowSorter(sorter); 
 		table.setFont(font3);
-		table.setBackground(Color.cyan);
+		table.setBackground(Color.CYAN);
 		DefaultTableCellRenderer r = new DefaultTableCellRenderer();   
 		r.setHorizontalAlignment(JLabel.CENTER);   
 		table.setDefaultRenderer(Object.class, r);
@@ -95,7 +98,16 @@ public Table(int listnum,JTable table){
 			for(int i = 0; i < list.size(); i++){
 				ccc = (customer)list.get(i);
 				defaultModel.addRow(new Object[]{ccc.getname(),
-								ccc.getidnum(),ccc.getroom(),ccc.getfromday(),ccc.gettoday()});
+								ccc.getidnum(),ccc.getemail(), ccc.getroom(),ccc.getfromday(),ccc.gettoday()});
+			}	
+		}
+		if(listnum == 5){
+			customer ccc = new customer();
+			ArrayList list = ccc.selectAll6();
+			for(int i = 0; i < list.size(); i++){
+				ccc = (customer)list.get(i);
+				defaultModel.addRow(new Object[]{ccc.getday(),
+								ccc.getnumofcheckin(),ccc.getnumofcheckout(),ccc.getfeeofday()});
 			}	
 		}
 	}

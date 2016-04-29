@@ -27,8 +27,14 @@ public class customer extends JDBCinfo {
 		private double fee_service;
 		private double total;
 		private String outtime;
+		private String email;
 		private String fromday;
 		private String today;
+		private String day;
+		private int numofcheckin;
+		private int numofcheckout;
+		private double feeofday;
+		
 		public void setid1(int i1){id1 = i1;}
 		public void setname(String nam){name = nam;}
 		public void setidnum(int idnu){idnum = idnu;}
@@ -68,7 +74,17 @@ public class customer extends JDBCinfo {
 		public String getfromday(){return fromday;}
 		public void settoday(String toda){today = toda;}
 		public String gettoday(){return today;}
+		public void setemail(String emai){email = emai;}
+		public String getemail(){return email;}
 		
+		public void setday(String da){day = da;}
+		public void setnumofcheckin(int numofchecki){numofcheckin = numofchecki;}
+		public void setnumofcheckout(int numofcheckou){numofcheckout = numofcheckou;}
+		public void setfeeofday(double feeofda){feeofday = feeofda;}
+		public String getday(){return day;}
+		public int getnumofcheckin(){return numofcheckin;}
+		public int getnumofcheckout(){return numofcheckout;}
+		public double getfeeofday(){return feeofday;}
 		@SuppressWarnings("rawtypes")
 		public ArrayList selectAll1(){
 			ArrayList<customer> ls = new ArrayList<customer>();
@@ -176,8 +192,30 @@ public class customer extends JDBCinfo {
 					cc.setname(myRs.getString("name"));
 					cc.setidnum(myRs.getInt("idnum"));
 					cc.setroom(myRs.getString("room"));
+					cc.setemail(myRs.getString("email"));
 					cc.setfromday(myRs.getString("fromday"));
 					cc.settoday(myRs.getString("today"));
+					ls.add(cc);
+				}	
+			}
+			catch (Exception exc) {
+				exc.printStackTrace();
+			}
+			return ls;
+	   }
+		public ArrayList selectAll6(){
+			ArrayList<customer> ls = new ArrayList<customer>();
+			try{
+				//Connection myConn = DriverManager.getConnection(url, user, password);
+				String sql = "select * from bill";
+				Statement myStmt = myConn.createStatement();
+				ResultSet myRs = myStmt.executeQuery(sql);
+				while (myRs.next()) {
+					customer cc= new customer();
+					cc.setday(myRs.getString("day"));
+					cc.setnumofcheckin(myRs.getInt("numofcheckin"));
+					cc.setnumofcheckout(myRs.getInt("numofcheckout"));
+					cc.setfeeofday(myRs.getDouble("feeofday"));
 					ls.add(cc);
 				}	
 			}
