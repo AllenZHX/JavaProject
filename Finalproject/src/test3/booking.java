@@ -54,6 +54,12 @@ public class booking extends JDBCinfo implements ActionListener{
 		JulianDate b = new JulianDate(tyear,tmon,tday);
 		from = fy+"-"+fm+"-"+fd;
 		to = ty+"-"+tm+"-"+td;
+		checkin cki = new checkin();
+		String current = cki.getDate();
+		int cyear = Integer.parseInt(current.substring(0,4));
+		int cmon = Integer.parseInt(current.substring(5,7));
+		int cday = Integer.parseInt(current.substring(8,10));
+		JulianDate e = new JulianDate(cyear,cmon,cday);
 		try{
 			roomid = 99;
 			for(int i = 0; i < 27; i++){
@@ -87,6 +93,11 @@ public class booking extends JDBCinfo implements ActionListener{
 					roomstatus[aa] = 2; 
 					roominfo[aa] = booker + ": " + cc + " ~ " + dd.substring(5,10);
 				}
+				
+			}
+			if(e.getJulianDate() > a.getJulianDate()){
+				for(int i = 0; i < 27; i++)
+					roomstatus[i] = 5;
 			}
 		}
 		catch (Exception exc) {
@@ -111,6 +122,10 @@ public class booking extends JDBCinfo implements ActionListener{
 			          button22[i].setBackground(Color.YELLOW);
 			          button22[i].setEnabled(false);
 			          button22[i].setToolTipText(roominfo[i]);
+			    }
+			    if (roomstatus[i] == 5){
+			          button22[i].setBackground(Color.gray);
+			          button22[i].setEnabled(false);
 			    }
 			    button22[i].addActionListener(this);
 			}

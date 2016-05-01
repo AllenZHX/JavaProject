@@ -32,8 +32,8 @@ public class checkout extends JDBCinfo{
 			int checkinyear = Integer.parseInt(intime.substring(0,4));
 			int checkinmon = Integer.parseInt(intime.substring(5,7));
 			int checkinday = Integer.parseInt(intime.substring(8,10));
-			int checkoutyear = Integer.parseInt(intime.substring(0,4));
-			int checkoutmon = Integer.parseInt(intime.substring(5,7));
+			int checkoutyear = Integer.parseInt(outtime.substring(0,4));
+			int checkoutmon = Integer.parseInt(outtime.substring(5,7));
 			int checkoutday = Integer.parseInt(outtime.substring(8, 10));
 			int checkouthour = Integer.parseInt(outtime.substring(11, 13));
 			JulianDate in = new JulianDate(checkinyear,checkinmon,checkinday);
