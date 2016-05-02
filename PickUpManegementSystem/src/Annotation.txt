@@ -1,7 +1,0 @@
-Network Communication:
-
-1: It is one-way communication, from client to server: after we enter some contents in the TextField and press enter button, the server will show the information you put in the client.
-
-2:  Add an actionListener to the TextField.
-
-3£ºIt works when server and client are put together in one project file.
