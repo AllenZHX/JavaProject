@@ -4,7 +4,7 @@ import java.util.ArrayList;
   
 public class Server extends ServerSocket {
     private static final int SERVER_PORT =8000;
-  
+    
     public Server()throws IOException {
         super(SERVER_PORT);
   
@@ -33,8 +33,9 @@ public class Server extends ServerSocket {
             bufferedReader =new BufferedReader(new InputStreamReader(client.getInputStream()));
               
             printWriter =new PrintWriter(client.getOutputStream(),true);
-            System.out.println("Client(" + getName() +") come in...");
-             
+            
+            System.out.println("Client(" + getName() +") came in...");
+            
             start();
         }
   
@@ -45,7 +46,7 @@ public class Server extends ServerSocket {
                 arrayList.add(line);
                 
                 while (!line.equals("bye")) {
-                    printWriter.println("continue, Client(" + getName() +")!");
+                    printWriter.println(" Have Received Your Information! continue, Client(" + getName() +")!");
                     line = bufferedReader.readLine();
                     System.out.println("Client(" + getName() +") say: " + line);
                     arrayList.add(line);
@@ -54,11 +55,10 @@ public class Server extends ServerSocket {
                     		System.out.println(i+": "+arrayList.get(i));
                     	}
                     	new Network(arrayList);
+                    	
                     	ManagementSystem ms=new ManagementSystem();
-                    	ms.update();
+                    	ms.update(arrayList);
                     	arrayList.clear();
-                    	
-                    	
                     }
                 }
                 printWriter.println("bye, Client(" + getName() +")!");

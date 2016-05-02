@@ -14,6 +14,7 @@ public class ManagementSystem extends JFrame implements ActionListener
 	JTable table;	
 	JScrollPane gd1;
 	MyTableModel tableModel;
+	JTextArea jta;
 		
 	
 	JMenuItem jmi1;
@@ -52,12 +53,28 @@ public class ManagementSystem extends JFrame implements ActionListener
 	
 		
 		mb1=new JPanel();
+		mb1.setLayout(new BorderLayout());
+		JPanel mb_new=new JPanel();
+		
 		bq1=new JLabel("Input name:");
 		wbk1=new JTextField(20);
 		an1=new JButton("search");
 		an1.addActionListener(this);/////////////
 		an1.setActionCommand("chaxun");//////////////////////////////
-		mb1.add(bq1); mb1.add(wbk1); mb1.add(an1);
+		jta=new JTextArea();
+		JScrollPane jsp_new=new JScrollPane(jta);
+//		jsp_new.
+		
+		jta.setBackground(Color.GRAY);
+		jta.setSize(1000,400);
+		jta.setText("Waiting info from client...");
+//		jta.setText(arrayList.get(0));
+//		mb1.add(bq1); mb1.add(wbk1); mb1.add(an1);
+		mb_new.add(bq1); mb_new.add(wbk1); mb_new.add(an1);
+		mb1.add(BorderLayout.NORTH,mb_new);
+		mb1.add(BorderLayout.CENTER,jsp_new);
+		
+		
 		
 		mb2=new JPanel(new GridLayout(1,3,15,15));
 		an2=new JButton("add");
@@ -76,6 +93,11 @@ public class ManagementSystem extends JFrame implements ActionListener
 		table.setRowHeight(30);
 		table.setAutoResizeMode(4);
 		gd1=new JScrollPane(table);
+		JPanel jpCenter=new JPanel();
+		jpCenter.setLayout(new GridLayout(2,1));
+	
+		jpCenter.add(jsp_new);
+		jpCenter.add(gd1);
 		
 		JTabbedPane jtp=new JTabbedPane();
 		jtp.addTab("Search", new JButton("Search"));
@@ -84,25 +106,33 @@ public class ManagementSystem extends JFrame implements ActionListener
 		jtp.addTab("Remove", new JButton("Remove"));
 		
 //		this.add(jtp,BorderLayout.WEST);
-		this.add(gd1);
+		this.add(jpCenter, BorderLayout.CENTER);
 		this.add(mb1,"North");
 		this.add(mb2,"South");
 		
 		this.setJMenuBar(jmb);
 		
-		this.setTitle("Student Management System");
+		this.setTitle("Management System");
 //		this.setSize(500,400);
-		this.setSize(570, 400);
+		this.setSize(1000, 800);
 		this.setLocation(201,181);
-		this.setResizable(false);
+//		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);			
+		this.setVisible(true);		
 	}
 	
-	public void update(){
+	public void update(ArrayList arrayList){
+		String s="Info from client:";
 		tableModel=new MyTableModel();
 		table.setModel(tableModel);
 		
+			String name="Name: "+arrayList.get(0);
+			String phone="Phone :"+arrayList.get(1);
+			String date="Date : "+arrayList.get(2);
+			String from="FromWhere :"+arrayList.get(3);
+			String to="ToWhere: "+arrayList.get(4);
+			s=name+"\n"+phone+"\n"+date+"\n"+from+"\n"+to+"\n";
+			jta.setText(s);
 	}
 	
 	public void actionPerformed(ActionEvent e) 
@@ -202,7 +232,7 @@ class MyJDialog extends JDialog implements ActionListener{
 		jp1.setBackground(Color.red);
 		
 		StringBuffer sb1=new StringBuffer();
-		sb1.append("This is a Student Management System.\n\n");
+		sb1.append("This is a Management System.\n\n");
 		sb1.append("It mainly involves Swing and Database.\n\n");
 		sb1.append("Author: Xiang");
 		
