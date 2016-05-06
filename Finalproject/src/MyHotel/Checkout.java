@@ -1,4 +1,4 @@
-package test3;
+package MyHotel;
 /*
  * @ author: Hongxiang Zheng, Xiang Cao
  * 
@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class checkout extends JDBCinfo{
+public class Checkout extends JDBCinfo{
 	private int day = 1;
 	
 	public double calculateTotalFee(String roomnum,String outtime) {

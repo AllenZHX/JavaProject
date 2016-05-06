@@ -1,4 +1,4 @@
-package test3;
+package MyHotel;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,7 +6,7 @@ import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
-public class bill extends JDBCinfo{
+public class Bill extends JDBCinfo{
 	DecimalFormat dfInt=new DecimalFormat("00");
 	private String[] day = new String[31];
 	

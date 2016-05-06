@@ -1,4 +1,4 @@
-package test3;
+package MyHotel;
 /*
  * @ author: Hongxiang Zheng, Xiang Cao, Yingbin Zheng
  * 
@@ -21,7 +21,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class booking extends JDBCinfo implements ActionListener{
+public class Booking extends JDBCinfo implements ActionListener{
 	private int roomid;
 	private int[] roomstatus = {0,0,0,0,0,0,0,0,0,
 								0,0,0,0,0,0,0,0,0,
@@ -54,7 +54,7 @@ public class booking extends JDBCinfo implements ActionListener{
 		JulianDate b = new JulianDate(tyear,tmon,tday);
 		from = fy+"-"+fm+"-"+fd;
 		to = ty+"-"+tm+"-"+td;
-		checkin cki = new checkin();
+		Checkin cki = new Checkin();
 		String current = cki.getDate();
 		int cyear = Integer.parseInt(current.substring(0,4));
 		int cmon = Integer.parseInt(current.substring(5,7));

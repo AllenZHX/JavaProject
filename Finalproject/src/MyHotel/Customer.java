@@ -1,4 +1,4 @@
-package test3;
+package MyHotel;
 /*
  * @ author: Hongxiang Zheng
  * 
@@ -10,7 +10,7 @@ package test3;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class customer extends JDBCinfo {
+public class Customer extends JDBCinfo {
 		private int id1;
 		private String name;
 		private int idnum;
@@ -87,14 +87,14 @@ public class customer extends JDBCinfo {
 		public double getfeeofday(){return feeofday;}
 		@SuppressWarnings("rawtypes")
 		public ArrayList selectAll1(){
-			ArrayList<customer> ls = new ArrayList<customer>();
+			ArrayList<Customer> ls = new ArrayList<Customer>();
 			try{
 				//Connection myConn = DriverManager.getConnection(url, user, password);
 				String sql = "select * from checkin";
 				Statement myStmt = myConn.createStatement();
 				ResultSet myRs = myStmt.executeQuery(sql);
 				while (myRs.next()) {
-					customer cc= new customer();
+					Customer cc= new Customer();
 					cc.setid1(myRs.getInt("id"));
 					cc.setname(myRs.getString("name"));
 					cc.setidnum(myRs.getInt("idnum"));
@@ -111,14 +111,14 @@ public class customer extends JDBCinfo {
 	   }
 		@SuppressWarnings("rawtypes")
 		public ArrayList selectAll2(){
-			ArrayList<customer> ls = new ArrayList<customer>();
+			ArrayList<Customer> ls = new ArrayList<Customer>();
 			try{
 				//Connection myConn = DriverManager.getConnection(url, user, password);
 				String sql = "select * from servicelist";
 				Statement myStmt = myConn.createStatement();
 				ResultSet myRs = myStmt.executeQuery(sql);
 				while (myRs.next()) {
-					customer cc= new customer();
+					Customer cc= new Customer();
 					cc.setid2(myRs.getInt("id"));
 					cc.setitems(myRs.getString("items"));
 					cc.setprice(myRs.getDouble("price"));
@@ -133,14 +133,14 @@ public class customer extends JDBCinfo {
 	   }
 		@SuppressWarnings("rawtypes")
 		public ArrayList selectAll3(){
-			ArrayList<customer> ls = new ArrayList<customer>();
+			ArrayList<Customer> ls = new ArrayList<Customer>();
 			try{
 				//Connection myConn = DriverManager.getConnection(url, user, password);
 				String sql = "select * from payment";
 				Statement myStmt = myConn.createStatement();
 				ResultSet myRs = myStmt.executeQuery(sql);
 				while (myRs.next()) {
-					customer cc= new customer();
+					Customer cc= new Customer();
 					cc.setid3(myRs.getInt("id"));
 					cc.setroomnum(myRs.getString("roomnum"));
 					cc.setfee_room(myRs.getDouble("fee_room"));
@@ -156,14 +156,14 @@ public class customer extends JDBCinfo {
 	   }
 		@SuppressWarnings("rawtypes")
 		public ArrayList selectAll4(){
-			ArrayList<customer> ls = new ArrayList<customer>();
+			ArrayList<Customer> ls = new ArrayList<Customer>();
 			try{
 				//Connection myConn = DriverManager.getConnection(url, user, password);
 				String sql = "select * from checkoutlist";
 				Statement myStmt = myConn.createStatement();
 				ResultSet myRs = myStmt.executeQuery(sql);
 				while (myRs.next()) {
-					customer cc= new customer();
+					Customer cc= new Customer();
 					cc.setid1(myRs.getInt("id"));
 					cc.setname(myRs.getString("name"));
 					cc.setidnum(myRs.getInt("idnum"));
@@ -180,14 +180,14 @@ public class customer extends JDBCinfo {
 			return ls;
 	   }
 		public ArrayList selectAll5(){
-			ArrayList<customer> ls = new ArrayList<customer>();
+			ArrayList<Customer> ls = new ArrayList<Customer>();
 			try{
 				//Connection myConn = DriverManager.getConnection(url, user, password);
 				String sql = "select * from booking";
 				Statement myStmt = myConn.createStatement();
 				ResultSet myRs = myStmt.executeQuery(sql);
 				while (myRs.next()) {
-					customer cc= new customer();
+					Customer cc= new Customer();
 					cc.setid1(myRs.getInt("id"));
 					cc.setname(myRs.getString("name"));
 					cc.setidnum(myRs.getInt("idnum"));
@@ -204,14 +204,14 @@ public class customer extends JDBCinfo {
 			return ls;
 	   }
 		public ArrayList selectAll6(){
-			ArrayList<customer> ls = new ArrayList<customer>();
+			ArrayList<Customer> ls = new ArrayList<Customer>();
 			try{
 				//Connection myConn = DriverManager.getConnection(url, user, password);
 				String sql = "select * from bill";
 				Statement myStmt = myConn.createStatement();
 				ResultSet myRs = myStmt.executeQuery(sql);
 				while (myRs.next()) {
-					customer cc= new customer();
+					Customer cc= new Customer();
 					cc.setday(myRs.getString("day"));
 					cc.setnumofcheckin(myRs.getInt("numofcheckin"));
 					cc.setnumofcheckout(myRs.getInt("numofcheckout"));

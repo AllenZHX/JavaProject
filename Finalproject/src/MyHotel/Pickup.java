@@ -1,4 +1,4 @@
-package test3;
+package MyHotel;
 /*
  * @ author: Hongxiang Zheng, Xiang Cao
  * 
@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class pickup implements ActionListener {
+public class Pickup implements ActionListener {
 	private JDialog jDialog=null; 
 	private JButton[] button1 = new JButton[2];
 	private JLabel[] label1 = new JLabel[5];

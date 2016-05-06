@@ -1,4 +1,4 @@
-package test3;
+package MyHotel;
 /*
  * @ author: Hongxiang Zheng
  * 
@@ -17,9 +17,9 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import test3.Popup;
+import MyHotel.Popup;
 
-public class massage extends JDBCinfo implements ActionListener {
+public class Massage extends JDBCinfo implements ActionListener {
 	private JDialog jDialog=null; 
 	private JButton[] button1 = new JButton[3];
 	private JButton[] button2 = new JButton[3];

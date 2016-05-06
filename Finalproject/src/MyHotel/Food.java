@@ -1,4 +1,4 @@
-package test3;
+package MyHotel;
 /*
  * @ author: Hongxiang Zheng
  * 
@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 
-public class food extends JDBCinfo implements ActionListener {
+public class Food extends JDBCinfo implements ActionListener {
 	private JDialog jDialog=null; 
 	private JButton[] button33 = new JButton[30];
 	private JButton[] button333 = new JButton[3];
@@ -37,17 +37,17 @@ public class food extends JDBCinfo implements ActionListener {
 	private JTable table = new JTable();
 	private JScrollPane scrollPane = new JScrollPane(table);
 	Font font =  new Font("Times new Roman", Font.BOLD, 20);
-	customer ccc = new customer();
+	Customer ccc = new Customer();
 	private String[] item = {"","","","","","","","","","","","","","",""};
 	private double[] price = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 	private int temp = 0;
 	
 	public void getitemname(){
-		customer cccc = new customer();
+		Customer cccc = new Customer();
 		@SuppressWarnings("rawtypes")
 		ArrayList list = cccc.selectAll2();
 		for(int i = 0; i < list.size(); i++){
-			cccc = (customer)list.get(i);
+			cccc = (Customer)list.get(i);
 			buttonString33[i] = cccc.getitems();
 			stocknum[i] = cccc.getstock();
 		}
@@ -172,7 +172,7 @@ public class food extends JDBCinfo implements ActionListener {
 			
 			ArrayList<?> list = ccc.selectAll2();
 			for(int i = 0; i < list.size(); i++){
-				ccc = (customer)list.get(i);
+				ccc = (Customer)list.get(i);
 				if(buttonString33[itemid].equals(ccc.getitems()) & clear == false){
 					item[temp-1] = ccc.getitems();
 					price[temp-1] = ccc.getprice();

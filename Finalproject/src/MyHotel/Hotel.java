@@ -1,4 +1,4 @@
-package test3;
+package MyHotel;
 /*
  * @ author: Hongxiang Zheng, Xiang Cao, Yingbin Zheng
  * JavaProject: Hotel management system
@@ -19,13 +19,13 @@ import java.util.Timer;
 import java.util.TimerTask;  
 import javax.swing.*;
 
-public class testclass3 extends JFrame implements ActionListener{
+public class Hotel extends JFrame implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
-	checkin rr = new checkin();
-	private static checkout mm = new checkout();
-	static booking bb = new booking();
-	bill bi = new bill();
+	Checkin rr = new Checkin();
+	private static Checkout mm = new Checkout();
+	static Booking bb = new Booking();
+	Bill bi = new Bill();
 	JButton[] button1 = new JButton[1];
 	JButton[] button2 = new JButton[5];
 	JButton[] button3 = new JButton[5];
@@ -36,7 +36,7 @@ public class testclass3 extends JFrame implements ActionListener{
 	JButton[] button10 = new JButton[1];
 	JLabel[] label1 = new JLabel[3];
 	JLabel[] label5 = new JLabel[5];
-	JLabel[] label9 = new JLabel[8];   //////
+	JLabel[] label9 = new JLabel[8];   ////////
 	JLabel[] label10 = new JLabel[2];
 	JTextArea[] ta1 = new JTextArea[2];
 	JTextArea[] ta5 = new JTextArea[4];
@@ -87,7 +87,7 @@ public class testclass3 extends JFrame implements ActionListener{
 	JPanel p10 = new JPanel();
 	
 	///////////// drawing the interface  //////////
-	public testclass3() {
+	public Hotel() {
 		setTitle("Hotel management System");
 		Container c = getContentPane();
 		c.setLayout(new FlowLayout(3,10,10));
@@ -528,16 +528,16 @@ public class testclass3 extends JFrame implements ActionListener{
 			cancel(2);
         }
         if(ae.getSource() == button6[0]) {  // "food and drink" button for popup a new order interface
-        	food oo = new food();
+        	Food oo = new Food();
         	oo.getitemname();
         	oo.Popup_service(this);
         }
         if(ae.getSource() == button6[1]) {  // "massage" button for popup a new order interface
-        	massage mmm = new massage();
+        	Massage mmm = new Massage();
         	mmm.Popup_service(this);
         }
         if(ae.getSource() == button6[2]) {  // "pickup" button for popup a new oder interface
-        	pickup pp = new pickup();
+        	Pickup pp = new Pickup();
         	pp.Popup_service(this);
         }
         if(ae.getSource() == button9[2]) {  // "check room status" button for showing the roomstaus according to the booking day from * to *
@@ -596,7 +596,7 @@ public class testclass3 extends JFrame implements ActionListener{
 	
     ///////////// main /////////////////
 	public static void main(String[] args){
-		new testclass3();
+		new Hotel();
 		
 		while(true){
 			if(bb.getdatabaseinfo() == 1){

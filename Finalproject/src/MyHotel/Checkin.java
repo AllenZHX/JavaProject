@@ -1,4 +1,4 @@
-package test3;
+package MyHotel;
 /*
  * @ author: Hongxiang Zheng, Xiang Cao, Yingbin Zheng
  * 
@@ -36,7 +36,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class checkin extends JDBCinfo implements ActionListener{
+public class Checkin extends JDBCinfo implements ActionListener{
 	private int roomid;
 	private int[] roomstatus = {0,0,0,0,0,0,0,0,0,
 								0,0,0,0,0,0,0,0,0,

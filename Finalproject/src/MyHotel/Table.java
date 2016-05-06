@@ -1,4 +1,4 @@
-package test3;
+package MyHotel;
 import java.awt.Color;
 /*
  * @ author: Hongxiang Zheng
@@ -57,55 +57,55 @@ public Table(int listnum,JTable table){
 		//table.setBorder(BorderFactory.createLoweredBevelBorder());
 
 		if(listnum == 0){
-			customer ccc = new customer();
+			Customer ccc = new Customer();
 			ArrayList list = ccc.selectAll1();
 			for(int i = 0; i < list.size(); i++){
-				ccc = (customer)list.get(i);
+				ccc = (Customer)list.get(i);
 				defaultModel.addRow(new Object[]{ ccc.getname(),
 								ccc.getidnum(),ccc.getroom(),ccc.getstatus(),ccc.getintime()});
 			}			
 		}
 		if(listnum == 1){
-			customer ccc = new customer();
+			Customer ccc = new Customer();
 			ArrayList list = ccc.selectAll2();
 			for(int i = 0; i < list.size(); i++){
-				ccc = (customer)list.get(i);
+				ccc = (Customer)list.get(i);
 				defaultModel.addRow(new Object[]{ccc.getid2(),ccc.getitems(),
 								               ccc.getprice(),ccc.getstock()});
 			}
 		}
 		if(listnum == 2){
-			customer ccc = new customer();
+			Customer ccc = new Customer();
 			ArrayList list = ccc.selectAll3();
 			for(int i = 0; i < list.size(); i++){
-				ccc = (customer)list.get(i);
+				ccc = (Customer)list.get(i);
 				defaultModel.addRow(new Object[]{ccc.getroomnum(),
 						     ccc.getfee_room(),ccc.getfee_service(),ccc.gettotal()});
 			}
 		}
 		if(listnum == 3){
-			customer ccc = new customer();
+			Customer ccc = new Customer();
 			ArrayList list = ccc.selectAll4();
 			for(int i = 0; i < list.size(); i++){
-				ccc = (customer)list.get(i);
+				ccc = (Customer)list.get(i);
 				defaultModel.addRow(new Object[]{ccc.getname(),
 								ccc.getidnum(),ccc.getroom(),ccc.getintime(),ccc.getouttime(),ccc.gettotal()});
 			}	
 		}
 		if(listnum == 4){
-			customer ccc = new customer();
+			Customer ccc = new Customer();
 			ArrayList list = ccc.selectAll5();
 			for(int i = 0; i < list.size(); i++){
-				ccc = (customer)list.get(i);
+				ccc = (Customer)list.get(i);
 				defaultModel.addRow(new Object[]{ccc.getname(),
 								ccc.getidnum(),ccc.getemail(), ccc.getroom(),ccc.getfromday(),ccc.gettoday()});
 			}	
 		}
 		if(listnum == 5){
-			customer ccc = new customer();
+			Customer ccc = new Customer();
 			ArrayList list = ccc.selectAll6();
 			for(int i = 0; i < list.size(); i++){
-				ccc = (customer)list.get(i);
+				ccc = (Customer)list.get(i);
 				defaultModel.addRow(new Object[]{ccc.getday(),
 								ccc.getnumofcheckin(),ccc.getnumofcheckout(),ccc.getfeeofday()});
 			}	
