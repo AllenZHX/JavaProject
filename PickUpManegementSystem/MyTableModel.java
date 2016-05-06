@@ -47,6 +47,7 @@ class MyTableModel extends AbstractTableModel
 		ziduan=new Vector();
 //		ziduan.add("ID");
 		ziduan.add("Name");
+		
 //		ziduan.add("Gender");
 		ziduan.add("Phone");
 //		ziduan.add("Age");
@@ -70,7 +71,7 @@ class MyTableModel extends AbstractTableModel
 			  
 			  while(rs.next())
 			  {
-				  System.out.println(rs.getString(5)+"\t");
+//				  System.out.println(rs.getString(5)+"\t");
 				  Vector hang=new Vector();
 //					hang.add(rs.getString(1));
 				  

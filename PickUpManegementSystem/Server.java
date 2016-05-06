@@ -3,6 +3,7 @@ import java.net.*;
 import java.util.ArrayList;
   
 public class Server extends ServerSocket {
+	
     private static final int SERVER_PORT =8000;
     
     public Server()throws IOException {

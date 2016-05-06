@@ -6,7 +6,9 @@ import java.net.Socket;
 public class Client {
     public static void main(String[] args) {
         try {
-            Socket socket =new Socket("10.0.0.165",8000);
+//          Socket socket =new Socket("10.0.0.165",8000);
+//        	Socket socket=new Socket("155.246.219.148",8000);
+         	Socket socket=new Socket("155.246.161.85",8000);
             socket.setSoTimeout(60000);
   
             PrintWriter printWriter =new PrintWriter(socket.getOutputStream(),true);

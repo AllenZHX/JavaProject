@@ -1,4 +1,5 @@
 import java.awt.*;
+
 import java.awt.event.*;
 import java.io.IOException;
 import java.sql.*;
@@ -7,12 +8,12 @@ import javax.swing.*;
 
 public class ManagementSystem extends JFrame implements ActionListener
 {
-	JPanel mb1,mb2;
-	JLabel bq1;
-	JTextField wbk1;
-	JButton an1,an2,an3,an4;	
+	JPanel jp1,jp2;
+	JLabel jl1;
+	JTextField jtf1;
+	JButton jb1,jb2,jb3,jb4;	
 	JTable table;	
-	JScrollPane gd1;
+	JScrollPane jsp1;
 	MyTableModel tableModel;
 	JTextArea jta;
 		
@@ -35,15 +36,15 @@ public class ManagementSystem extends JFrame implements ActionListener
 		JMenuBar jmb=new JMenuBar();
 		
 		JMenu jm1=new JMenu("File");
-		jm1.setFont(new Font("Times New Roman", 1,12));
+		jm1.setFont(new Font("Times New Roman", 1,18));
 		JMenu jm2=new JMenu("Help");
-		jm2.setFont(new Font("Times New Roman",1,12));
+		jm2.setFont(new Font("Times New Roman",1,18));
 		
 		jmi1=new JMenuItem("Exit");
-		jmi1.setFont(new Font("Times New Roman", 0,12));
+		jmi1.setFont(new Font("Times New Roman", 1,12));
 		jmi1.addActionListener(this);
 		jmi2=new JMenuItem("About the System");
-		jmi2.setFont(new Font("Times New Roman",0,12));
+		jmi2.setFont(new Font("Times New Roman",1,12));
 		jmi2.addActionListener(this);
 		
 		jm1.add(jmi1);
@@ -52,52 +53,61 @@ public class ManagementSystem extends JFrame implements ActionListener
 		jmb.add(jm2);
 	
 		
-		mb1=new JPanel();
-		mb1.setLayout(new BorderLayout());
+		jp1=new JPanel();
+		jp1.setLayout(new BorderLayout());
 		JPanel mb_new=new JPanel();
 		
-		bq1=new JLabel("Input name:");
-		wbk1=new JTextField(20);
-		an1=new JButton("search");
-		an1.addActionListener(this);/////////////
-		an1.setActionCommand("chaxun");//////////////////////////////
+		jl1=new JLabel("Input name:");
+		jl1.setFont(new Font("Times New Roman",0,20));
+		jtf1=new JTextField(20);
+		jb1=new JButton("search");
+		jb1.setFont(new Font("Times New Roman",1,20));
+		jb1.setBackground(Color.PINK);
+		jb1.addActionListener(this);/////////////
+		jb1.setActionCommand("chaxun");//////////////////////////////
 		jta=new JTextArea();
 		JScrollPane jsp_new=new JScrollPane(jta);
 //		jsp_new.
 		
-		jta.setBackground(Color.GRAY);
+		jta.setBackground(Color.WHITE);
 		jta.setSize(1000,400);
 		jta.setText("Waiting info from client...");
+		jta.setFont(new Font("Times New Roman",0,18));
 //		jta.setText(arrayList.get(0));
 //		mb1.add(bq1); mb1.add(wbk1); mb1.add(an1);
-		mb_new.add(bq1); mb_new.add(wbk1); mb_new.add(an1);
-		mb1.add(BorderLayout.NORTH,mb_new);
-		mb1.add(BorderLayout.CENTER,jsp_new);
+		mb_new.add(jl1); mb_new.add(jtf1); mb_new.add(jb1);
+		jp1.add(BorderLayout.NORTH,mb_new);
+		jp1.add(BorderLayout.CENTER,jsp_new);
 		
 		
 		
-		mb2=new JPanel(new GridLayout(1,3,15,15));
-		an2=new JButton("add");
-		an2.addActionListener(this);
-		an2.setActionCommand("tianjia");
-		an3=new JButton("modify");
-		an3.addActionListener(this);
-		an3.setActionCommand("xiugai");
-		an4=new JButton("delete");
-		an4.addActionListener(this);
-		an4.setActionCommand("shanchu");
-		mb2.add(an2); mb2.add(an3); mb2.add(an4);
+		jp2=new JPanel(new GridLayout(1,3,15,15));
+		jb2=new JButton("add");
+		jb2.setFont(new Font("Times New Roman",1,20));
+		jb2.addActionListener(this);
+		jb2.setActionCommand("tianjia");
+		jb3=new JButton("modify");
+		jb3.setFont(new Font("Times New Roman",1,20));
+		jb3.addActionListener(this);
+		jb3.setActionCommand("xiugai");
+		jb4=new JButton("delete");
+		jb4.setFont(new Font("Times New Roman",1,20));
+		jb4.addActionListener(this);
+		jb4.setActionCommand("shanchu");
+		jp2.add(jb2); jp2.add(jb3); jp2.add(jb4);
 		
 		tableModel=new MyTableModel();
+	
 		table=new JTable(tableModel);
 		table.setRowHeight(30);
+		table.setFont(new Font("Times New Roman",0,17));
 		table.setAutoResizeMode(4);
-		gd1=new JScrollPane(table);
+		jsp1=new JScrollPane(table);
 		JPanel jpCenter=new JPanel();
 		jpCenter.setLayout(new GridLayout(2,1));
 	
 		jpCenter.add(jsp_new);
-		jpCenter.add(gd1);
+		jpCenter.add(jsp1);
 		
 		JTabbedPane jtp=new JTabbedPane();
 		jtp.addTab("Search", new JButton("Search"));
@@ -107,12 +117,13 @@ public class ManagementSystem extends JFrame implements ActionListener
 		
 //		this.add(jtp,BorderLayout.WEST);
 		this.add(jpCenter, BorderLayout.CENTER);
-		this.add(mb1,"North");
-		this.add(mb2,"South");
+		this.add(jp1,"North");
+		this.add(jp2,"South");
 		
 		this.setJMenuBar(jmb);
 		
 		this.setTitle("Management System");
+		this.setBackground(Color.GREEN);
 //		this.setSize(500,400);
 		this.setSize(1000, 800);
 		this.setLocation(201,181);
@@ -139,8 +150,7 @@ public class ManagementSystem extends JFrame implements ActionListener
 	{
 		if(e.getActionCommand().equals("chaxun"))
 		{
-			
-			String xingming=this.wbk1.getText().trim();
+			String xingming=this.jtf1.getText().trim();
 //			String sql="select * from students where name='"+xingming+"'";
 			String sql="select * from client where Name like '"+xingming+"'";
 //			String sql="select * from students where name like 'xingming%'";
@@ -150,7 +160,7 @@ public class ManagementSystem extends JFrame implements ActionListener
 		}
 		else if(e.getActionCommand().equals("tianjia"))
 		{
-			Add tj=new Add(this,"Add Student Information",true);
+			Add tj=new Add(this,"Add Client Information",true);
 			tableModel=new MyTableModel();
 			table.setModel(tableModel);
 		}
@@ -162,7 +172,7 @@ public class ManagementSystem extends JFrame implements ActionListener
 				JOptionPane.showMessageDialog(this,"Choose the row needed to be revised");
 				return;
 			}
-			new Modify(this,"Modify Student's Information",true,tableModel,ii);
+			new Modify(this,"Modify Client's Information",true,tableModel,ii);
 			
 			tableModel=new MyTableModel();
 			
@@ -258,27 +268,4 @@ class MyJDialog extends JDialog implements ActionListener{
 			this.dispose();
 		}
 	}
-//	JDialog jd1=new JDialog(this, "About the System");
-//	JPanel jp1=new JPanel();
-//	
-//	StringBuffer sb=new StringBuffer();
-//	sb.append("This is a Student Management System.\n\n");
-//	sb.append("It mainly involves Swing and Database.\n\n");
-//	sb.append("Author: Xiang");
-//	
-//	
-//	JTextArea jta=new JTextArea(5,21);
-//	jta.setText(sb.toString());
-//	jp1.add(jta);
-//	getContentPane().add(jp1);
-//	
-//	jd1.setVisible(true);
-//	jd1.setLocation(201,181);
-//	jd1.setSize(200, 200);
-
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 }
