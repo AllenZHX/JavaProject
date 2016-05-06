@@ -20,7 +20,8 @@ DataBase: We will use the MySQL database.(use JDBC to connect database with Java
 4.     Xiang Cao will use Stocket to create a car rental interface, which can receive the order info from hotel, then send a notice back to hotel.
 
 #Main classes and structure:
-just see the classStructure.vsd
-https://www.draw.io/?state=%7B%22ids%22:%5B%220B6G2nMMHIC1rMWJ5b2ZpZHJjM3c%22%5D,%22action%22:%22open%22,%22userId%22:%22104859114805731306837%22%7D#G0B6G2nMMHIC1rMWJ5b2ZpZHJjM3c
+1: just see the classStructure.vsd
+
+2:    https://www.draw.io/?state=%7B%22ids%22:%5B%220B6G2nMMHIC1rMWJ5b2ZpZHJjM3c%22%5D,%22action%22:%22open%22,%22userId%22:%22104859114805731306837%22%7D#G0B6G2nMMHIC1rMWJ5b2ZpZHJjM3c
 
 
