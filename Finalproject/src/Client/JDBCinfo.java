@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class JDBCinfo {
 	protected static String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
 	protected static String user = "root";
-	protected static String password = "root";
+	protected static String password = ",26187108hoog";
 	protected static Connection myConn = getconnection();
 	public static Connection getconnection(){
 		

@@ -20,7 +20,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 public class Table {
-	Font font3 =  new Font("Calibri", Font.PLAIN, 14);
+	Font font3 =  new Font("Calibri", Font.PLAIN, 24);
 public Table(int listnum,JTable table){
 		
 		DefaultTableModel defaultModel = (DefaultTableModel)table.getModel();
@@ -50,6 +50,7 @@ public Table(int listnum,JTable table){
 		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(defaultModel);  
         table.setRowSorter(sorter); 
 		table.setFont(font3);
+		table.setRowHeight(25);
 		table.setBackground(Color.CYAN);
 		DefaultTableCellRenderer r = new DefaultTableCellRenderer();   
 		r.setHorizontalAlignment(JLabel.CENTER);   

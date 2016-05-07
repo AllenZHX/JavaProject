@@ -220,6 +220,7 @@ public class Register extends JFrame implements ActionListener{
 			boolean tmp=mm.searchregister(ta5[0].getText(),ta5[1].getText()); 
 			if(tmp){
 				String []t=mm.getnameidemail(ta5[0].getText(),ta5[1].getText());
+				dispose();
 				new testclass3(t[0],t[1],t[2]);      
 				
 				cancel(2);
