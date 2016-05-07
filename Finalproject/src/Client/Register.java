@@ -19,9 +19,9 @@ import javax.swing.*;
 public class Register extends JFrame implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
-	roominfo rr = new roominfo();
-	manager mm = new manager();
-	booking bb = new booking();
+	Roominfo rr = new Roominfo();
+	Manager mm = new Manager();
+	Booking bb = new Booking();
 	JButton[] button5 = new JButton[4];
 	JButton[] button9 = new JButton[3];
 	JLabel[] label1 = new JLabel[3];
@@ -112,6 +112,7 @@ public class Register extends JFrame implements ActionListener{
 		p9.setOpaque(false);
 		//show detail panel
 		p3.setPreferredSize(new Dimension(830,295));
+		p3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		p3.setOpaque(false);
 		// ******for Panel4(standard time Part)******
 		timeLabel = new JLabel("CurrentTime: ");  
@@ -164,7 +165,7 @@ public class Register extends JFrame implements ActionListener{
 			p5.add(label5[i]);
 		for(int i = 0; i < 2; i++) 
 			p5.add(ta5[i]);
-
+		p5.setOpaque(false);
 
 		// for Panel7 (logo)
 		JLabel label = new JLabel("Welcome To Java810 Hotel");
@@ -200,7 +201,7 @@ public class Register extends JFrame implements ActionListener{
 		c.add(p3);
 		
 		((JComponent) c).setOpaque(false);
-		ImageIcon img = new ImageIcon("C:\\3.jpg");  //add background picture
+		ImageIcon img = new ImageIcon("lib/3.jpg");  //add background picture
 	    JLabel hy = new JLabel(img);
 	    getLayeredPane().add(hy, new Integer(Integer.MIN_VALUE));
 	    hy.setBounds(0,0,img.getIconWidth(),img.getIconHeight()); 
@@ -210,11 +211,9 @@ public class Register extends JFrame implements ActionListener{
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
+	
 	public static String vcode="";
 	public void actionPerformed(ActionEvent ae) {
-
-
-        
 
 		if(ae.getSource() == button5[0]){
 			boolean tmp=mm.searchregister(ta5[0].getText(),ta5[1].getText()); 

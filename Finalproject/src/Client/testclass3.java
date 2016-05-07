@@ -16,9 +16,9 @@ import javax.swing.*;
 public class testclass3 extends JFrame implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
-	roominfo rr = new roominfo();
-	manager mm = new manager();
-	booking bb = new booking();
+	Roominfo rr = new Roominfo();
+	Manager mm = new Manager();
+	Booking bb = new Booking();
 	private static String name, idnum,email;
 	JButton[] button5 = new JButton[4];
 	JButton[] button9 = new JButton[3];
@@ -226,7 +226,7 @@ public class testclass3 extends JFrame implements ActionListener{
 			p5.add(button5[i]);
 		for(int i = 0; i < 1; i++) 
 			p5.add(label5[i]);
-		
+		p5.setOpaque(false);
 
 		// for Panel7 (logo)
 		JLabel label = new JLabel("Welcome To Java810 Hotel");

@@ -19,7 +19,7 @@ public class Client {
  
     public Client(String info) {
         try {
-            client = new Socket("155.246.138.106", 8000);
+            client = new Socket("192.168.1.175", 8000);
             BufferedReader input = new BufferedReader(new StringReader(info));
             BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             PrintStream out = new PrintStream(client.getOutputStream());;
@@ -41,7 +41,7 @@ public class Client {
                 if(n == 4)
                 	new Popup(new JFrame(), 5);
             }
-            new Popup(new JFrame(), 5);
+            
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -598,7 +598,7 @@ public class Hotel extends JFrame implements ActionListener{
 	public static void main(String[] args){
 		new Hotel();
 		
-		while(true){
+		/*while(true){
 			if(bb.getdatabaseinfo() == 1){
 				new Popup(new JFrame(), 4);
 				bb.reset();
@@ -610,7 +610,7 @@ public class Hotel extends JFrame implements ActionListener{
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 			}
-		}
+		}*/
 		
 	}
 

@@ -15,7 +15,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-public class manager extends JDBCinfo{
+public class Manager extends JDBCinfo{
 	public void createANewBookingUser(String name, String idnum, String room, int roomid, String from, String to, String status,String email) {
 		try{
 			//1. Get a connection to database

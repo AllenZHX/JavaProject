@@ -13,7 +13,10 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class booking extends JDBCinfo implements ActionListener{
+import MyHotel.Checkin;
+import MyHotel.JulianDate;
+
+public class Booking extends JDBCinfo implements ActionListener{
 	private int roomid;
 	private int[] roomstatus = {0,0,0,0,0,0,0,0,0,
 								0,0,0,0,0,0,0,0,0,
@@ -44,6 +47,12 @@ public class booking extends JDBCinfo implements ActionListener{
 		int tday = Integer.parseInt(td);
 		JulianDate a = new JulianDate(fyear,fmon,fday);
 		JulianDate b = new JulianDate(tyear,tmon,tday);
+		Checkin cki = new Checkin();
+		String current = cki.getDate();
+		int cyear = Integer.parseInt(current.substring(0,4));
+		int cmon = Integer.parseInt(current.substring(5,7));
+		int cday = Integer.parseInt(current.substring(8,10));
+		JulianDate e = new JulianDate(cyear,cmon,cday);
 		from = fy+"-"+fm+"-"+fd;
 		to = ty+"-"+tm+"-"+td;
 		try{
@@ -79,6 +88,11 @@ public class booking extends JDBCinfo implements ActionListener{
 					roomstatus[aa] = 2; 
 					roominfo[aa] = booker + ": " + cc + " ~ " + dd.substring(5,10);
 				}
+				
+			}
+			if(e.getJulianDate() > a.getJulianDate()){
+				for(int i = 0; i < 27; i++)
+					roomstatus[i] = 5;
 			}
 		}
 		catch (Exception exc) {
@@ -103,6 +117,10 @@ public class booking extends JDBCinfo implements ActionListener{
 			          button22[i].setBackground(Color.YELLOW);
 			          button22[i].setEnabled(false);
 			          button22[i].setToolTipText(roominfo[i]);
+			    }
+			    if (roomstatus[i] == 5){
+			          button22[i].setBackground(Color.gray);
+			          button22[i].setEnabled(false);
 			    }
 			    button22[i].addActionListener(this);
 			}
