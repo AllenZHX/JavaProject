@@ -151,26 +151,21 @@ public class testclass3 extends JFrame implements ActionListener{
 		}
 		
 		p9.setLayout(null);
-		button9[0].setBounds(210,220,100,40);
-		button9[1].setBounds(370,220,100,40);
-		button9[2].setBounds(620,180,330,80);
-		//label9[0].setBounds(140,0,160,50);
-		//label9[1].setBounds(140,70,80,50);
-		//label9[2].setBounds(140,140,80,50);
-		jcb[0].setBounds(670,70,80,30);
-		jcb[1].setBounds(770,70,80,30);
-		jcb[2].setBounds(870,70,80,30);
-		jcb[3].setBounds(670,130,80,30);
-		jcb[4].setBounds(770,130,80,30);
-		jcb[5].setBounds(870,130,80,30);
-		label9[3].setBounds(590,60,80,50);
-		label9[4].setBounds(590,120,80,50);
-		label9[5].setBounds(690,15,80,50);
-		label9[6].setBounds(785,15,80,50);
-		label9[7].setBounds(890,15,80,50);
-		//ta9[0].setBounds(220,80,250,30);
-		//ta9[1].setBounds(220,150,250,30);
-		//ta9[8].setBounds(220,10,250,30);
+		button9[0].setBounds(570,100,100,40);
+		button9[1].setBounds(570,200,100,40);
+		button9[2].setBounds(150,180,330,80);
+		jcb[0].setBounds(200,70,80,30);
+		jcb[1].setBounds(300,70,80,30);
+		jcb[2].setBounds(400,70,80,30);
+		jcb[3].setBounds(200,130,80,30);
+		jcb[4].setBounds(300,130,80,30);
+		jcb[5].setBounds(400,130,80,30);
+		label9[3].setBounds(120,60,80,50);
+		label9[4].setBounds(120,120,80,50);
+		label9[5].setBounds(320,15,80,50);
+		label9[6].setBounds(415,15,80,50);
+		label9[7].setBounds(220,15,80,50);
+
 		for(int i = 0; i < 3; i++){
 	    	p9.add(button9[i]);
 		}
@@ -182,7 +177,8 @@ public class testclass3 extends JFrame implements ActionListener{
 			p9.add(jcb[i]);
 		p9.setOpaque(false);
 		//show detail panel
-		p3.setPreferredSize(new Dimension(830,295));
+		p3.setPreferredSize(new Dimension(610,255));
+		p3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		p3.setOpaque(false);
 		// ******for Panel4(standard time Part)******
 		timeLabel = new JLabel("CurrentTime: ");  
@@ -190,13 +186,13 @@ public class testclass3 extends JFrame implements ActionListener{
         timeLabel.setFont(font);
         displayArea.setFont(font);
         p4.setLayout(null);
-        timeLabel.setBounds(120,80,140,50);
-        displayArea.setBounds(100,150,180,50);
+        timeLabel.setBounds(120,60,140,50);
+        displayArea.setBounds(100,130,180,50);
         configTimeArea();
 		p4.add(timeLabel);
 		p4.add(displayArea);
 		p4.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		p4.setPreferredSize(new Dimension(380, 295));
+		p4.setPreferredSize(new Dimension(380, 255));
 		p4.setOpaque(false);
 		
 		// ******for Panel5(Cancel Part)******
@@ -232,11 +228,11 @@ public class testclass3 extends JFrame implements ActionListener{
 		JLabel label = new JLabel("Welcome To Java810 Hotel");
 		p7.setLayout(null);
 		label.setFont(font4);
-		label.setBounds(240,5,720,100);
+		label.setBounds(140,5,720,100);
 		p7.add(label);
 		p7.setOpaque(false);
 	    p7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		p7.setPreferredSize(new Dimension(1220, 100));
+		p7.setPreferredSize(new Dimension(1000, 100));
 		
 		// for Panel8
 		UIManager.put("TabbedPane.contentOpaque", false);
@@ -246,14 +242,14 @@ public class testclass3 extends JFrame implements ActionListener{
 	    jtp.setFont(font5);
 	    jtp.setBackground(new Color(0,0,0,0));
 	    jtp.setOpaque(false);
-	    jtp.setTabPlacement(JTabbedPane.LEFT);
+	    jtp.setTabPlacement(JTabbedPane.TOP);
 	    jtp.setOpaque(false);
 	    p8.setLayout(null);
-	    jtp.setBounds(5,10,1205,275);
+	    jtp.setBounds(5,10,985,315);
 		p8.add(jtp);
 		p8.setOpaque(false);
 	    p8.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		p8.setPreferredSize(new Dimension(1220, 295));
+		p8.setPreferredSize(new Dimension(1000, 335));
 		
 		// add all of Panel to Container c
 		c.add(p7);
@@ -266,7 +262,7 @@ public class testclass3 extends JFrame implements ActionListener{
 	    JLabel hy = new JLabel(img);
 	    getLayeredPane().add(hy, new Integer(Integer.MIN_VALUE));
 	    hy.setBounds(0,0,img.getIconWidth(),img.getIconHeight()); 
-		setSize(1245,760);
+		setSize(1025,760);
 		setVisible(true);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -308,15 +304,12 @@ public class testclass3 extends JFrame implements ActionListener{
         	
         }
         if(ae.getSource() == button9[0]) {
-				TextArea text=p3();
+			TextArea text=p3();
         	mm.createANewBookingUser(name,idnum,bb.getroom(),bb.getroomid(),bb.getfrom(),bb.getto(),bb.getstatus(),email);
     		text.setText("This is your booking information: \n\n"+"Name: "+name+"\n"+"ID: "+idnum+"\n"+"Room: "+bb.getroom()+"\n"+"From: "+bb.getfrom()+"\n"+"To: "+bb.getto());
     		p3.add(text);
-    		
     		new Popup(this,0);
         	cancel(1);
-        	//Table tt = new Table(4,table);
-        
 			
         }
         
@@ -340,7 +333,7 @@ public class testclass3 extends JFrame implements ActionListener{
 	}
 	public TextArea p3(){
 		TextArea text=new TextArea();
-		text.setPreferredSize(new Dimension(830,295));
+		text.setPreferredSize(new Dimension(590,240));
 		text.setEditable(false);
 		text.setFont(font);
 
